@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String _events = "";
   final _flutterAccessorysetupPlugin = FlutterAccessorysetup();
 
   @override
@@ -34,7 +35,19 @@ class _MyAppState extends State<MyApp> {
       platformVersion =
           await _flutterAccessorysetupPlugin.getPlatformVersion() ?? 'Unknown platform version';
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      platformVersion = 'Failed to get a platform version';
+    }
+
+    try {
+      await _flutterAccessorysetupPlugin.activate();
+    } on PlatformException {
+      debugPrint('Failed to activate the session');
+    }
+
+    try {
+      await _flutterAccessorysetupPlugin.showPicker();
+    } on PlatformException {
+      debugPrint('Failed to show the picker');
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -45,6 +58,12 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _platformVersion = platformVersion;
     });
+
+    _flutterAccessorysetupPlugin.sessionStream.listen((event) => setState(() {
+      if (event is String) {
+        _events = _events.isEmpty ? event : '$_events,\n$event';
+      }
+    }));
   }
 
   @override
@@ -52,10 +71,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Accessory Setup app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(children: [
+            Text('Running on: $_platformVersion\n'),
+            const SizedBox(height: 15,),
+            Text('Setup Session events: \n$_events'),
+          ],)
+          
         ),
       ),
     );

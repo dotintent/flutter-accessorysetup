@@ -20,8 +20,8 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    FlutterAccessorysetup flutterAccessorysetupPlugin = FlutterAccessorysetup();
-    MockFlutterAccessorysetupPlatform fakePlatform = MockFlutterAccessorysetupPlatform();
+    final flutterAccessorysetupPlugin = FlutterAccessorysetup();
+    final fakePlatform = MockFlutterAccessorysetupPlatform();
     FlutterAccessorysetupPlatform.instance = fakePlatform;
 
     expect(await flutterAccessorysetupPlugin.getPlatformVersion(), '42');
