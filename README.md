@@ -9,7 +9,7 @@
 
 * You should use xCode 16 and iOS 18 or higher to use that package, don't forget to setup the [cocoapods](./example/ios/Podfile) correctly too.
 
-* You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work. ‼ **If you miss the required key the app will crash when you show the picker** ‼ 
+* You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work. ⚠️ **If you miss the required key the app will crash when you show the picker** ⚠️ 
   * ALWAYS: (Bluetooth or WiFi, or both)
   ```
   <key>NSAccessorySetupKitSupports</key>
@@ -26,7 +26,7 @@
   </array>
   ```
   * when you use the ``ASDiscoveryDescriptor`` with ``bluetoothNameSubstring``
-  ‼ **Does not work in the iOS 18 Developer beta 2** ‼ 
+  ⚠️ **Does not work in the iOS 18 Developer beta 2** ⚠️ 
   ```
   <key>NSAccessorySetupBluetoothNames</key>
   <array>
@@ -58,16 +58,16 @@
 ----
 ## 🧑‍🦯 Know how
 
-‼ The AccessorySetup does not work on the Simulator ‼ 
+⚠️ The AccessorySetup does not work on the Simulator ⚠️ 
 
 * When user close the Picker by tapping cross button, the showPicker closure emits an error (ASErrorDomain, code 700)
 
 * If the device have been connected previously, it will be in the ``session.accessories`` array right after the session was activated event. 
-‼ **This device will not discoverable by Setup Picker until the User disconnects it from the settings** ‼
+⚠️ **This device will not discoverable by Setup Picker until the User disconnects it from the settings** ⚠️
 
 * When the User selects the device using picker, 
-  *  the device will be displayed in the MyDevices section of the `Settings/Bluetooth` screen
-  * the device info will screen will display image and name you provided to the descriptor during the discovery process (the same that user see in the picker)
+  * the device will be displayed in the `MyDevices` section of the `Settings/Bluetooth` screen
+  * the device's `info screen` will display image and name you provided to the descriptor during the discovery process (the same that user see in the picker)
 
 ----
 
