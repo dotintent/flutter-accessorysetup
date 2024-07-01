@@ -1,6 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'flutter_accessorysetup_method_channel.dart';
+import 'package:flutter_accessorysetup/flutter_accessorysetup_method_channel.dart';
 
 abstract class FlutterAccessorysetupPlatform extends PlatformInterface {
   /// Constructs a FlutterAccessorysetupPlatform.
@@ -23,7 +23,17 @@ abstract class FlutterAccessorysetupPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Stream<dynamic> get sessionStream;
+
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<void> activate() {
+    throw UnimplementedError('activate() has not been implemented.');
+  }
+
+  Future<void> showPicker() {
+    throw UnimplementedError('showPicker() has not been implemented.');
   }
 }

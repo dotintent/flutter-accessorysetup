@@ -5,7 +5,7 @@ import 'package:flutter_accessorysetup/flutter_accessorysetup_method_channel.dar
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelFlutterAccessorysetup platform = MethodChannelFlutterAccessorysetup();
+  final MethodChannelFlutterAccessorysetup platform = MethodChannelFlutterAccessorysetup();
   const MethodChannel channel = MethodChannel('flutter_accessorysetup');
 
   setUp(() {

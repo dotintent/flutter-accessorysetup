@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_accessorysetup (0.0.1):
+    - Flutter
+  - integration_test (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_accessorysetup (from `.symlinks/plugins/flutter_accessorysetup/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_accessorysetup:
+    :path: ".symlinks/plugins/flutter_accessorysetup/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_accessorysetup: 95aa9e3200af3062dc97a483f64d4f0312ee3f47
+  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+
+PODFILE CHECKSUM: 88001a6f63fedf7dfbfdf4ee0c335d29da93cbc0
+
+COCOAPODS: 1.15.2

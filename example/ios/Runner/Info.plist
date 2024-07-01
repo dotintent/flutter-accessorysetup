@@ -45,5 +45,14 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSAccessorySetupKitSupports</key>
+	<array>
+		<string>Bluetooth</string>
+		<string>WiFi</string>
+	</array>
+	<key>NSAccessorySetupBluetoothServices</key>
+	<array>
+		<string>149E9E42-33AD-41AD-8665-70D153533EC1</string>
+	</array>
 </dict>
 </plist>
