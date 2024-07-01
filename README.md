@@ -7,39 +7,37 @@
 
 ## ⚙️ Installation
 
-‼ **you should use xCode 16 and iOS 18 to use that package, don't forget to setup the [cocoapods](./example/ios/Podfile) correctly too** ‼
+* You should use xCode 16 and iOS 18 or higher to use that package, don't forget to setup the [cocoapods](./example/ios/Podfile) correctly too.
 
-### You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work 
- * ALWAYS: (Bluetooth or WiFi, or both)
- ```
- <key>NSAccessorySetupKitSupports</key>
- <array>
-	<string>Bluetooth</string>
-	<string>WiFi</string>
- </array>
- ```
- * when you use the ``ASDiscoveryDescriptor`` with ``bluetoothServiceUUID``
- ```
- <key>NSAccessorySetupBluetoothServices</key>
- <array>
- 	<string>149E9E42-33AD-41AD-8665-70D153533EC1</string>
- </array>
- ```
-* when you use the ``ASDiscoveryDescriptor`` with ``bluetoothNameSubstring``
- ‼ **Does not work in the iOS 18 Developer beta 2** ‼ 
- ```
- <key>NSAccessorySetupBluetoothNames</key>
- <array>
- 	<string>DeviceName</string>
- </array>
- ```
-* there is an option with manufacturer ID that is not covered here
+* You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work. ‼ **If you miss the required key the app will crash when you show the picker** ‼ 
+  * ALWAYS: (Bluetooth or WiFi, or both)
+  ```
+  <key>NSAccessorySetupKitSupports</key>
+  <array>
+    <string>Bluetooth</string>
+    <string>WiFi</string>
+  </array>
+  ```
+  * when you use the ``ASDiscoveryDescriptor`` with ``bluetoothServiceUUID``
+  ```
+  <key>NSAccessorySetupBluetoothServices</key>
+  <array>
+    <string>149E9E42-33AD-41AD-8665-70D153533EC1</string>
+  </array>
+  ```
+  * when you use the ``ASDiscoveryDescriptor`` with ``bluetoothNameSubstring``
+  ‼ **Does not work in the iOS 18 Developer beta 2** ‼ 
+  ```
+  <key>NSAccessorySetupBluetoothNames</key>
+  <array>
+    <string>DeviceName</string>
+  </array>
+  ```
+  * there is an option with manufacturer ID that is not covered here
 
-‼ **If you miss the required key the app will crash when you show the picker** ‼
 
-### Use the FlutterAccessorysetup class
 
-See the full code example in the [Example app](./example/lib/main.dart) 
+* Use the FlutterAccessorysetup class. See the full code example in the [Example app](./example/lib/main.dart) 
 
 ```
     final _flutterAccessorysetupPlugin = FlutterAccessorysetup();
