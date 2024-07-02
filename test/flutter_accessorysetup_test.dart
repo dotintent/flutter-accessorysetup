@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_accessorysetup/flutter_accessorysetup.dart';
-import 'package:flutter_accessorysetup/flutter_accessorysetup_platform_interface.dart';
-import 'package:flutter_accessorysetup/flutter_accessorysetup_method_channel.dart';
+import 'package:flutter_accessorysetup/flutter_accessorysetup_platform.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterAccessorysetupPlatform
@@ -15,8 +14,8 @@ class MockFlutterAccessorysetupPlatform
 void main() {
   final FlutterAccessorysetupPlatform initialPlatform = FlutterAccessorysetupPlatform.instance;
 
-  test('$MethodChannelFlutterAccessorysetup is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelFlutterAccessorysetup>());
+  test('$FlutterAccessorysetupPlatform is the default instance', () {
+    expect(initialPlatform, isInstanceOf<FlutterAccessorysetupPlatform>());
   });
 
   test('getPlatformVersion', () async {

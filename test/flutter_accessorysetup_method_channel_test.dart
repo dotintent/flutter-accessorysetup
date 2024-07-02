@@ -1,12 +1,12 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_accessorysetup/flutter_accessorysetup_platform.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_accessorysetup/flutter_accessorysetup_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  final MethodChannelFlutterAccessorysetup platform = MethodChannelFlutterAccessorysetup();
-  const MethodChannel channel = MethodChannel('flutter_accessorysetup');
+  final FlutterAccessorysetupPlatform platform = FlutterAccessorysetupPlatform();
+  const MethodChannel channel = MethodChannel('com.withintent.flutter.package.flutter_accessorysetup.methods');
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
