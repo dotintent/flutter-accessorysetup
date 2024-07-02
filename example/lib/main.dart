@@ -66,9 +66,8 @@ class _MyAppState extends State<MyApp> {
     });
 
     _flutterAccessorysetupPlugin.sessionStream.listen((event) => setState(() {
-      if (event is String) {
-        _events = _events.isEmpty ? event : '$_events,\n$event';
-      }
+      final eventDesc = event.toString();
+      _events = _events.isEmpty ? eventDesc : '$_events,\n$eventDesc';
     }));
   }
 

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_accessorysetup/flutter_accessorysetup_error.dart';
+import 'package:flutter_accessorysetup/flutter_accessorysetup_event.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class FlutterAccessorysetupPlatform extends PlatformInterface {
@@ -29,7 +33,16 @@ class FlutterAccessorysetupPlatform extends PlatformInterface {
   final eventChannel = const EventChannel(
       'com.withintent.flutter.package.flutter_accessorysetup.events');
 
-  Stream<dynamic> get sessionStream => eventChannel.receiveBroadcastStream();
+  Stream<FlutterAccessorysetupSessionEvent> get sessionStream => eventChannel.receiveBroadcastStream().map((jsonItem) {
+    final jsonString = jsonItem as String?;
+    if (jsonString == null) throw Exception('got invalid json from stream');
+    final json = jsonDecode(jsonString);
+    return switch (json['a']) {
+      'EVENT' => FlutterAccessorysetupEvent.fromJson(json),
+      'ERROR' => FlutterAccessorysetupError.fromJson(json),
+      _ => throw Exception('Invalid stream item')
+    };
+  });
 
   Future<String?> getPlatformVersion() async {
     final version =
