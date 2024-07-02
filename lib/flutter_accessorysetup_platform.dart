@@ -35,12 +35,12 @@ class FlutterAccessorysetupPlatform extends PlatformInterface {
 
   Stream<FlutterAccessorysetupSessionEvent> get sessionStream => eventChannel.receiveBroadcastStream().map((jsonItem) {
     final jsonString = jsonItem as String?;
-    if (jsonString == null) throw Exception('got invalid json from stream');
+    if (jsonString == null) throw Exception('got invalid json from the stream $jsonItem');
     final json = jsonDecode(jsonString);
     return switch (json['a']) {
       'EVENT' => FlutterAccessorysetupEvent.fromJson(json),
       'ERROR' => FlutterAccessorysetupError.fromJson(json),
-      _ => throw Exception('Invalid stream item')
+      _ => throw Exception('got unsupported json object: $jsonString')
     };
   });
 
