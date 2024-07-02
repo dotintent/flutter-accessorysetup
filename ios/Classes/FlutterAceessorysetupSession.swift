@@ -6,18 +6,6 @@ class AccessorysetupSession {
     private let session = ASAccessorySession()
     private let sink: Sink
 
-    private static let duckDevice: ASPickerDisplayItem = {
-        let descriptor = ASDiscoveryDescriptor()
-        descriptor.bluetoothServiceUUID = CBUUID(string: "149e9e42-33ad-41ad-8665-70d153533ec1")
-        //            descriptor.bluetoothNameSubstring = "KITCHENSINK"
-
-        return ASPickerDisplayItem(
-            name: "My Duck",
-            productImage: UIImage(systemName: "moon.dust")!,
-            descriptor: descriptor
-        )
-    }()
-
     init(sink: @escaping Sink) {
         self.sink = sink
     }
@@ -26,8 +14,25 @@ class AccessorysetupSession {
         session.activate(on: .main, eventHandler: handle(event:))
     }
 
-    func showPicker() {
-        session.showPicker(for: [Self.duckDevice]) { error in
+    func showBlePicker(
+        name: String,
+        image: UIImage,
+        serviceUUID: String?,
+        nameSubstring: String?
+    ) {
+        let descriptor = ASDiscoveryDescriptor()
+        if let serviceUUID {
+            descriptor.bluetoothServiceUUID = CBUUID(string: serviceUUID)
+        }
+        if let nameSubstring {
+            descriptor.bluetoothNameSubstring = nameSubstring
+        }
+        let item = ASPickerDisplayItem(
+            name: name,
+            productImage: image,
+            descriptor: descriptor
+        )
+        session.showPicker(for: [item]) { error in
             if let error {
                 self.sink("showPicker failed: \(error)")
             }

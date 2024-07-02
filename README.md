@@ -19,6 +19,7 @@
   </array>
   ```
   * when you use the ``ASDiscoveryDescriptor`` with ``bluetoothServiceUUID``
+  ⚠️ **The UUID string must be upper-cased here** ⚠️
   ```
   <key>NSAccessorySetupBluetoothServices</key>
   <array>

@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/flutter_accessorysetup.dart';
+import 'package:flutter_accessorysetup_example/gen/assets.gen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +46,12 @@ class _MyAppState extends State<MyApp> {
     }
 
     try {
-      await _flutterAccessorysetupPlugin.showPicker();
+      await _flutterAccessorysetupPlugin.showBlePicker(
+        'My Device',
+         Assets.images.ble.path,
+        '149E9E42-33AD-41AD-8665-70D153533EC1',
+        null
+      );
     } on PlatformException {
       debugPrint('Failed to show the picker');
     }
