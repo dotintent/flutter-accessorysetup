@@ -2,12 +2,15 @@ PODS:
   - Flutter (1.0.0)
   - flutter_accessorysetup (0.0.1):
     - Flutter
+  - flutter_blue_plus (0.0.1):
+    - Flutter
   - integration_test (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_accessorysetup (from `.symlinks/plugins/flutter_accessorysetup/ios`)
+  - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
 
 EXTERNAL SOURCES:
@@ -15,12 +18,15 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_accessorysetup:
     :path: ".symlinks/plugins/flutter_accessorysetup/ios"
+  flutter_blue_plus:
+    :path: ".symlinks/plugins/flutter_blue_plus/ios"
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_accessorysetup: 6ff59d1cfbb16537c9113c3fc6c8248652f1558c
+  flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
 
 PODFILE CHECKSUM: 88001a6f63fedf7dfbfdf4ee0c335d29da93cbc0
