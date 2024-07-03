@@ -98,14 +98,14 @@ next steps:
 * image
 * custom services UUID
 
-- [ ] find a way to work with the Flutter ble package (setup kit gives the Peripheral ID which the app ble should work with)
+- [x] find a way to work with the Flutter ble package (setup kit gives the Peripheral ID which the app ble should work with)
   * There are 2 libraries: 
     * https://pub.dev/packages/flutter_reactive_ble
     * https://pub.dev/packages/flutter_blue_plus
   Both ok, both used. Probably blue plus has more support, but reactive ble is done by Philips.
   * flutter_blue_plus required bluetooth access to load the device using provided identifier.
 
-- [v] check if new ESP32 board will trigger ``ASAccessoryEventType.accessoryAdded`` event. NO
+- [x] check if new ESP32 board will trigger ``ASAccessoryEventType.accessoryAdded`` event. NO
 
 - [ ] introduce unit tests
 
