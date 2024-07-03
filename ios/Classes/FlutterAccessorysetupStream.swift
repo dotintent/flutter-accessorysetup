@@ -13,8 +13,8 @@ public class FlutterAccessorysetupStream: NSObject, FlutterStreamHandler {
     return nil
   }
 
-  public func send(event: Any?) {
-    eventSink?(event)
-    print("sent event: \(event ?? "nil")")
+  public func send(json: String) {
+    eventSink?(json)
+    print("sent json: \(json)")
   }
 }

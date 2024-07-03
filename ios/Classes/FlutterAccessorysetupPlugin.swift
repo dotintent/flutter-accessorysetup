@@ -6,7 +6,7 @@ public class FlutterAccessorysetupPlugin: NSObject, FlutterPlugin {
     let setupSession: AccessorysetupSession
 
     override init() {
-        setupSession = AccessorysetupSession(sink: { Self.sharedStream.send(event: $0) })
+        setupSession = AccessorysetupSession(sink: { Self.sharedStream.send(json: $0) })
     }
 
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -23,11 +23,6 @@ public class FlutterAccessorysetupPlugin: NSObject, FlutterPlugin {
         )
 
         eventChannel.setStreamHandler(sharedStream)
-
-        // for the debug purposes
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-            sharedStream.send(event: "Hello from Swift!")
-        }
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
