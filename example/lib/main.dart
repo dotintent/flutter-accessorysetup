@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
   String _deviceStatus = 'Disconnected';
   String _events = "";
   StreamSubscription<BluetoothAdapterState>? bleStateSubscription;
+  Accessory? _pickedAccessory;
 
   final _flutterAccessorysetupPlugin = FlutterAccessorysetup();
 
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     try {
-      await _flutterAccessorysetupPlugin.showBlePicker('My Device',
+      await _flutterAccessorysetupPlugin.showBlePicker('My Ble',
           Assets.images.ble.path, '149E9E42-33AD-41AD-8665-70D153533EC1', null);
     } on PlatformException {
       debugPrint('Failed to show the picker');
@@ -78,15 +79,30 @@ class _MyAppState extends State<MyApp> {
           final eventDesc = event.toString();
           debugPrint('got session event: $eventDesc');
           _events = _events.isEmpty ? eventDesc : '$_events,\n$eventDesc';
-          if (event is FlutterAccessorysetupEvent &&
-              event.type == AccessoryEventType.accessoryChanged) {
-            final accessory = event.accessories.firstOrNull;
-            final id = accessory?.bluetoothIdentifier;
-            debugPrint('accessory changed: ${event.accessories})');
-            if (accessory != null && id != null && accessory.state == AccessoryState.authorized) {
-              _connectWithoutScanning(id);
-            } else {
-              throw Exception('added device identifier should not be null');
+          if (event is FlutterAccessorysetupEvent) {
+            if (event.type == AccessoryEventType.accessoryChanged ||
+                event.type == AccessoryEventType.accessoryAdded) {
+              debugPrint('accessory added/changed: ${event.accessories})');
+               setState(() {
+                _pickedAccessory = event.accessories.firstOrNull;
+               });
+            }
+
+            if (event.type == AccessoryEventType.pickerDidDismiss) {
+              debugPrint('user picked accessory: $_pickedAccessory)');
+              final accessory = _pickedAccessory;
+              setState(() {
+                _pickedAccessory = null;
+              });
+              final id = accessory?.bluetoothIdentifier;
+              if (accessory != null &&
+                  id != null &&
+                  accessory.state == AccessoryState.authorized) {
+                _connectWithoutScanning(id);
+              } else {
+                throw Exception(
+                    'added accessory should have identifier and be authorized');
+              }
             }
           }
         }));
@@ -129,18 +145,18 @@ class _MyAppState extends State<MyApp> {
       _connectDevice(id);
       return;
     }
-    bleStateSubscription = FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
+    bleStateSubscription =
+        FlutterBluePlus.adapterState.listen((BluetoothAdapterState state) {
       debugPrint('got adapter state: $state');
       if (state == BluetoothAdapterState.on) {
         _connectDevice(id);
         bleStateSubscription?.cancel();
-      } 
+      }
     });
-   
   }
 
   Future<void> _connectDevice(String id) async {
-     var device = BluetoothDevice.fromId(id);
+    var device = BluetoothDevice.fromId(id);
     debugPrint('loaded device: $device');
     try {
       await device.connect();

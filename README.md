@@ -74,7 +74,7 @@ flutter pub get TBD
 
 - When user close the Picker by tapping cross button, the showPicker closure emits an error (ASErrorDomain, code 700)
 
-- ⚠️ **When the person picks an accessory the picker sends an event of type **ASAccessoryEventType.accessoryChanged**, it might be that the picker sends an event of type **ASAccessoryEventType.accessoryAdded** ONLY the first time the User picks the accessory on that particular phone ⚠️ 
+- ⚠️ **When the person picks an ble accessory the picker sends an event of type **ASAccessoryEventType.accessoryChanged**, it might be that the picker sends an event of type **ASAccessoryEventType.accessoryAdded** but I can't reproduce it at all ⚠️ 
 
 - If the device have been connected previously, it will be in the `session.accessories` array right after the session was activated event.<br>
   ⚠️ **This device will not discoverable by Setup Picker until the User disconnects it from the settings** ⚠️
@@ -82,6 +82,8 @@ flutter pub get TBD
 - When the User selects the device using picker,
   - the device will be displayed in the `MyDevices` section of the `Settings/Bluetooth` screen
   - the device's `info screen` will display image and name you provided to the ``ASPickerDisplayItem`` during the discovery process (the same that user saw in the picker)
+
+- When used deletes the App, the device will be disconnected automatically. It won't be displayed in the `MyDevices` section of the `Settings/Bluetooth` screen anymore.
 
 ---
 
@@ -103,7 +105,7 @@ next steps:
   Both ok, both used. Probably blue plus has more support, but reactive ble is done by Philips.
   * flutter_blue_plus required bluetooth access to load the device using provided identifier.
 
-- [ ] check if new ESP32 board will trigger ``ASAccessoryEventType.accessoryAdded`` event.
+- [v] check if new ESP32 board will trigger ``ASAccessoryEventType.accessoryAdded`` event. NO
 
 - [ ] introduce unit tests
 
