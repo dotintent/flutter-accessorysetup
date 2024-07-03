@@ -2,7 +2,7 @@ import AccessorySetupKit
 import CoreBluetooth
 
 class AccessorysetupSession {
-    typealias Sink = (Any?) -> Void
+    typealias Sink = (_ json: String) -> Void
     private let session = ASAccessorySession()
     private let sink: Sink
 
@@ -32,56 +32,58 @@ class AccessorysetupSession {
             productImage: image,
             descriptor: descriptor
         )
-        session.showPicker(for: [item]) { error in
+        session.showPicker(for: [item]) { [weak self] error in
             if let error {
-                self.sink("showPicker failed: \(error)")
+                self?.send(error: error, description: "failed to show picker")
             }
         }
     }
 
     func handle(event: ASAccessoryEvent) {
-        print("got ASAccessorySession event: \(event.eventType) ")
+        print("got ASAccessorySession event: \(event.eventType.jsonString) ")
+        var accessories = [ASAccessory]()
+
         switch event.eventType {
-        case .accessoryAdded: break
-        case .accessoryChanged:
-            sink("accessoryChanged")
-            print("changed: \(String(describing: event.accessory)) \(String(describing: event.error))")
-        case .accessoryRemoved: break
+        case .accessoryAdded, .accessoryChanged, .accessoryRemoved, .migrationComplete:
+            if let accessory = event.accessory {
+                accessories.append(accessory)
+            }
         case .activated:
-            print("activated \(session.accessories)")
-            sink("activated")
-        case .invalidated:
-            sink("invalidated")
-        case .migrationComplete: break
-        case .pickerDidDismiss: break
-        case .pickerDidPresent:
-            sink("pickerDidPresent")
-        case .unknown: break
+            accessories.append(contentsOf: session.accessories)
+        case .invalidated, .pickerDidDismiss, .pickerDidPresent, .unknown: break
         @unknown default:
-            print("got unknown default type event: \(event.eventType) ")
+            send(
+                error: AccessorysetupCodeError.gotUnknownDefaultCase,
+                description: "got unknown default type of the event: \(event.eventType)"
+            )
+        }
+        let event = AccessorysetupEvent(
+            eventType: event.eventType,
+            accessories: accessories.map { AccessorysetupAccessory($0) }
+        )
+        do {
+            let eventJson = try JSONEncoder().encode(event)
+            sink(try eventJson.jsonString())
+        } catch {
+            send(error: error, description: "failed to encode event \(event.type)")
+        }
+    }
+
+    private func send(error: Error, description: String) {
+        do {
+            let errorJson = try JSONEncoder().encode(
+                AccessorysetupError(error, description: description)
+            )
+            sink(try errorJson.jsonString())
+        } catch {
+            print("failed to send error: \(description), \(error)")
+            // crash debug build here
+            assert(false)
         }
     }
 }
 
-
-#if DEBUG
-
-extension ASAccessoryEventType: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .accessoryAdded: "accessoryAdded"
-        case .accessoryChanged: "accessoryChanged"
-        case .accessoryRemoved: "accessoryRemoved"
-        case .activated: "activated"
-        case .invalidated: "invalidated"
-        case .migrationComplete: "migrationComplete"
-        case .pickerDidDismiss: "pickerDidDismiss"
-        case .pickerDidPresent: "pickerDidPresent"
-        case .unknown: "unknown"
-        @unknown default:
-            "unknown default"
-        }
-    }
+enum AccessorysetupCodeError: Error {
+    case gotUnknownDefaultCase
+    case failedStringConversion
 }
-
-#endif

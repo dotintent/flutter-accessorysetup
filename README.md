@@ -89,8 +89,7 @@ next steps:
 
 - [x] update the documentation to note all required steps and limitations of the AccessorySetupKit
 
-- [ ] introduce customization for the device discovery:
-
+- [x] introduce customization for the device discovery:
 * name
 * image
 * custom services UUID

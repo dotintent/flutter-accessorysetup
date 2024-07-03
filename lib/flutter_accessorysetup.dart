@@ -1,10 +1,10 @@
-
+import 'package:flutter_accessorysetup/flutter_accessorysetup_event.dart';
 import 'package:flutter_accessorysetup/flutter_accessorysetup_platform.dart';
 
 class FlutterAccessorysetup {
   final platform = FlutterAccessorysetupPlatform.instance;
 
-  Stream<dynamic> get sessionStream => platform.sessionStream;
+  Stream<FlutterAccessorysetupSessionEvent> get sessionStream => platform.sessionStream;
 
   Future<String?> getPlatformVersion() {
     return platform.getPlatformVersion();
