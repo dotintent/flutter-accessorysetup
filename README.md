@@ -3,7 +3,7 @@
 ## 🚇 Install
 
 ```
-flutte pub get
+flutter pub get TBD
 ```
 
 ## ⚙️ Setup
