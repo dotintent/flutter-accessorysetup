@@ -2,19 +2,19 @@ import 'package:flutter_accessorysetup/flutter_accessorysetup_event.dart';
 import 'package:flutter_accessorysetup/flutter_accessorysetup_platform.dart';
 
 class FlutterAccessorysetup {
-  final platform = FlutterAccessorysetupPlatform.instance;
+  FlutterAccessorysetupPlatform get _platform => FlutterAccessorysetupPlatform.instance;
 
-  Stream<FlutterAccessorysetupSessionEvent> get sessionStream => platform.sessionStream;
+  Stream<FlutterAccessorysetupSessionEvent> get sessionStream => _platform.sessionStream;
 
   Future<String?> getPlatformVersion() {
-    return platform.getPlatformVersion();
+    return _platform.getPlatformVersion();
   }
 
   Future<void> activate() async {
-    await platform.activate();
+    await _platform.activate();
   }
 
   Future<void> showBlePicker(String name, String asset, String? serviceUUID, String? nameSubstring) async {
-    await platform.showBlePicker(name, asset, serviceUUID, nameSubstring);
+    await _platform.showBlePicker(name, asset, serviceUUID, nameSubstring);
   }
 }
