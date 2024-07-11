@@ -35,7 +35,6 @@ struct AccessorysetupAccessory: Encodable {
             case .awaitingAuthorization: self = .awaitingAuthorization
             case .unauthorized: self = .unauthorized
             @unknown default:
-                print("got unsupported case \(accessoryState)")
                 // crash debug build here
                 assert(false)
                 self = .unknown

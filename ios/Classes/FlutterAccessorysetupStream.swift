@@ -15,6 +15,5 @@ public class FlutterAccessorysetupStream: NSObject, FlutterStreamHandler {
 
   public func send(json: String) {
     eventSink?(json)
-    print("sent json: \(json)")
   }
 }

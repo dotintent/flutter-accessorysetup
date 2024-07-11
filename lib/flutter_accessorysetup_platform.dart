@@ -22,8 +22,6 @@ class FlutterAccessorysetupPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  // Concrete implementation goes here
-
   @visibleForTesting
   final methodChannel = const MethodChannel(
       'com.withintent.flutter.package.flutter_accessorysetup.methods');
