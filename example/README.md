@@ -1,4 +1,4 @@
-# Example App
+# AccessorySetup Demo App
 
 ## Requirements
 
@@ -26,13 +26,6 @@ If the iOS build fails for `Cocoapods` reason, please run this command:
 2. `pod repo update`
 3. `pod install`
 
-## Code Generators
+## How to use
 
-The repo makes use of code generators to secure access to local assets and manipulate visual features across different platforms.
-
-### Assets
-
-After updating any Assets run:
-`flutter pub run build_runner build --delete-conflicting-outputs`
-
-If you're adding new directory, make sure to add its path to `pubspec.yaml` (in `assets:`).
+In order to have it working you need a Google with BLE support broadcasting the service `FEF3` for Fast Pair, but you can adjust to any value your BLE device is providing.

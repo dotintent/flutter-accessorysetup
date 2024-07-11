@@ -40,7 +40,6 @@ class AccessorysetupSession {
     }
 
     func handle(event: ASAccessoryEvent) {
-        print("got ASAccessorySession event: \(event.eventType.jsonString) ")
         var accessories = [ASAccessory]()
 
         switch event.eventType {
@@ -76,7 +75,6 @@ class AccessorysetupSession {
             )
             sink(try errorJson.jsonString())
         } catch {
-            print("failed to send error: \(description), \(error)")
             // crash debug build here
             assert(false)
         }

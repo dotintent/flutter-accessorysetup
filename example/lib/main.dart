@@ -60,8 +60,8 @@ class _MyAppState extends State<MyApp> {
     }
 
     try {
-      await _flutterAccessorysetupPlugin.showBlePicker('My Ble',
-          Assets.images.ble.path, '149E9E42-33AD-41AD-8665-70D153533EC1', null);
+      await _flutterAccessorysetupPlugin.showBlePicker(
+          'My Ble', Assets.images.ble.path, 'FEF3', null);
     } on PlatformException {
       debugPrint('Failed to show the picker');
     }
@@ -83,9 +83,9 @@ class _MyAppState extends State<MyApp> {
             if (event.type == AccessoryEventType.accessoryChanged ||
                 event.type == AccessoryEventType.accessoryAdded) {
               debugPrint('accessory added/changed: ${event.accessories})');
-               setState(() {
+              setState(() {
                 _pickedAccessory = event.accessories.firstOrNull;
-               });
+              });
             }
 
             if (event.type == AccessoryEventType.pickerDidDismiss) {

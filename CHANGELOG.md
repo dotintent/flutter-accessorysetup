@@ -1,3 +1,3 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Introduce basic support for AccessorySetupKit for BLE

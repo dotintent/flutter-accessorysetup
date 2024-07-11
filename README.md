@@ -1,22 +1,33 @@
+Sure, here's the fixed markdown:
+
 # Flutter Accessory Kit
 
-## 🚇 Install
+![](.github/flutter-accessorysetup.png)
 
-```
+At this stage the library supports:
+
+- [x] BLE
+- [ ] WiFi (work in progress)
+- [ ] Migration
+
+‼️ One important remark: by Apple's design, the library works only with **iOS 18 or above**. ‼️
+
+## 🚇 How to use
+
+Install the library using the command line:
+
+```sh
 flutter pub get TBD
 ```
 
-## ⚙️ Setup
+### ⚙️ Setup
 
-- You should use xCode 16 and iOS 18 or higher to use that package, don't forget to setup the [cocoapods](./example/ios/Podfile) correctly too.
-
-- You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work. <br>
-  ⚠️ **If you miss the required key the app will crash when you show the picker** ⚠️
-  <br><br>
+- You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work.
+  ⚠️ **If you miss the required key the app will crash when you show the picker.** ⚠️
 
   - ALWAYS: (Bluetooth or WiFi, or both)
 
-  ```
+  ```xml
   <key>NSAccessorySetupKitSupports</key>
   <array>
     <string>Bluetooth</string>
@@ -24,97 +35,66 @@ flutter pub get TBD
   </array>
   ```
 
-  - when you use the `ASDiscoveryDescriptor` with `bluetoothServiceUUID`<br>
-    ⚠️ **The UUID string must be upper-cased here** ⚠️
-    <br><br>
+  - When you use the `ASDiscoveryDescriptor` with `bluetoothServiceUUID`  
+    ⚠️ **The UUID string must be upper-cased here.** ⚠️
 
-  ```
+  ```xml
   <key>NSAccessorySetupBluetoothServices</key>
   <array>
     <string>149E9E42-33AD-41AD-8665-70D153533EC1</string>
   </array>
   ```
 
-  - when you use the `ASDiscoveryDescriptor` with `bluetoothNameSubstring`<br>
-    ⚠️ **Does not work in the iOS 18 Developer beta 2** ⚠️
-    <br><br>
+  - When you use the `ASDiscoveryDescriptor` with `bluetoothNameSubstring`  
+    ⚠️ **Does not work in the iOS 18 Developer beta 2.** ⚠️
 
-  ```
+  ```xml
   <key>NSAccessorySetupBluetoothNames</key>
   <array>
     <string>DeviceName</string>
   </array>
   ```
 
-  - there is an option with manufacturer ID that is not covered here
+  - There is an option with manufacturer ID that is not covered here.
 
-- Use the FlutterAccessorysetup class. See the full code example in the [Example app](./example/lib/main.dart)
+- Use the `FlutterAccessorysetup` class. See the full code example in the [Example app](./example/lib/main.dart)
 
-```
-    final _flutterAccessorysetupPlugin = FlutterAccessorysetup();
+```dart
+final _flutterAccessorysetupPlugin = FlutterAccessorysetup();
 
-    _flutterAccessorysetupPlugin.sessionStream.listen((event) => setState(() {
-        // handle session events here
-        // async errors will be delivered as session events too
-    }
+_flutterAccessorysetupPlugin.sessionStream.listen((event) => setState(() {
+    // handle session events here
+    // async errors will be delivered as session events too
+}));
 
-    try {
-      await _flutterAccessorysetupPlugin.activate();
-      await _flutterAccessorysetupPlugin.showPicker();
-    } on PlatformException {
-      debugPrint('Failed to show the picker');
-    }
+try {
+  await _flutterAccessorysetupPlugin.activate();
+  await _flutterAccessorysetupPlugin.showPicker();
+} on PlatformException {
+  debugPrint('Failed to show the picker');
+}
 ```
 
 ---
 
 ## ℹ️ What we know
 
-⚠️ The AccessorySetup does not work on the Simulator ⚠️
+⚠️ The AccessorySetup does not work on the Simulator. ⚠️
 
-- When user close the Picker by tapping cross button, the showPicker closure emits an error (ASErrorDomain, code 700)
+- When the user closes the Picker by tapping the cross button, the `showPicker` closure emits an error (ASErrorDomain, code 700).
 
-- ⚠️ **When the person picks an ble accessory the picker sends an event of type **ASAccessoryEventType.accessoryChanged**, it might be that the picker sends an event of type **ASAccessoryEventType.accessoryAdded** but I can't reproduce it at all ⚠️ 
+- ⚠️ **When the person picks a BLE accessory, the picker sends an event of type `ASAccessoryEventType.accessoryChanged`. It might be that the picker sends an event of type `ASAccessoryEventType.accessoryAdded`, but I can't reproduce it at all.** ⚠️
 
-- If the device have been connected previously, it will be in the `session.accessories` array right after the session was activated event.<br>
-  ⚠️ **This device will not discoverable by Setup Picker until the User disconnects it from the settings** ⚠️
+- If the device has been connected previously, it will be in the `session.accessories` array right after the session is activated.  
+  ⚠️ **This device will not be discoverable by the Setup Picker until the user disconnects it from the settings.** ⚠️
 
-- When the User selects the device using picker,
-  - the device will be displayed in the `MyDevices` section of the `Settings/Bluetooth` screen
-  - the device's `info screen` will display image and name you provided to the ``ASPickerDisplayItem`` during the discovery process (the same that user saw in the picker)
+- When the user selects the device using the picker:
+  - The device will be displayed in the `My Devices` section of the `Settings/Bluetooth` screen.
+  - The device's info screen will display the image and name you provided to the `ASPickerDisplayItem` during the discovery process (the same that the user saw in the picker).
 
-- When used deletes the App, the device will be disconnected automatically. It won't be displayed in the `MyDevices` section of the `Settings/Bluetooth` screen anymore.
+- When the user deletes the app, the device will be disconnected automatically. It won't be displayed in the `My Devices` section of the `Settings/Bluetooth` screen anymore.
 
 ---
-
-## ✅ TODO
-
-next steps:
-
-- [x] update the documentation to note all required steps and limitations of the AccessorySetupKit
-
-- [x] introduce customization for the device discovery:
-* name
-* image
-* custom services UUID
-
-- [x] find a way to work with the Flutter ble package (setup kit gives the Peripheral ID which the app ble should work with)
-  * There are 2 libraries: 
-    * https://pub.dev/packages/flutter_reactive_ble
-    * https://pub.dev/packages/flutter_blue_plus
-  Both ok, both used. Probably blue plus has more support, but reactive ble is done by Philips.
-  * flutter_blue_plus required bluetooth access to load the device using provided identifier.
-
-- [x] check if new ESP32 board will trigger ``ASAccessoryEventType.accessoryAdded`` event. NO
-
-- [ ] introduce unit tests
-
-- [ ] future: implement wifi setup
-
-- [ ] future: use Pigeon for the cross platform messages <https://docs.flutter.dev/platform-integration/platform-channels?tab=type-mappings-kotlin-tab#pigeon>
-
-- [ ] check the migration sequence and implementation in Flutter (for example app)
-
 
 ## 📗 References
 
