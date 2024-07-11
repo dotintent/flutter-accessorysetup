@@ -17,7 +17,7 @@ At this stage the library supports:
 Install the library using the command line:
 
 ```sh
-flutter pub get TBD
+flutter pub get flutter_accessorysetup
 ```
 
 ### ⚙️ Setup
