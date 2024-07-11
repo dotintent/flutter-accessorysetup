@@ -1,14 +1,22 @@
 # Flutter Accessory Kit
 
-## 🚇 Install
+At this stage the library supports:
+
+- [x] BLE
+- [ ] WiFi (work in progress)
+- [ ] Migration
+
+‼️ One important remark, by Apple's design, the library works only with **iOS 18 or above**. ‼️
+
+## 🚇 How to use
+
+Install the library using the command line:
 
 ```
 flutter pub get TBD
 ```
 
-## ⚙️ Setup
-
-- You should use xCode 16 and iOS 18 or higher to use that package, don't forget to setup the [cocoapods](./example/ios/Podfile) correctly too.
+### ⚙️ Setup
 
 - You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work. <br>
   ⚠️ **If you miss the required key the app will crash when you show the picker** ⚠️
