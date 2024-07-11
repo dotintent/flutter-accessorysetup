@@ -87,34 +87,6 @@ flutter pub get TBD
 
 ---
 
-## ✅ TODO
-
-next steps:
-
-- [x] update the documentation to note all required steps and limitations of the AccessorySetupKit
-
-- [x] introduce customization for the device discovery:
-* name
-* image
-* custom services UUID
-
-- [x] find a way to work with the Flutter ble package (setup kit gives the Peripheral ID which the app ble should work with)
-  * There are 2 libraries: 
-    * https://pub.dev/packages/flutter_reactive_ble
-    * https://pub.dev/packages/flutter_blue_plus
-  Both ok, both used. Probably blue plus has more support, but reactive ble is done by Philips.
-  * flutter_blue_plus required bluetooth access to load the device using provided identifier.
-
-- [x] check if new ESP32 board will trigger ``ASAccessoryEventType.accessoryAdded`` event. NO
-
-- [ ] introduce unit tests
-
-- [ ] future: implement wifi setup
-
-- [ ] future: use Pigeon for the cross platform messages <https://docs.flutter.dev/platform-integration/platform-channels?tab=type-mappings-kotlin-tab#pigeon>
-
-- [ ] check the migration sequence and implementation in Flutter (for example app)
-
 
 ## 📗 References
 
