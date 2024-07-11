@@ -2,6 +2,8 @@ Sure, here's the fixed markdown:
 
 # Flutter Accessory Kit
 
+![](.github/flutter-accessorysetup.png)
+
 At this stage the library supports:
 
 - [x] BLE

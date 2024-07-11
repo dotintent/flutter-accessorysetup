@@ -25,3 +25,7 @@ If the iOS build fails for `Cocoapods` reason, please run this command:
 1. `cd iOS`
 2. `pod repo update`
 3. `pod install`
+
+## How to use
+
+In order to have it working you need a Google with BLE support broadcasting the service `FEF3` for Fast Pair, but you can adjust to any value your BLE device is providing.
