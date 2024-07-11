@@ -1,4 +1,4 @@
-# Example App
+# AccessorySetup Demo App
 
 ## Requirements
 
@@ -25,14 +25,3 @@ If the iOS build fails for `Cocoapods` reason, please run this command:
 1. `cd iOS`
 2. `pod repo update`
 3. `pod install`
-
-## Code Generators
-
-The repo makes use of code generators to secure access to local assets and manipulate visual features across different platforms.
-
-### Assets
-
-After updating any Assets run:
-`flutter pub run build_runner build --delete-conflicting-outputs`
-
-If you're adding new directory, make sure to add its path to `pubspec.yaml` (in `assets:`).
