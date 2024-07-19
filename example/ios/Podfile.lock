@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_accessorysetup (0.0.1):
+  - flutter_accessorysetup (0.0.2):
     - Flutter
   - flutter_blue_plus (0.0.1):
     - Flutter
@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_accessorysetup: e566e77f1982ce0ced488b5be0de17698b895efc
+  flutter_accessorysetup: 26f003d59e4120153c66b87ed8996994d4eb88ba
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
   integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
 
