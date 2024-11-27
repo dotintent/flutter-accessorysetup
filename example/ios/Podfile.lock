@@ -27,8 +27,8 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_accessorysetup: 26f003d59e4120153c66b87ed8996994d4eb88ba
   flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
-  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
 
 PODFILE CHECKSUM: 88001a6f63fedf7dfbfdf4ee0c335d29da93cbc0
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2
