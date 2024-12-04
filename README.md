@@ -1,4 +1,3 @@
-Sure, here's the fixed markdown:
 
 # Flutter Accessory Kit
 
@@ -100,3 +99,8 @@ try {
 
 - <https://developer.apple.com/documentation/accessorysetupkit/discovering-and-configuring-accessories>
 - <https://developer.apple.com/documentation/accessorysetupkit/authorizing-a-bluetooth-accessory-to-share-a-dice-roll>
+
+
+
+I see that block pointer is not working properly in FFI, check how to make them work
+NSArray to list to print logs by using a custom helper

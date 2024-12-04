@@ -21,3 +21,5 @@ Here is the adapted and fixed markdown text:
 - [ ] Use Pigeon for the cross-platform messages [Pigeon documentation](https://docs.flutter.dev/platform-integration/platform-channels?tab=type-mappings-kotlin-tab#pigeon).
 
 - [ ] Check the migration sequence and implementation in Flutter (for example app).
+
+
