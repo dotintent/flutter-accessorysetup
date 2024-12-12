@@ -11,6 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "flutter-accessorysetup",
+            // type: .dynamic,
             targets: ["flutter_accessorysetup", "flutter_accessorysetup_swift"]
         )
     ],
