@@ -1,6 +1,7 @@
 #include <stdint.h>
 #import <AccessorySetupKit/AccessorySetupKit.h>
 #import "AccessorySetupBindings.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
 #if !__has_feature(objc_arc)
 #error "This file must be compiled with ARC enabled"

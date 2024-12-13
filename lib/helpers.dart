@@ -50,15 +50,21 @@ extension NSArrayExtension on NSArray {
     return results.cast();
   }
 
-  List<String> toStringList() {
-    return toList<NSString>().map((nsString) => nsString.toNativeString()).toList();
+  List<String> toDartStringList() {
+    return toList<NSString>().map((nsString) => nsString.toDartString()).toList();
   }
 }
 
-extension NativeStringExtension on NSString {
-  String toNativeString() {
+extension DartStringExtension on NSString {
+  String toDartString() {
     final Pointer<Utf8> pointer = UTF8String.cast();
     return pointer.toDartString();
+  }
+}
+
+extension DartStringUUIDExtension on NSUUID {
+  String toDartUUIDString() {
+    return UUIDString.toDartString();
   }
 }
 

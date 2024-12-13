@@ -1,73 +1,147 @@
-import 'dart:ffi' as ffi;
 import 'dart:io';
+import 'dart:async';
 import 'package:objective_c/objective_c.dart';
-import 'package:ffi/ffi.dart';
 
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup/helpers.dart';
 
 
 class FlutterAccessorysetupFFI {
-  // final lib = ffi.DynamicLibrary.open('flutter_accessorysetup');
 
-  final session = FFIAccessorySession.alloc().init();
-
-  late final delegate = FFIAccessorySessionDelegate.implementAsListener(
-    handleEvent_: handleEvent,
-    didShowPickerWithError_: didShowPicker,
-    didRenameAccessory_withError_: didRenameAccessory,
-    didRemoveAccessory_withError_: didRemoveAccessory,
-    didFinishAuthorizationForAccessory_withError_: didFinishAuthorization,
-    didFailAuthorizationForAccessory_withError_: didFailAuthorization
+  Stream<ASAccessoryEvent> get eventStream => _eventsController.stream;
+  List<ASAccessory> get accessories => _session.accessories.toList();
+  final _session = FFIAccessorySession.alloc().init();
+  final _eventsController = StreamController<ASAccessoryEvent>();
+  
+  late final _delegate = FFIAccessorySessionDelegate.implementAsListener(
+    handleEvent_: _handleEvent,
+    didShowPickerWithError_: _didShowPicker,
+    didRenameAccessory_withError_: _didRenameAccessory,
+    didRemoveAccessory_withError_: _didRemoveAccessory,
+    didFinishAuthorizationForAccessory_withError_: _didFinishAuthorization,
+    didFailAuthorizationForAccessory_withError_: _didFailAuthorization
   );
+  // TODO: bind completers to accessories to enable multiple calls
+  Completer<void>? _showPickerCompleter;
+  Completer<void>? _renameAccessoryCompleter;
+  Completer<void>? _removeAccessoryCompleter;
+  Completer<void>? _finishAuthorizationForAccessoryCompleter;
+  Completer<void>? _failAuthorizationForAccessoryCompleter;
+
+  void dispose() {
+    _eventsController.close();
+  }
+
+  // region Interface
+
+  void activate() {
+    _session.setDelegate_(_delegate);
+    _session.activate();
+  }
+
+  Future<void> showPicker() async {
+    final completer = Completer<void>();
+    _showPickerCompleter = completer;
+    _session.showPicker();
+    return completer.future;
+  }
+
+  Future<void> showPickerForItems(List<ASPickerDisplayItem> items) async {
+    final completer = Completer<void>();
+    _showPickerCompleter = completer;
+    _session.showPickerForItems_(items.toNSArray());
+    return completer.future;
+  }
+
+  Future<void> renameAccessory(
+    ASAccessory accessory,
+    ASAccessoryRenameOptions options
+  ) async {
+    final completer = Completer<void>();
+    _renameAccessoryCompleter = completer;
+    _session.renameAccessory_options_(accessory, options);
+    return completer.future;
+  }
+
+   Future<void> removeAccessory(ASAccessory accessory) async {
+    final completer = Completer<void>();
+    _removeAccessoryCompleter = completer;
+    _session.removeAccessory_(accessory);
+    return completer.future;
+  }
+
+   Future<void> finishAuthorizationForAccessory(
+    ASAccessory accessory,
+    ASAccessorySettings settings
+   ) async {
+    final completer = Completer<void>();
+    _finishAuthorizationForAccessoryCompleter = completer;
+    _session.finishAuthorizationForAccessory_settings_(accessory, settings);
+    return completer.future;
+  }
+
+   Future<void> failAuthorizationForAccessory(ASAccessory accessory) async {
+    final completer = Completer<void>();
+    _failAuthorizationForAccessoryCompleter = completer;
+    _session.failAuthorizationForAccessory_(accessory);
+    return completer.future;
+  }
 
   // endregion
 
-  void activate() {
-    print("Set Delegate");
-    session.setDelegate_(delegate);
-    print("Activate");
-    session.activate();
-    sleep(const Duration(seconds: 2));
-    print("Get accessories: ${session.accessories}");
-    getLogs();
-  }
-
   // region Delegate
 
-  void handleEvent(ASAccessoryEvent event) {
-    print('Accessory Event Received: $event');
-    print('Type: ${event.eventType}');
-    print('Accessory: ${event.accessory}');
-    print('Error: ${event.error}');
+  void _handleEvent(ASAccessoryEvent event) {
+    _eventsController.add(event);
   }
 
-  void didShowPicker(NSError? nsError) {
-
+  void _didShowPicker(NSError? nsError) {
+    if (nsError != null) {
+      _showPickerCompleter?.completeError(NativeCodeError(nsError));
+      return;
+    }
+    _showPickerCompleter?.complete();
   }
 
-  void didRenameAccessory(ASAccessory accessory, NSError? nsError) {
-
+  void _didRenameAccessory(ASAccessory accessory, NSError? nsError) {
+    if (nsError != null) {
+      _renameAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      return;
+    }
+    _renameAccessoryCompleter?.complete();
   }
 
-  void didRemoveAccessory(ASAccessory accessory, NSError? nsError) {
-
+  void _didRemoveAccessory(ASAccessory accessory, NSError? nsError) {
+    if (nsError != null) {
+      _removeAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      return;
+    }
+    _removeAccessoryCompleter?.complete();
   }
 
-  void didFinishAuthorization(ASAccessory accessory, NSError? nsError) {
-
+  void _didFinishAuthorization(ASAccessory accessory, NSError? nsError) {
+    if (nsError != null) {
+      _finishAuthorizationForAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      return;
+    }
+    _finishAuthorizationForAccessoryCompleter?.complete();
   }
 
-  void didFailAuthorization(ASAccessory accessory, NSError? nsError) {
-
+  void _didFailAuthorization(ASAccessory accessory, NSError? nsError) {
+    if (nsError != null) {
+      _failAuthorizationForAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      return;
+    }
+    _failAuthorizationForAccessoryCompleter?.complete();
   }
 
   // endregion
 
   // region Logs
 
-  void getLogs() {
-    final logs = session.logs.toStringList();
+  /// for debugging the native part of the code
+  void printNativeSessionLogs() {
+    final logs = _session.logs.toDartStringList();
     print("logs count: ${logs.length}");
     for (final log in logs) {
       print(log);
@@ -75,4 +149,43 @@ class FlutterAccessorysetupFFI {
   }
 
   // endregion
+}
+
+class NativeCodeError extends Error {
+
+  late final String domain;
+  late final int code;
+  late final String description;
+
+  NativeCodeError(NSError nsError) {
+    code = nsError.code;
+    domain = nsError.domain.toDartString();
+    description = nsError.description1.toDartString();
+  }
+
+  @override
+  String toString() => 'NativeCodeError(domain: $domain, code: $code, description: $description)';
+}
+
+
+/// Exposing properties as Dart types
+extension ASAccessoryDartExtension on ASAccessory {
+
+  String? get dartBluetoothIdentifier {
+    return bluetoothIdentifier?.toDartUUIDString();
+  }
+}
+
+/// Exposing properties as Dart types
+extension ASAccessoryEventDartExtension on ASAccessoryEvent {
+  
+  NativeCodeError? get dartError {
+    final nsError = error;
+    if (nsError != null) {
+      return NativeCodeError(nsError);
+    }
+    return null;
+  }
+
+  String get dartDescription => 'AccessoryEvent($eventType, e: $dartError)';
 }

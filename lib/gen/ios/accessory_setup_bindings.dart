@@ -27,6 +27,8 @@ external ffi.Pointer<objc.ObjCBlockImpl>
 
 final class _NSZone extends ffi.Opaque {}
 
+final class __CFUUID extends ffi.Opaque {}
+
 late final _class_NSNull = objc.getClass("NSNull");
 late final _sel_isKindOfClass_ = objc.registerName("isKindOfClass:");
 final _objc_msgSend_69e0x1 = objc.msgSendPointer
@@ -597,9 +599,44 @@ class NSNull extends objc.NSObject {
   }
 }
 
-/// WARNING: NSUUID is a stub. To generate bindings for this class, include
-/// NSUUID in your config's objc-interfaces list.
-///
+late final _class_NSUUID = objc.getClass("NSUUID");
+late final _sel_UUID = objc.registerName("UUID");
+late final _sel_initWithUUIDString_ = objc.registerName("initWithUUIDString:");
+late final _sel_initWithUUIDBytes_ = objc.registerName("initWithUUIDBytes:");
+final _objc_msgSend_3p0t0x = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<ffi.UnsignedChar>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<ffi.UnsignedChar>)>();
+late final _sel_getUUIDBytes_ = objc.registerName("getUUIDBytes:");
+final _objc_msgSend_uvel7h = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<ffi.UnsignedChar>)>>()
+    .asFunction<
+        void Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<ffi.UnsignedChar>)>();
+late final _sel_compare_ = objc.registerName("compare:");
+final _objc_msgSend_1wpduvy = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Long Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>)>>()
+    .asFunction<
+        int Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<objc.ObjCObject>)>();
+late final _sel_UUIDString = objc.registerName("UUIDString");
+
 /// NSUUID
 class NSUUID extends objc.NSObject {
   NSUUID._(ffi.Pointer<objc.ObjCObject> pointer,
@@ -614,6 +651,115 @@ class NSUUID extends objc.NSObject {
   NSUUID.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
       {bool retain = false, bool release = false})
       : this._(other, retain: retain, release: release);
+
+  /// Returns whether [obj] is an instance of [NSUUID].
+  static bool isInstance(objc.ObjCObjectBase obj) {
+    return _objc_msgSend_69e0x1(
+        obj.ref.pointer, _sel_isKindOfClass_, _class_NSUUID);
+  }
+
+  /// UUID
+  static NSUUID UUID() {
+    final _ret = _objc_msgSend_1x359cv(_class_NSUUID, _sel_UUID);
+    return NSUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// init
+  NSUUID init() {
+    final _ret =
+        _objc_msgSend_1x359cv(this.ref.retainAndReturnPointer(), _sel_init);
+    return NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithUUIDString:
+  NSUUID? initWithUUIDString_(objc.NSString string) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.retainAndReturnPointer(),
+        _sel_initWithUUIDString_, string.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithUUIDBytes:
+  NSUUID initWithUUIDBytes_(ffi.Pointer<ffi.UnsignedChar> bytes) {
+    final _ret = _objc_msgSend_3p0t0x(
+        this.ref.retainAndReturnPointer(), _sel_initWithUUIDBytes_, bytes);
+    return NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// getUUIDBytes:
+  void getUUIDBytes_(ffi.Pointer<ffi.UnsignedChar> uuid) {
+    _objc_msgSend_uvel7h(this.ref.pointer, _sel_getUUIDBytes_, uuid);
+  }
+
+  /// compare:
+  objc.NSComparisonResult compare_(NSUUID otherUUID) {
+    final _ret = _objc_msgSend_1wpduvy(
+        this.ref.pointer, _sel_compare_, otherUUID.ref.pointer);
+    return objc.NSComparisonResult.fromValue(_ret);
+  }
+
+  /// UUIDString
+  objc.NSString get UUIDString {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_UUIDString);
+    return objc.NSString.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// new
+  static NSUUID new1() {
+    final _ret = _objc_msgSend_1x359cv(_class_NSUUID, _sel_new);
+    return NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// allocWithZone:
+  static NSUUID allocWithZone_(ffi.Pointer<_NSZone> zone) {
+    final _ret = _objc_msgSend_hzlb60(_class_NSUUID, _sel_allocWithZone_, zone);
+    return NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// alloc
+  static NSUUID alloc() {
+    final _ret = _objc_msgSend_1x359cv(_class_NSUUID, _sel_alloc);
+    return NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// self
+  NSUUID self() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_self);
+    return NSUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// retain
+  NSUUID retain() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_retain);
+    return NSUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// autorelease
+  NSUUID autorelease() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_autorelease);
+    return NSUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// supportsSecureCoding
+  static bool getSupportsSecureCoding() {
+    return _objc_msgSend_91o635(_class_NSUUID, _sel_supportsSecureCoding);
+  }
+
+  /// encodeWithCoder:
+  void encodeWithCoder_(objc.NSCoder coder) {
+    _objc_msgSend_1jdvcbf(
+        this.ref.pointer, _sel_encodeWithCoder_, coder.ref.pointer);
+  }
+
+  /// initWithCoder:
+  NSUUID? initWithCoder_(objc.NSCoder coder) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.retainAndReturnPointer(),
+        _sel_initWithCoder_, coder.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : NSUUID.castFromPointer(_ret, retain: false, release: true);
+  }
 }
 
 enum ASAccessoryState {
@@ -770,15 +916,26 @@ late final _sel_bluetoothServiceDataMask =
     objc.registerName("bluetoothServiceDataMask");
 late final _sel_setBluetoothServiceDataMask_ =
     objc.registerName("setBluetoothServiceDataMask:");
+late final _class_CBUUID = objc.getClass("CBUUID");
+late final _sel_data = objc.registerName("data");
+late final _sel_UUIDWithString_ = objc.registerName("UUIDWithString:");
+late final _sel_UUIDWithData_ = objc.registerName("UUIDWithData:");
+late final _sel_UUIDWithCFUUID_ = objc.registerName("UUIDWithCFUUID:");
+final _objc_msgSend_1tne5pw = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<__CFUUID>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<__CFUUID>)>();
+late final _sel_UUIDWithNSUUID_ = objc.registerName("UUIDWithNSUUID:");
 
-/// WARNING: CBUUID is a stub. To generate bindings for this class, include
-/// CBUUID in your config's objc-interfaces list.
-///
 /// CBUUID
-class CBUUID extends objc.ObjCObjectBase {
+class CBUUID extends objc.NSObject {
   CBUUID._(ffi.Pointer<objc.ObjCObject> pointer,
       {bool retain = false, bool release = false})
-      : super(pointer, retain: retain, release: release);
+      : super.castFromPointer(pointer, retain: retain, release: release);
 
   /// Constructs a [CBUUID] that points to the same underlying object as [other].
   CBUUID.castFrom(objc.ObjCObjectBase other)
@@ -788,6 +945,95 @@ class CBUUID extends objc.ObjCObjectBase {
   CBUUID.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
       {bool retain = false, bool release = false})
       : this._(other, retain: retain, release: release);
+
+  /// Returns whether [obj] is an instance of [CBUUID].
+  static bool isInstance(objc.ObjCObjectBase obj) {
+    return _objc_msgSend_69e0x1(
+        obj.ref.pointer, _sel_isKindOfClass_, _class_CBUUID);
+  }
+
+  /// data
+  objc.NSData get data {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_data);
+    return objc.NSData.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// UUIDString
+  objc.NSString get UUIDString {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_UUIDString);
+    return objc.NSString.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// UUIDWithString:
+  static CBUUID UUIDWithString_(objc.NSString theString) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_CBUUID, _sel_UUIDWithString_, theString.ref.pointer);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// UUIDWithData:
+  static CBUUID UUIDWithData_(objc.NSData theData) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_CBUUID, _sel_UUIDWithData_, theData.ref.pointer);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// UUIDWithCFUUID:
+  static CBUUID UUIDWithCFUUID_(ffi.Pointer<__CFUUID> theUUID) {
+    final _ret =
+        _objc_msgSend_1tne5pw(_class_CBUUID, _sel_UUIDWithCFUUID_, theUUID);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// UUIDWithNSUUID:
+  static CBUUID UUIDWithNSUUID_(NSUUID theUUID) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_CBUUID, _sel_UUIDWithNSUUID_, theUUID.ref.pointer);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// init
+  CBUUID init() {
+    final _ret =
+        _objc_msgSend_1x359cv(this.ref.retainAndReturnPointer(), _sel_init);
+    return CBUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// new
+  static CBUUID new1() {
+    final _ret = _objc_msgSend_1x359cv(_class_CBUUID, _sel_new);
+    return CBUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// allocWithZone:
+  static CBUUID allocWithZone_(ffi.Pointer<_NSZone> zone) {
+    final _ret = _objc_msgSend_hzlb60(_class_CBUUID, _sel_allocWithZone_, zone);
+    return CBUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// alloc
+  static CBUUID alloc() {
+    final _ret = _objc_msgSend_1x359cv(_class_CBUUID, _sel_alloc);
+    return CBUUID.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// self
+  CBUUID self() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_self);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// retain
+  CBUUID retain() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_retain);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// autorelease
+  CBUUID autorelease() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_autorelease);
+    return CBUUID.castFromPointer(_ret, retain: true, release: true);
+  }
 }
 
 late final _sel_bluetoothServiceUUID =

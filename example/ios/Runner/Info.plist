@@ -26,7 +26,7 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-		<key>NSAccessorySetupBluetoothServices</key>
+	<key>NSAccessorySetupBluetoothServices</key>
 	<array>
 		<string>55AD5FE1-E877-486B-9CD9-A29C8584308D</string>
 	</array>
