@@ -160,7 +160,7 @@ class NativeCodeError extends Error {
   NativeCodeError(NSError nsError) {
     code = nsError.code;
     domain = nsError.domain.toDartString();
-    description = nsError.description1.toDartString();
+    description = nsError.localizedDescription.toDartString();
   }
 
   @override
