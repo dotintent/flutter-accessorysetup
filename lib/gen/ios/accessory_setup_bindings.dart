@@ -8,6 +8,7 @@
 // ignore_for_file: type=lint
 import 'dart:ffi' as ffi;
 import 'package:objective_c/objective_c.dart' as objc;
+import 'package:ffi/ffi.dart' as pkg_ffi;
 
 @ffi.Native<
     ffi.Pointer<objc.ObjCBlockImpl> Function(
@@ -25,9 +26,168 @@ external ffi.Pointer<objc.ObjCBlockImpl>
   ffi.Pointer<objc.ObjCBlockImpl> block,
 );
 
+@ffi.Native<
+    ffi.Pointer<objc.ObjCBlockImpl> Function(
+        ffi.Pointer<objc.ObjCBlockImpl>)>(isLeaf: true)
+external ffi.Pointer<objc.ObjCBlockImpl>
+    _FFIAccessorySetupKit_wrapListenerBlock_wjvic9(
+  ffi.Pointer<objc.ObjCBlockImpl> block,
+);
+
+final class CGPoint extends ffi.Struct {
+  @ffi.Double()
+  external double x;
+
+  @ffi.Double()
+  external double y;
+}
+
+final class CGSize extends ffi.Struct {
+  @ffi.Double()
+  external double width;
+
+  @ffi.Double()
+  external double height;
+}
+
+final class CGRect extends ffi.Struct {
+  external CGPoint origin;
+
+  external CGSize size;
+}
+
+final class CGAffineTransform extends ffi.Struct {
+  @ffi.Double()
+  external double a;
+
+  @ffi.Double()
+  external double b;
+
+  @ffi.Double()
+  external double c;
+
+  @ffi.Double()
+  external double d;
+
+  @ffi.Double()
+  external double tx;
+
+  @ffi.Double()
+  external double ty;
+}
+
 final class _NSZone extends ffi.Opaque {}
 
 final class __CFUUID extends ffi.Opaque {}
+
+/// WARNING: NSProgress is a stub. To generate bindings for this class, include
+/// NSProgress in your config's objc-interfaces list.
+///
+/// NSProgress
+class NSProgress extends objc.NSObject {
+  NSProgress._(ffi.Pointer<objc.ObjCObject> pointer,
+      {bool retain = false, bool release = false})
+      : super.castFromPointer(pointer, retain: retain, release: release);
+
+  /// Constructs a [NSProgress] that points to the same underlying object as [other].
+  NSProgress.castFrom(objc.ObjCObjectBase other)
+      : this._(other.ref.pointer, retain: true, release: true);
+
+  /// Constructs a [NSProgress] that wraps the given raw object pointer.
+  NSProgress.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
+      {bool retain = false, bool release = false})
+      : this._(other, retain: retain, release: release);
+}
+
+/// WARNING: NSBundle is a stub. To generate bindings for this class, include
+/// NSBundle in your config's objc-interfaces list.
+///
+/// NSBundle
+class NSBundle extends objc.NSObject {
+  NSBundle._(ffi.Pointer<objc.ObjCObject> pointer,
+      {bool retain = false, bool release = false})
+      : super.castFromPointer(pointer, retain: retain, release: release);
+
+  /// Constructs a [NSBundle] that points to the same underlying object as [other].
+  NSBundle.castFrom(objc.ObjCObjectBase other)
+      : this._(other.ref.pointer, retain: true, release: true);
+
+  /// Constructs a [NSBundle] that wraps the given raw object pointer.
+  NSBundle.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
+      {bool retain = false, bool release = false})
+      : this._(other, retain: retain, release: release);
+}
+
+enum NSAttributedStringEnumerationOptions {
+  NSAttributedStringEnumerationReverse(2),
+  NSAttributedStringEnumerationLongestEffectiveRangeNotRequired(1048576);
+
+  final int value;
+  const NSAttributedStringEnumerationOptions(this.value);
+
+  static NSAttributedStringEnumerationOptions fromValue(int value) =>
+      switch (value) {
+        2 => NSAttributedStringEnumerationReverse,
+        1048576 =>
+          NSAttributedStringEnumerationLongestEffectiveRangeNotRequired,
+        _ => throw ArgumentError(
+            "Unknown value for NSAttributedStringEnumerationOptions: $value"),
+      };
+}
+
+enum NSAttributedStringMarkdownParsingFailurePolicy {
+  NSAttributedStringMarkdownParsingFailureReturnError(0),
+  NSAttributedStringMarkdownParsingFailureReturnPartiallyParsedIfPossible(1);
+
+  final int value;
+  const NSAttributedStringMarkdownParsingFailurePolicy(this.value);
+
+  static NSAttributedStringMarkdownParsingFailurePolicy fromValue(int value) =>
+      switch (value) {
+        0 => NSAttributedStringMarkdownParsingFailureReturnError,
+        1 =>
+          NSAttributedStringMarkdownParsingFailureReturnPartiallyParsedIfPossible,
+        _ => throw ArgumentError(
+            "Unknown value for NSAttributedStringMarkdownParsingFailurePolicy: $value"),
+      };
+}
+
+enum NSAttributedStringMarkdownInterpretedSyntax {
+  NSAttributedStringMarkdownInterpretedSyntaxFull(0),
+  NSAttributedStringMarkdownInterpretedSyntaxInlineOnly(1),
+  NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace(2);
+
+  final int value;
+  const NSAttributedStringMarkdownInterpretedSyntax(this.value);
+
+  static NSAttributedStringMarkdownInterpretedSyntax fromValue(int value) =>
+      switch (value) {
+        0 => NSAttributedStringMarkdownInterpretedSyntaxFull,
+        1 => NSAttributedStringMarkdownInterpretedSyntaxInlineOnly,
+        2 =>
+          NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace,
+        _ => throw ArgumentError(
+            "Unknown value for NSAttributedStringMarkdownInterpretedSyntax: $value"),
+      };
+}
+
+enum NSAttributedStringFormattingOptions {
+  NSAttributedStringFormattingInsertArgumentAttributesWithoutMerging(1),
+  NSAttributedStringFormattingApplyReplacementIndexAttribute(2);
+
+  final int value;
+  const NSAttributedStringFormattingOptions(this.value);
+
+  static NSAttributedStringFormattingOptions fromValue(int value) =>
+      switch (value) {
+        1 => NSAttributedStringFormattingInsertArgumentAttributesWithoutMerging,
+        2 => NSAttributedStringFormattingApplyReplacementIndexAttribute,
+        _ => throw ArgumentError(
+            "Unknown value for NSAttributedStringFormattingOptions: $value"),
+      };
+}
+
+final class __IOSurface extends ffi.Opaque {}
 
 late final _class_NSNull = objc.getClass("NSNull");
 late final _sel_isKindOfClass_ = objc.registerName("isKindOfClass:");
@@ -2784,4 +2944,2158 @@ abstract final class FFIAccessorySessionDelegate {
             (ffi.Pointer<ffi.Void> _, ASAccessory arg1, objc.NSError? arg2) =>
                 func(arg1, arg2)),
   );
+}
+
+final class CGColor extends ffi.Opaque {}
+
+final class CGColorSpace extends ffi.Opaque {}
+
+final class CGImage extends ffi.Opaque {}
+
+enum CGBlendMode {
+  kCGBlendModeNormal(0),
+  kCGBlendModeMultiply(1),
+  kCGBlendModeScreen(2),
+  kCGBlendModeOverlay(3),
+  kCGBlendModeDarken(4),
+  kCGBlendModeLighten(5),
+  kCGBlendModeColorDodge(6),
+  kCGBlendModeColorBurn(7),
+  kCGBlendModeSoftLight(8),
+  kCGBlendModeHardLight(9),
+  kCGBlendModeDifference(10),
+  kCGBlendModeExclusion(11),
+  kCGBlendModeHue(12),
+  kCGBlendModeSaturation(13),
+  kCGBlendModeColor(14),
+  kCGBlendModeLuminosity(15),
+  kCGBlendModeClear(16),
+  kCGBlendModeCopy(17),
+  kCGBlendModeSourceIn(18),
+  kCGBlendModeSourceOut(19),
+  kCGBlendModeSourceAtop(20),
+  kCGBlendModeDestinationOver(21),
+  kCGBlendModeDestinationIn(22),
+  kCGBlendModeDestinationOut(23),
+  kCGBlendModeDestinationAtop(24),
+  kCGBlendModeXOR(25),
+  kCGBlendModePlusDarker(26),
+  kCGBlendModePlusLighter(27);
+
+  final int value;
+  const CGBlendMode(this.value);
+
+  static CGBlendMode fromValue(int value) => switch (value) {
+        0 => kCGBlendModeNormal,
+        1 => kCGBlendModeMultiply,
+        2 => kCGBlendModeScreen,
+        3 => kCGBlendModeOverlay,
+        4 => kCGBlendModeDarken,
+        5 => kCGBlendModeLighten,
+        6 => kCGBlendModeColorDodge,
+        7 => kCGBlendModeColorBurn,
+        8 => kCGBlendModeSoftLight,
+        9 => kCGBlendModeHardLight,
+        10 => kCGBlendModeDifference,
+        11 => kCGBlendModeExclusion,
+        12 => kCGBlendModeHue,
+        13 => kCGBlendModeSaturation,
+        14 => kCGBlendModeColor,
+        15 => kCGBlendModeLuminosity,
+        16 => kCGBlendModeClear,
+        17 => kCGBlendModeCopy,
+        18 => kCGBlendModeSourceIn,
+        19 => kCGBlendModeSourceOut,
+        20 => kCGBlendModeSourceAtop,
+        21 => kCGBlendModeDestinationOver,
+        22 => kCGBlendModeDestinationIn,
+        23 => kCGBlendModeDestinationOut,
+        24 => kCGBlendModeDestinationAtop,
+        25 => kCGBlendModeXOR,
+        26 => kCGBlendModePlusDarker,
+        27 => kCGBlendModePlusLighter,
+        _ => throw ArgumentError("Unknown value for CGBlendMode: $value"),
+      };
+}
+
+final class CGLayer extends ffi.Opaque {}
+
+final class __CVBuffer extends ffi.Opaque {}
+
+final class CGImageSource extends ffi.Opaque {}
+
+enum CGImagePropertyOrientation {
+  kCGImagePropertyOrientationUp(1),
+  kCGImagePropertyOrientationUpMirrored(2),
+  kCGImagePropertyOrientationDown(3),
+  kCGImagePropertyOrientationDownMirrored(4),
+  kCGImagePropertyOrientationLeftMirrored(5),
+  kCGImagePropertyOrientationRight(6),
+  kCGImagePropertyOrientationRightMirrored(7),
+  kCGImagePropertyOrientationLeft(8);
+
+  final int value;
+  const CGImagePropertyOrientation(this.value);
+
+  static CGImagePropertyOrientation fromValue(int value) => switch (value) {
+        1 => kCGImagePropertyOrientationUp,
+        2 => kCGImagePropertyOrientationUpMirrored,
+        3 => kCGImagePropertyOrientationDown,
+        4 => kCGImagePropertyOrientationDownMirrored,
+        5 => kCGImagePropertyOrientationLeftMirrored,
+        6 => kCGImagePropertyOrientationRight,
+        7 => kCGImagePropertyOrientationRightMirrored,
+        8 => kCGImagePropertyOrientationLeft,
+        _ => throw ArgumentError(
+            "Unknown value for CGImagePropertyOrientation: $value"),
+      };
+}
+
+/// WARNING: CIImage is a stub. To generate bindings for this class, include
+/// CIImage in your config's objc-interfaces list.
+///
+/// CIImage
+class CIImage extends objc.NSObject {
+  CIImage._(ffi.Pointer<objc.ObjCObject> pointer,
+      {bool retain = false, bool release = false})
+      : super.castFromPointer(pointer, retain: retain, release: release);
+
+  /// Constructs a [CIImage] that points to the same underlying object as [other].
+  CIImage.castFrom(objc.ObjCObjectBase other)
+      : this._(other.ref.pointer, retain: true, release: true);
+
+  /// Constructs a [CIImage] that wraps the given raw object pointer.
+  CIImage.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
+      {bool retain = false, bool release = false})
+      : this._(other, retain: retain, release: release);
+}
+
+enum UIImageOrientation {
+  /// default orientation
+  UIImageOrientationUp(0),
+
+  /// 180 deg rotation
+  UIImageOrientationDown(1),
+
+  /// 90 deg CCW
+  UIImageOrientationLeft(2),
+
+  /// 90 deg CW
+  UIImageOrientationRight(3),
+
+  /// as above but image mirrored along other axis. horizontal flip
+  UIImageOrientationUpMirrored(4),
+
+  /// horizontal flip
+  UIImageOrientationDownMirrored(5),
+
+  /// vertical flip
+  UIImageOrientationLeftMirrored(6),
+
+  /// vertical flip
+  UIImageOrientationRightMirrored(7);
+
+  final int value;
+  const UIImageOrientation(this.value);
+
+  static UIImageOrientation fromValue(int value) => switch (value) {
+        0 => UIImageOrientationUp,
+        1 => UIImageOrientationDown,
+        2 => UIImageOrientationLeft,
+        3 => UIImageOrientationRight,
+        4 => UIImageOrientationUpMirrored,
+        5 => UIImageOrientationDownMirrored,
+        6 => UIImageOrientationLeftMirrored,
+        7 => UIImageOrientationRightMirrored,
+        _ =>
+          throw ArgumentError("Unknown value for UIImageOrientation: $value"),
+      };
+}
+
+/// UIImage will implement the resizing mode the fastest way possible while
+/// retaining the desired visual appearance.
+/// Note that if an image's resizable area is one point then UIImageResizingModeTile
+/// is visually indistinguishable from UIImageResizingModeStretch.
+enum UIImageResizingMode {
+  UIImageResizingModeTile(0),
+  UIImageResizingModeStretch(1);
+
+  final int value;
+  const UIImageResizingMode(this.value);
+
+  static UIImageResizingMode fromValue(int value) => switch (value) {
+        0 => UIImageResizingModeTile,
+        1 => UIImageResizingModeStretch,
+        _ =>
+          throw ArgumentError("Unknown value for UIImageResizingMode: $value"),
+      };
+}
+
+/// Images are created with UIImageRenderingModeAutomatic by default. An image with this mode is interpreted as a template image or an original image based on the context in which it is rendered. For example, navigation bars, tab bars, toolbars, and segmented controls automatically treat their foreground images as templates, while image views and web views treat their images as originals. You can use UIImageRenderingModeAlwaysTemplate to force your image to always be rendered as a template or UIImageRenderingModeAlwaysOriginal to force your image to always be rendered as an original.
+enum UIImageRenderingMode {
+  /// Use the default rendering mode for the context where the image is used
+  UIImageRenderingModeAutomatic(0),
+
+  /// Always draw the original image, without treating it as a template
+  UIImageRenderingModeAlwaysOriginal(1),
+
+  /// Always draw the image as a template image, ignoring its color information
+  UIImageRenderingModeAlwaysTemplate(2);
+
+  final int value;
+  const UIImageRenderingMode(this.value);
+
+  static UIImageRenderingMode fromValue(int value) => switch (value) {
+        0 => UIImageRenderingModeAutomatic,
+        1 => UIImageRenderingModeAlwaysOriginal,
+        2 => UIImageRenderingModeAlwaysTemplate,
+        _ =>
+          throw ArgumentError("Unknown value for UIImageRenderingMode: $value"),
+      };
+}
+
+late final _class_UIImage = objc.getClass("UIImage");
+late final _sel_actionsImage = objc.registerName("actionsImage");
+late final _sel_addImage = objc.registerName("addImage");
+late final _sel_removeImage = objc.registerName("removeImage");
+late final _sel_checkmarkImage = objc.registerName("checkmarkImage");
+late final _sel_strokedCheckmarkImage =
+    objc.registerName("strokedCheckmarkImage");
+
+/// PreconfiguredSystemImages
+extension PreconfiguredSystemImages on UIImage {
+  /// actionsImage
+  static UIImage getActionsImage() {
+    final _ret = _objc_msgSend_1x359cv(_class_UIImage, _sel_actionsImage);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// addImage
+  static UIImage getAddImage() {
+    final _ret = _objc_msgSend_1x359cv(_class_UIImage, _sel_addImage);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// removeImage
+  static UIImage getRemoveImage() {
+    final _ret = _objc_msgSend_1x359cv(_class_UIImage, _sel_removeImage);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// checkmarkImage
+  static UIImage getCheckmarkImage() {
+    final _ret = _objc_msgSend_1x359cv(_class_UIImage, _sel_checkmarkImage);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// strokedCheckmarkImage
+  static UIImage getStrokedCheckmarkImage() {
+    final _ret =
+        _objc_msgSend_1x359cv(_class_UIImage, _sel_strokedCheckmarkImage);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+}
+
+late final _sel_readableTypeIdentifiersForItemProvider =
+    objc.registerName("readableTypeIdentifiersForItemProvider");
+ffi.Pointer<objc.ObjCObject> _ObjCBlock_NSArray_ffiVoid_fnPtrTrampoline(
+        ffi.Pointer<objc.ObjCBlockImpl> block, ffi.Pointer<ffi.Void> arg0) =>
+    block.ref.target
+        .cast<
+            ffi.NativeFunction<
+                ffi.Pointer<objc.ObjCObject> Function(
+                    ffi.Pointer<ffi.Void> arg0)>>()
+        .asFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<ffi.Void>)>()(arg0);
+ffi.Pointer<ffi.Void> _ObjCBlock_NSArray_ffiVoid_fnPtrCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Pointer<objc.ObjCObject> Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>, ffi.Pointer<ffi.Void>)>(
+            _ObjCBlock_NSArray_ffiVoid_fnPtrTrampoline)
+        .cast();
+ffi.Pointer<objc.ObjCObject> _ObjCBlock_NSArray_ffiVoid_closureTrampoline(
+        ffi.Pointer<objc.ObjCBlockImpl> block, ffi.Pointer<ffi.Void> arg0) =>
+    (objc.getBlockClosure(block) as ffi.Pointer<objc.ObjCObject> Function(
+        ffi.Pointer<ffi.Void>))(arg0);
+ffi.Pointer<ffi.Void> _ObjCBlock_NSArray_ffiVoid_closureCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Pointer<objc.ObjCObject> Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>, ffi.Pointer<ffi.Void>)>(
+            _ObjCBlock_NSArray_ffiVoid_closureTrampoline)
+        .cast();
+
+/// Construction methods for `objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>`.
+abstract final class ObjCBlock_NSArray_ffiVoid {
+  /// Returns a block that wraps the given raw block pointer.
+  static objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>
+      castFromPointer(ffi.Pointer<objc.ObjCBlockImpl> pointer,
+              {bool retain = false, bool release = false}) =>
+          objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>(pointer,
+              retain: retain, release: release);
+
+  /// Creates a block from a C function pointer.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>
+      fromFunctionPointer(
+              ffi.Pointer<
+                      ffi.NativeFunction<
+                          ffi.Pointer<objc.ObjCObject> Function(
+                              ffi.Pointer<ffi.Void> arg0)>>
+                  ptr) =>
+          objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>(
+              objc.newPointerBlock(_ObjCBlock_NSArray_ffiVoid_fnPtrCallable, ptr.cast()),
+              retain: false,
+              release: true);
+
+  /// Creates a block from a Dart function.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>
+      fromFunction(objc.NSArray Function(ffi.Pointer<ffi.Void>) fn) =>
+          objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>(
+              objc.newClosureBlock(
+                  _ObjCBlock_NSArray_ffiVoid_closureCallable,
+                  (ffi.Pointer<ffi.Void> arg0) =>
+                      fn(arg0).ref.retainAndAutorelease()),
+              retain: false,
+              release: true);
+}
+
+/// Call operator for `objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)>`.
+extension ObjCBlock_NSArray_ffiVoid_CallExtension
+    on objc.ObjCBlock<objc.NSArray Function(ffi.Pointer<ffi.Void>)> {
+  objc.NSArray call(ffi.Pointer<ffi.Void> arg0) => objc.NSArray.castFromPointer(
+      ref.pointer.ref.invoke
+          .cast<
+              ffi.NativeFunction<
+                  ffi.Pointer<objc.ObjCObject> Function(
+                      ffi.Pointer<objc.ObjCBlockImpl> block,
+                      ffi.Pointer<ffi.Void> arg0)>>()
+          .asFunction<
+              ffi.Pointer<objc.ObjCObject> Function(
+                  ffi.Pointer<objc.ObjCBlockImpl>,
+                  ffi.Pointer<ffi.Void>)>()(ref.pointer, arg0),
+      retain: true,
+      release: true);
+}
+
+late final _sel_writableTypeIdentifiersForItemProvider =
+    objc.registerName("writableTypeIdentifiersForItemProvider");
+late final _sel_itemProviderVisibilityForRepresentationWithTypeIdentifier_ =
+    objc.registerName(
+        "itemProviderVisibilityForRepresentationWithTypeIdentifier:");
+final _objc_msgSend_96wwe1 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Long Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>)>>()
+    .asFunction<
+        int Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<objc.ObjCObject>)>();
+int _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_fnPtrTrampoline(
+        ffi.Pointer<objc.ObjCBlockImpl> block,
+        ffi.Pointer<ffi.Void> arg0,
+        ffi.Pointer<objc.ObjCObject> arg1) =>
+    block.ref.target
+        .cast<
+            ffi.NativeFunction<
+                ffi.Long Function(ffi.Pointer<ffi.Void> arg0,
+                    ffi.Pointer<objc.ObjCObject> arg1)>>()
+        .asFunction<
+            int Function(ffi.Pointer<ffi.Void>,
+                ffi.Pointer<objc.ObjCObject>)>()(arg0, arg1);
+ffi.Pointer<ffi.Void>
+    _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_fnPtrCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Long Function(ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<objc.ObjCObject>)>(
+            _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_fnPtrTrampoline,
+            0)
+        .cast();
+int _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_closureTrampoline(
+        ffi.Pointer<objc.ObjCBlockImpl> block,
+        ffi.Pointer<ffi.Void> arg0,
+        ffi.Pointer<objc.ObjCObject> arg1) =>
+    (objc.getBlockClosure(block) as int Function(
+        ffi.Pointer<ffi.Void>, ffi.Pointer<objc.ObjCObject>))(arg0, arg1);
+ffi.Pointer<ffi.Void>
+    _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_closureCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Long Function(ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<ffi.Void>, ffi.Pointer<objc.ObjCObject>)>(
+            _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_closureTrampoline,
+            0)
+        .cast();
+
+/// Construction methods for `objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)>`.
+abstract final class ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString {
+  /// Returns a block that wraps the given raw block pointer.
+  static objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)>
+      castFromPointer(ffi.Pointer<objc.ObjCBlockImpl> pointer,
+              {bool retain = false, bool release = false}) =>
+          objc.ObjCBlock<
+              ffi.Long Function(ffi.Pointer<ffi.Void>,
+                  objc.NSString)>(pointer, retain: retain, release: release);
+
+  /// Creates a block from a C function pointer.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<
+      ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)> fromFunctionPointer(
+          ffi.Pointer<ffi.NativeFunction<ffi.Long Function(ffi.Pointer<ffi.Void> arg0, ffi.Pointer<objc.ObjCObject> arg1)>>
+              ptr) =>
+      objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)>(
+          objc.newPointerBlock(
+              _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_fnPtrCallable,
+              ptr.cast()),
+          retain: false,
+          release: true);
+
+  /// Creates a block from a Dart function.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)> fromFunction(
+          objc.NSItemProviderRepresentationVisibility Function(
+                  ffi.Pointer<ffi.Void>, objc.NSString)
+              fn) =>
+      objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)>(
+          objc.newClosureBlock(
+              _ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_closureCallable,
+              (ffi.Pointer<ffi.Void> arg0, ffi.Pointer<objc.ObjCObject> arg1) =>
+                  fn(arg0, objc.NSString.castFromPointer(arg1, retain: true, release: true))
+                      .value),
+          retain: false,
+          release: true);
+}
+
+/// Call operator for `objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)>`.
+extension ObjCBlock_NSItemProviderRepresentationVisibility_ffiVoid_NSString_CallExtension
+    on objc.ObjCBlock<ffi.Long Function(ffi.Pointer<ffi.Void>, objc.NSString)> {
+  objc.NSItemProviderRepresentationVisibility call(
+          ffi.Pointer<ffi.Void> arg0, objc.NSString arg1) =>
+      objc.NSItemProviderRepresentationVisibility.fromValue(ref
+              .pointer.ref.invoke
+              .cast<
+                  ffi.NativeFunction<
+                      ffi.Long Function(
+                          ffi.Pointer<objc.ObjCBlockImpl> block,
+                          ffi.Pointer<ffi.Void> arg0,
+                          ffi.Pointer<objc.ObjCObject> arg1)>>()
+              .asFunction<int Function(ffi.Pointer<objc.ObjCBlockImpl>, ffi.Pointer<ffi.Void>, ffi.Pointer<objc.ObjCObject>)>()(
+          ref.pointer, arg0, arg1.ref.pointer));
+}
+
+void _ObjCBlock_ffiVoid_NSData_NSError_fnPtrTrampoline(
+        ffi.Pointer<objc.ObjCBlockImpl> block,
+        ffi.Pointer<objc.ObjCObject> arg0,
+        ffi.Pointer<objc.ObjCObject> arg1) =>
+    block.ref.target
+        .cast<
+            ffi.NativeFunction<
+                ffi.Void Function(ffi.Pointer<objc.ObjCObject> arg0,
+                    ffi.Pointer<objc.ObjCObject> arg1)>>()
+        .asFunction<
+            void Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>)>()(arg0, arg1);
+ffi.Pointer<ffi.Void> _ObjCBlock_ffiVoid_NSData_NSError_fnPtrCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Void Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCObject>)>(
+            _ObjCBlock_ffiVoid_NSData_NSError_fnPtrTrampoline)
+        .cast();
+void _ObjCBlock_ffiVoid_NSData_NSError_closureTrampoline(
+        ffi.Pointer<objc.ObjCBlockImpl> block,
+        ffi.Pointer<objc.ObjCObject> arg0,
+        ffi.Pointer<objc.ObjCObject> arg1) =>
+    (objc.getBlockClosure(block) as void Function(ffi.Pointer<objc.ObjCObject>,
+        ffi.Pointer<objc.ObjCObject>))(arg0, arg1);
+ffi.Pointer<ffi.Void> _ObjCBlock_ffiVoid_NSData_NSError_closureCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Void Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCObject>)>(
+            _ObjCBlock_ffiVoid_NSData_NSError_closureTrampoline)
+        .cast();
+void _ObjCBlock_ffiVoid_NSData_NSError_listenerTrampoline(
+    ffi.Pointer<objc.ObjCBlockImpl> block,
+    ffi.Pointer<objc.ObjCObject> arg0,
+    ffi.Pointer<objc.ObjCObject> arg1) {
+  (objc.getBlockClosure(block) as void Function(
+      ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCObject>))(arg0, arg1);
+  objc.objectRelease(block.cast());
+}
+
+ffi.NativeCallable<
+        ffi.Void Function(ffi.Pointer<objc.ObjCBlockImpl>,
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCObject>)>
+    _ObjCBlock_ffiVoid_NSData_NSError_listenerCallable = ffi.NativeCallable<
+            ffi.Void Function(
+                ffi.Pointer<objc.ObjCBlockImpl>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>)>.listener(
+        _ObjCBlock_ffiVoid_NSData_NSError_listenerTrampoline)
+      ..keepIsolateAlive = false;
+
+/// Construction methods for `objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>`.
+abstract final class ObjCBlock_ffiVoid_NSData_NSError {
+  /// Returns a block that wraps the given raw block pointer.
+  static objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>
+      castFromPointer(ffi.Pointer<objc.ObjCBlockImpl> pointer,
+              {bool retain = false, bool release = false}) =>
+          objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>(
+              pointer,
+              retain: retain,
+              release: release);
+
+  /// Creates a block from a C function pointer.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)> fromFunctionPointer(
+          ffi.Pointer<
+                  ffi.NativeFunction<
+                      ffi.Void Function(ffi.Pointer<objc.ObjCObject> arg0,
+                          ffi.Pointer<objc.ObjCObject> arg1)>>
+              ptr) =>
+      objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>(
+          objc.newPointerBlock(_ObjCBlock_ffiVoid_NSData_NSError_fnPtrCallable, ptr.cast()),
+          retain: false,
+          release: true);
+
+  /// Creates a block from a Dart function.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)> fromFunction(
+          void Function(objc.NSData?, objc.NSError?) fn) =>
+      objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>(
+          objc.newClosureBlock(
+              _ObjCBlock_ffiVoid_NSData_NSError_closureCallable,
+              (ffi.Pointer<objc.ObjCObject> arg0, ffi.Pointer<objc.ObjCObject> arg1) => fn(
+                  arg0.address == 0
+                      ? null
+                      : objc.NSData.castFromPointer(arg0,
+                          retain: true, release: true),
+                  arg1.address == 0 ? null : objc.NSError.castFromPointer(arg1, retain: true, release: true))),
+          retain: false,
+          release: true);
+
+  /// Creates a listener block from a Dart function.
+  ///
+  /// This is based on FFI's NativeCallable.listener, and has the same
+  /// capabilities and limitations. This block can be invoked from any thread,
+  /// but only supports void functions, and is not run synchronously. See
+  /// NativeCallable.listener for more details.
+  ///
+  /// Note that unlike the default behavior of NativeCallable.listener, listener
+  /// blocks do not keep the isolate alive.
+  static objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>
+      listener(void Function(objc.NSData?, objc.NSError?) fn) {
+    final raw = objc.newClosureBlock(
+        _ObjCBlock_ffiVoid_NSData_NSError_listenerCallable.nativeFunction
+            .cast(),
+        (ffi.Pointer<objc.ObjCObject> arg0,
+                ffi.Pointer<objc.ObjCObject> arg1) =>
+            fn(
+                arg0.address == 0
+                    ? null
+                    : objc.NSData.castFromPointer(arg0,
+                        retain: false, release: true),
+                arg1.address == 0
+                    ? null
+                    : objc.NSError.castFromPointer(arg1,
+                        retain: false, release: true)));
+    final wrapper = _FFIAccessorySetupKit_wrapListenerBlock_wjvic9(raw);
+    objc.objectRelease(raw.cast());
+    return objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>(
+        wrapper,
+        retain: false,
+        release: true);
+  }
+}
+
+/// Call operator for `objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>`.
+extension ObjCBlock_ffiVoid_NSData_NSError_CallExtension
+    on objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)> {
+  void call(objc.NSData? arg0, objc.NSError? arg1) => ref.pointer.ref.invoke
+          .cast<
+              ffi.NativeFunction<
+                  ffi.Void Function(
+                      ffi.Pointer<objc.ObjCBlockImpl> block,
+                      ffi.Pointer<objc.ObjCObject> arg0,
+                      ffi.Pointer<objc.ObjCObject> arg1)>>()
+          .asFunction<
+              void Function(
+                  ffi.Pointer<objc.ObjCBlockImpl>,
+                  ffi.Pointer<objc.ObjCObject>,
+                  ffi.Pointer<objc.ObjCObject>)>()(ref.pointer,
+      arg0?.ref.pointer ?? ffi.nullptr, arg1?.ref.pointer ?? ffi.nullptr);
+}
+
+late final _sel_loadDataWithTypeIdentifier_forItemProviderCompletionHandler_ =
+    objc.registerName(
+        "loadDataWithTypeIdentifier:forItemProviderCompletionHandler:");
+final _objc_msgSend_o4sqyk = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCBlockImpl>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCBlockImpl>)>();
+ffi.Pointer<objc.ObjCObject>
+    _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_fnPtrTrampoline(
+            ffi.Pointer<objc.ObjCBlockImpl> block,
+            ffi.Pointer<ffi.Void> arg0,
+            ffi.Pointer<objc.ObjCObject> arg1,
+            ffi.Pointer<objc.ObjCBlockImpl> arg2) =>
+        block.ref.target
+            .cast<
+                ffi.NativeFunction<
+                    ffi.Pointer<objc.ObjCObject> Function(
+                        ffi.Pointer<ffi.Void> arg0,
+                        ffi.Pointer<objc.ObjCObject> arg1,
+                        ffi.Pointer<objc.ObjCBlockImpl> arg2)>>()
+            .asFunction<
+                ffi.Pointer<objc.ObjCObject> Function(
+                    ffi.Pointer<ffi.Void>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCBlockImpl>)>()(arg0, arg1, arg2);
+ffi.Pointer<ffi.Void>
+    _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_fnPtrCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Pointer<objc.ObjCObject> Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<ffi.Void>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCBlockImpl>)>(
+            _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_fnPtrTrampoline)
+        .cast();
+ffi.Pointer<objc.ObjCObject>
+    _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_closureTrampoline(
+            ffi.Pointer<objc.ObjCBlockImpl> block,
+            ffi.Pointer<ffi.Void> arg0,
+            ffi.Pointer<objc.ObjCObject> arg1,
+            ffi.Pointer<objc.ObjCBlockImpl> arg2) =>
+        (objc.getBlockClosure(block) as ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<ffi.Void>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCBlockImpl>))(arg0, arg1, arg2);
+ffi.Pointer<ffi.Void>
+    _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_closureCallable =
+    ffi.Pointer.fromFunction<
+                ffi.Pointer<objc.ObjCObject> Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<ffi.Void>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCBlockImpl>)>(
+            _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_closureTrampoline)
+        .cast();
+
+/// Construction methods for `objc.ObjCBlock<NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString, objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>`.
+abstract final class ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError {
+  /// Returns a block that wraps the given raw block pointer.
+  static objc.ObjCBlock<
+          NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString,
+              objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>
+      castFromPointer(ffi.Pointer<objc.ObjCBlockImpl> pointer,
+              {bool retain = false, bool release = false}) =>
+          objc.ObjCBlock<
+                  NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString,
+                      objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>(pointer,
+              retain: retain, release: release);
+
+  /// Creates a block from a C function pointer.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<
+          NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString,
+              objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>
+      fromFunctionPointer(ffi.Pointer<ffi.NativeFunction<ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<ffi.Void> arg0, ffi.Pointer<objc.ObjCObject> arg1, ffi.Pointer<objc.ObjCBlockImpl> arg2)>> ptr) =>
+          objc.ObjCBlock<
+                  NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString,
+                      objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>(
+              objc.newPointerBlock(_ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_fnPtrCallable, ptr.cast()),
+              retain: false,
+              release: true);
+
+  /// Creates a block from a Dart function.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString, objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>
+      fromFunction(NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString, objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>) fn) =>
+          objc.ObjCBlock<NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString, objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>(
+              objc.newClosureBlock(
+                  _ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_closureCallable,
+                  (ffi.Pointer<ffi.Void> arg0,
+                          ffi.Pointer<objc.ObjCObject> arg1,
+                          ffi.Pointer<objc.ObjCBlockImpl> arg2) =>
+                      fn(arg0, objc.NSString.castFromPointer(arg1, retain: true, release: true), ObjCBlock_ffiVoid_NSData_NSError.castFromPointer(arg2, retain: true, release: true))
+                          ?.ref
+                          .retainAndAutorelease() ??
+                      ffi.nullptr),
+              retain: false,
+              release: true);
+}
+
+/// Call operator for `objc.ObjCBlock<NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString, objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)>`.
+extension ObjCBlock_NSProgress_ffiVoid_NSString_ffiVoidNSDataNSError_CallExtension
+    on objc.ObjCBlock<
+        NSProgress? Function(ffi.Pointer<ffi.Void>, objc.NSString,
+            objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>)> {
+  NSProgress? call(ffi.Pointer<ffi.Void> arg0, objc.NSString arg1, objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)> arg2) =>
+      ref.pointer.ref.invoke
+                  .cast<
+                      ffi.NativeFunction<
+                          ffi.Pointer<objc.ObjCObject> Function(
+                              ffi.Pointer<objc.ObjCBlockImpl> block,
+                              ffi.Pointer<ffi.Void> arg0,
+                              ffi.Pointer<objc.ObjCObject> arg1,
+                              ffi.Pointer<objc.ObjCBlockImpl> arg2)>>()
+                  .asFunction<
+                      ffi.Pointer<objc.ObjCObject> Function(
+                          ffi.Pointer<objc.ObjCBlockImpl>,
+                          ffi.Pointer<ffi.Void>,
+                          ffi.Pointer<objc.ObjCObject>,
+                          ffi.Pointer<objc.ObjCBlockImpl>)>()
+                  (ref.pointer, arg0, arg1.ref.pointer, arg2.ref.pointer)
+                  .address ==
+              0
+          ? null
+          : NSProgress.castFromPointer(
+              ref.pointer.ref.invoke.cast<ffi.NativeFunction<ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCBlockImpl> block, ffi.Pointer<ffi.Void> arg0, ffi.Pointer<objc.ObjCObject> arg1, ffi.Pointer<objc.ObjCBlockImpl> arg2)>>().asFunction<ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCBlockImpl>, ffi.Pointer<ffi.Void>, ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCBlockImpl>)>()(ref.pointer, arg0, arg1.ref.pointer, arg2.ref.pointer),
+              retain: true,
+              release: true);
+}
+
+/// NSItemProvider
+extension NSItemProvider on UIImage {
+  /// readableTypeIdentifiersForItemProvider
+  static objc.NSArray getReadableTypeIdentifiersForItemProvider() {
+    final _ret = _objc_msgSend_1x359cv(
+        _class_UIImage, _sel_readableTypeIdentifiersForItemProvider);
+    return objc.NSArray.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// writableTypeIdentifiersForItemProvider
+  static objc.NSArray getWritableTypeIdentifiersForItemProvider() {
+    final _ret = _objc_msgSend_1x359cv(
+        _class_UIImage, _sel_writableTypeIdentifiersForItemProvider);
+    return objc.NSArray.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// writableTypeIdentifiersForItemProvider
+  objc.NSArray get writableTypeIdentifiersForItemProvider1 {
+    if (!objc.respondsToSelector(
+        this.ref.pointer, _sel_writableTypeIdentifiersForItemProvider)) {
+      throw objc.UnimplementedOptionalMethodException(
+          'UIImage', 'writableTypeIdentifiersForItemProvider');
+    }
+    final _ret = _objc_msgSend_1x359cv(
+        this.ref.pointer, _sel_writableTypeIdentifiersForItemProvider);
+    return objc.NSArray.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// itemProviderVisibilityForRepresentationWithTypeIdentifier:
+  static objc.NSItemProviderRepresentationVisibility
+      itemProviderVisibilityForRepresentationWithTypeIdentifier_(
+          objc.NSString typeIdentifier) {
+    if (!objc.respondsToSelector(_class_UIImage,
+        _sel_itemProviderVisibilityForRepresentationWithTypeIdentifier_)) {
+      throw objc.UnimplementedOptionalMethodException('UIImage',
+          'itemProviderVisibilityForRepresentationWithTypeIdentifier:');
+    }
+    final _ret = _objc_msgSend_96wwe1(
+        _class_UIImage,
+        _sel_itemProviderVisibilityForRepresentationWithTypeIdentifier_,
+        typeIdentifier.ref.pointer);
+    return objc.NSItemProviderRepresentationVisibility.fromValue(_ret);
+  }
+
+  /// itemProviderVisibilityForRepresentationWithTypeIdentifier:
+  objc.NSItemProviderRepresentationVisibility
+      itemProviderVisibilityForRepresentationWithTypeIdentifier_1(
+          objc.NSString typeIdentifier) {
+    if (!objc.respondsToSelector(this.ref.pointer,
+        _sel_itemProviderVisibilityForRepresentationWithTypeIdentifier_)) {
+      throw objc.UnimplementedOptionalMethodException('UIImage',
+          'itemProviderVisibilityForRepresentationWithTypeIdentifier:');
+    }
+    final _ret = _objc_msgSend_96wwe1(
+        this.ref.pointer,
+        _sel_itemProviderVisibilityForRepresentationWithTypeIdentifier_,
+        typeIdentifier.ref.pointer);
+    return objc.NSItemProviderRepresentationVisibility.fromValue(_ret);
+  }
+
+  /// loadDataWithTypeIdentifier:forItemProviderCompletionHandler:
+  NSProgress? loadDataWithTypeIdentifier_forItemProviderCompletionHandler_(
+      objc.NSString typeIdentifier,
+      objc.ObjCBlock<ffi.Void Function(objc.NSData?, objc.NSError?)>
+          completionHandler) {
+    final _ret = _objc_msgSend_o4sqyk(
+        this.ref.pointer,
+        _sel_loadDataWithTypeIdentifier_forItemProviderCompletionHandler_,
+        typeIdentifier.ref.pointer,
+        completionHandler.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : NSProgress.castFromPointer(_ret, retain: true, release: true);
+  }
+}
+
+late final _sel_stretchableImageWithLeftCapWidth_topCapHeight_ =
+    objc.registerName("stretchableImageWithLeftCapWidth:topCapHeight:");
+final _objc_msgSend_1jdxweh = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, ffi.Long, ffi.Long)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, int, int)>();
+late final _sel_leftCapWidth = objc.registerName("leftCapWidth");
+final _objc_msgSend_1hz7y9r = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Long Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        int Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_topCapHeight = objc.registerName("topCapHeight");
+
+/// UIImageDeprecated
+extension UIImageDeprecated on UIImage {
+  /// use resizableImageWithCapInsets: and capInsets.
+  UIImage stretchableImageWithLeftCapWidth_topCapHeight_(
+      int leftCapWidth, int topCapHeight) {
+    final _ret = _objc_msgSend_1jdxweh(
+        this.ref.pointer,
+        _sel_stretchableImageWithLeftCapWidth_topCapHeight_,
+        leftCapWidth,
+        topCapHeight);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// default is 0. if non-zero, horiz. stretchable. right cap is calculated as width - leftCapWidth - 1
+  int get leftCapWidth {
+    return _objc_msgSend_1hz7y9r(this.ref.pointer, _sel_leftCapWidth);
+  }
+
+  /// default is 0. if non-zero, vert. stretchable. bottom cap is calculated as height - topCapWidth - 1
+  int get topCapHeight {
+    return _objc_msgSend_1hz7y9r(this.ref.pointer, _sel_topCapHeight);
+  }
+}
+
+late final _sel_systemImageNamed_ = objc.registerName("systemImageNamed:");
+
+/// WARNING: UIImageConfiguration is a stub. To generate bindings for this class, include
+/// UIImageConfiguration in your config's objc-interfaces list.
+///
+/// UIImageConfiguration
+class UIImageConfiguration extends objc.ObjCObjectBase {
+  UIImageConfiguration._(ffi.Pointer<objc.ObjCObject> pointer,
+      {bool retain = false, bool release = false})
+      : super(pointer, retain: retain, release: release);
+
+  /// Constructs a [UIImageConfiguration] that points to the same underlying object as [other].
+  UIImageConfiguration.castFrom(objc.ObjCObjectBase other)
+      : this._(other.ref.pointer, retain: true, release: true);
+
+  /// Constructs a [UIImageConfiguration] that wraps the given raw object pointer.
+  UIImageConfiguration.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
+      {bool retain = false, bool release = false})
+      : this._(other, retain: retain, release: release);
+}
+
+late final _sel_systemImageNamed_withConfiguration_ =
+    objc.registerName("systemImageNamed:withConfiguration:");
+final _objc_msgSend_rsfdlh = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCObject>)>();
+late final _sel_systemImageNamed_variableValue_withConfiguration_ =
+    objc.registerName("systemImageNamed:variableValue:withConfiguration:");
+final _objc_msgSend_45qm9k = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Double,
+                ffi.Pointer<objc.ObjCObject>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            double,
+            ffi.Pointer<objc.ObjCObject>)>();
+late final _sel_imageNamed_ = objc.registerName("imageNamed:");
+late final _sel_imageNamed_inBundle_withConfiguration_ =
+    objc.registerName("imageNamed:inBundle:withConfiguration:");
+late final _sel_imageNamed_inBundle_variableValue_withConfiguration_ =
+    objc.registerName("imageNamed:inBundle:variableValue:withConfiguration:");
+final _objc_msgSend_1ck51ja = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Double,
+                ffi.Pointer<objc.ObjCObject>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCObject>,
+            double,
+            ffi.Pointer<objc.ObjCObject>)>();
+late final _sel_imageWithContentsOfFile_ =
+    objc.registerName("imageWithContentsOfFile:");
+late final _sel_imageWithData_ = objc.registerName("imageWithData:");
+late final _sel_imageWithData_scale_ =
+    objc.registerName("imageWithData:scale:");
+final _objc_msgSend_1cw9ptg = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Double)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            double)>();
+late final _sel_imageWithCGImage_ = objc.registerName("imageWithCGImage:");
+final _objc_msgSend_6cumpt = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<CGImage>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, ffi.Pointer<CGImage>)>();
+late final _sel_imageWithCGImage_scale_orientation_ =
+    objc.registerName("imageWithCGImage:scale:orientation:");
+final _objc_msgSend_1t901p7 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<CGImage>,
+                ffi.Double,
+                ffi.Long)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<CGImage>,
+            double,
+            int)>();
+late final _sel_imageWithCIImage_ = objc.registerName("imageWithCIImage:");
+late final _sel_imageWithCIImage_scale_orientation_ =
+    objc.registerName("imageWithCIImage:scale:orientation:");
+final _objc_msgSend_1e1qck9 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Double,
+                ffi.Long)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            double,
+            int)>();
+late final _sel_initWithContentsOfFile_ =
+    objc.registerName("initWithContentsOfFile:");
+late final _sel_initWithData_ = objc.registerName("initWithData:");
+late final _sel_initWithData_scale_ = objc.registerName("initWithData:scale:");
+late final _sel_initWithCGImage_ = objc.registerName("initWithCGImage:");
+late final _sel_initWithCGImage_scale_orientation_ =
+    objc.registerName("initWithCGImage:scale:orientation:");
+late final _sel_initWithCIImage_ = objc.registerName("initWithCIImage:");
+late final _sel_initWithCIImage_scale_orientation_ =
+    objc.registerName("initWithCIImage:scale:orientation:");
+late final _sel_size = objc.registerName("size");
+final _objc_msgSend_1vdfken = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            CGSize Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        CGSize Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+final _objc_msgSend_1vdfkenStret = objc.msgSendStretPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(ffi.Pointer<CGSize>, ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        void Function(ffi.Pointer<CGSize>, ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_CGImage = objc.registerName("CGImage");
+final _objc_msgSend_y1izi1 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<CGImage> Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        ffi.Pointer<CGImage> Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_CIImage = objc.registerName("CIImage");
+late final _sel_imageOrientation = objc.registerName("imageOrientation");
+final _objc_msgSend_fkvhxy = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Long Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        int Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_scale = objc.registerName("scale");
+final _objc_msgSend_1ukqyt8 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Double Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        double Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+final _objc_msgSend_1ukqyt8Fpret = objc.msgSendFpretPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Double Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        double Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_isSymbolImage = objc.registerName("isSymbolImage");
+late final _sel_animatedImageNamed_duration_ =
+    objc.registerName("animatedImageNamed:duration:");
+late final _sel_animatedResizableImageNamed_capInsets_duration_ =
+    objc.registerName("animatedResizableImageNamed:capInsets:duration:");
+final _objc_msgSend_1xdeq9e = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Double)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCObject>,
+            double)>();
+late final _sel_animatedResizableImageNamed_capInsets_resizingMode_duration_ =
+    objc.registerName(
+        "animatedResizableImageNamed:capInsets:resizingMode:duration:");
+final _objc_msgSend_1fh29a1 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Long,
+                ffi.Double)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCObject>,
+            int,
+            double)>();
+late final _sel_animatedImageWithImages_duration_ =
+    objc.registerName("animatedImageWithImages:duration:");
+late final _sel_images = objc.registerName("images");
+late final _sel_duration = objc.registerName("duration");
+late final _sel_drawAtPoint_ = objc.registerName("drawAtPoint:");
+final _objc_msgSend_iy8iz6 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, CGPoint)>>()
+    .asFunction<
+        void Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, CGPoint)>();
+late final _sel_drawAtPoint_blendMode_alpha_ =
+    objc.registerName("drawAtPoint:blendMode:alpha:");
+final _objc_msgSend_yg3i7f = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                CGPoint,
+                ffi.Int32,
+                ffi.Double)>>()
+    .asFunction<
+        void Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, CGPoint, int, double)>();
+late final _sel_drawInRect_ = objc.registerName("drawInRect:");
+final _objc_msgSend_1okkq16 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, CGRect)>>()
+    .asFunction<
+        void Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, CGRect)>();
+late final _sel_drawInRect_blendMode_alpha_ =
+    objc.registerName("drawInRect:blendMode:alpha:");
+final _objc_msgSend_1ggt4c3 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Void Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                CGRect,
+                ffi.Int32,
+                ffi.Double)>>()
+    .asFunction<
+        void Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, CGRect, int, double)>();
+late final _sel_drawAsPatternInRect_ =
+    objc.registerName("drawAsPatternInRect:");
+late final _sel_resizableImageWithCapInsets_ =
+    objc.registerName("resizableImageWithCapInsets:");
+late final _sel_resizableImageWithCapInsets_resizingMode_ =
+    objc.registerName("resizableImageWithCapInsets:resizingMode:");
+final _objc_msgSend_17cdz0o = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Long)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            int)>();
+late final _sel_capInsets = objc.registerName("capInsets");
+final _objc_msgSend_13yqbb6 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Int Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        int Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_resizingMode = objc.registerName("resizingMode");
+final _objc_msgSend_knxebs = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Long Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        int Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_imageWithAlignmentRectInsets_ =
+    objc.registerName("imageWithAlignmentRectInsets:");
+late final _sel_alignmentRectInsets = objc.registerName("alignmentRectInsets");
+late final _sel_imageWithRenderingMode_ =
+    objc.registerName("imageWithRenderingMode:");
+final _objc_msgSend_oomw3f = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, ffi.Long)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, int)>();
+late final _sel_renderingMode = objc.registerName("renderingMode");
+final _objc_msgSend_s2io2v = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Long Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>)>>()
+    .asFunction<
+        int Function(
+            ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCSelector>)>();
+late final _sel_imageFlippedForRightToLeftLayoutDirection =
+    objc.registerName("imageFlippedForRightToLeftLayoutDirection");
+late final _sel_flipsForRightToLeftLayoutDirection =
+    objc.registerName("flipsForRightToLeftLayoutDirection");
+late final _sel_imageWithHorizontallyFlippedOrientation =
+    objc.registerName("imageWithHorizontallyFlippedOrientation");
+late final _sel_baselineOffsetFromBottom =
+    objc.registerName("baselineOffsetFromBottom");
+late final _sel_hasBaseline = objc.registerName("hasBaseline");
+late final _sel_imageWithBaselineOffsetFromBottom_ =
+    objc.registerName("imageWithBaselineOffsetFromBottom:");
+final _objc_msgSend_1x911p2 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>, ffi.Double)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>, double)>();
+late final _sel_imageWithoutBaseline =
+    objc.registerName("imageWithoutBaseline");
+late final _sel_configuration = objc.registerName("configuration");
+late final _sel_imageWithConfiguration_ =
+    objc.registerName("imageWithConfiguration:");
+
+/// WARNING: UIImageSymbolConfiguration is a stub. To generate bindings for this class, include
+/// UIImageSymbolConfiguration in your config's objc-interfaces list.
+///
+/// UIImageSymbolConfiguration
+class UIImageSymbolConfiguration extends objc.ObjCObjectBase {
+  UIImageSymbolConfiguration._(ffi.Pointer<objc.ObjCObject> pointer,
+      {bool retain = false, bool release = false})
+      : super(pointer, retain: retain, release: release);
+
+  /// Constructs a [UIImageSymbolConfiguration] that points to the same underlying object as [other].
+  UIImageSymbolConfiguration.castFrom(objc.ObjCObjectBase other)
+      : this._(other.ref.pointer, retain: true, release: true);
+
+  /// Constructs a [UIImageSymbolConfiguration] that wraps the given raw object pointer.
+  UIImageSymbolConfiguration.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
+      {bool retain = false, bool release = false})
+      : this._(other, retain: retain, release: release);
+}
+
+late final _sel_symbolConfiguration = objc.registerName("symbolConfiguration");
+late final _sel_imageByApplyingSymbolConfiguration_ =
+    objc.registerName("imageByApplyingSymbolConfiguration:");
+late final _sel_imageWithTintColor_ = objc.registerName("imageWithTintColor:");
+late final _sel_imageWithTintColor_renderingMode_ =
+    objc.registerName("imageWithTintColor:renderingMode:");
+final _objc_msgSend_noczqd = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Long)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            int)>();
+late final _sel_isHighDynamicRange = objc.registerName("isHighDynamicRange");
+late final _sel_imageRestrictedToStandardDynamicRange =
+    objc.registerName("imageRestrictedToStandardDynamicRange");
+late final _sel_objectWithItemProviderData_typeIdentifier_error_ =
+    objc.registerName("objectWithItemProviderData:typeIdentifier:error:");
+final _objc_msgSend_bo6ep4 = objc.msgSendPointer
+    .cast<
+        ffi.NativeFunction<
+            ffi.Pointer<objc.ObjCObject> Function(
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCSelector>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<objc.ObjCObject>,
+                ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>>()
+    .asFunction<
+        ffi.Pointer<objc.ObjCObject> Function(
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCSelector>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>();
+instancetype
+    _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_fnPtrTrampoline(
+            ffi.Pointer<objc.ObjCBlockImpl> block,
+            ffi.Pointer<ffi.Void> arg0,
+            ffi.Pointer<objc.ObjCObject> arg1,
+            ffi.Pointer<objc.ObjCObject> arg2,
+            ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3) =>
+        block.ref.target
+                .cast<
+                    ffi.NativeFunction<
+                        instancetype Function(
+                            ffi.Pointer<ffi.Void> arg0,
+                            ffi.Pointer<objc.ObjCObject> arg1,
+                            ffi.Pointer<objc.ObjCObject> arg2,
+                            ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3)>>()
+                .asFunction<
+                    instancetype Function(
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<objc.ObjCObject>,
+                        ffi.Pointer<objc.ObjCObject>,
+                        ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>()(
+            arg0, arg1, arg2, arg3);
+ffi.Pointer<ffi.Void>
+    _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_fnPtrCallable =
+    ffi.Pointer.fromFunction<
+                instancetype Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<ffi.Void>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>(
+            _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_fnPtrTrampoline)
+        .cast();
+instancetype
+    _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_closureTrampoline(
+            ffi.Pointer<objc.ObjCBlockImpl> block,
+            ffi.Pointer<ffi.Void> arg0,
+            ffi.Pointer<objc.ObjCObject> arg1,
+            ffi.Pointer<objc.ObjCObject> arg2,
+            ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3) =>
+        (objc.getBlockClosure(block) as instancetype Function(
+            ffi.Pointer<ffi.Void>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<objc.ObjCObject>,
+            ffi.Pointer<ffi.Pointer<objc.ObjCObject>>))(arg0, arg1, arg2, arg3);
+ffi.Pointer<ffi.Void>
+    _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_closureCallable =
+    ffi.Pointer.fromFunction<
+                instancetype Function(
+                    ffi.Pointer<objc.ObjCBlockImpl>,
+                    ffi.Pointer<ffi.Void>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<objc.ObjCObject>,
+                    ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>(
+            _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_closureTrampoline)
+        .cast();
+
+/// Construction methods for `objc.ObjCBlock<ffi.Pointer<objc.ObjCObject>? Function(ffi.Pointer<ffi.Void>, objc.NSData, objc.NSString, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>`.
+abstract final class ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError {
+  /// Returns a block that wraps the given raw block pointer.
+  static objc.ObjCBlock<
+          ffi.Pointer<objc.ObjCObject>? Function(
+              ffi.Pointer<ffi.Void>,
+              objc.NSData,
+              objc.NSString,
+              ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>
+      castFromPointer(ffi.Pointer<objc.ObjCBlockImpl> pointer,
+              {bool retain = false, bool release = false}) =>
+          objc.ObjCBlock<
+              ffi.Pointer<objc.ObjCObject>? Function(
+                  ffi.Pointer<ffi.Void>,
+                  objc.NSData,
+                  objc.NSString,
+                  ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>(pointer, retain: retain, release: release);
+
+  /// Creates a block from a C function pointer.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<
+          ffi.Pointer<objc.ObjCObject>? Function(
+              ffi.Pointer<ffi.Void>, objc.NSData, objc.NSString, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>
+      fromFunctionPointer(ffi.Pointer<ffi.NativeFunction<instancetype Function(ffi.Pointer<ffi.Void> arg0, ffi.Pointer<objc.ObjCObject> arg1, ffi.Pointer<objc.ObjCObject> arg2, ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3)>> ptr) =>
+          objc.ObjCBlock<
+                  ffi.Pointer<objc.ObjCObject>? Function(
+                      ffi.Pointer<ffi.Void>,
+                      objc.NSData,
+                      objc.NSString,
+                      ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>(
+              objc.newPointerBlock(_ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_fnPtrCallable, ptr.cast()),
+              retain: false,
+              release: true);
+
+  /// Creates a block from a Dart function.
+  ///
+  /// This block must be invoked by native code running on the same thread as
+  /// the isolate that registered it. Invoking the block on the wrong thread
+  /// will result in a crash.
+  static objc.ObjCBlock<ffi.Pointer<objc.ObjCObject>? Function(ffi.Pointer<ffi.Void>, objc.NSData, objc.NSString, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>
+      fromFunction(Dartinstancetype? Function(ffi.Pointer<ffi.Void>, objc.NSData, objc.NSString, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>) fn) =>
+          objc.ObjCBlock<ffi.Pointer<objc.ObjCObject>? Function(ffi.Pointer<ffi.Void>, objc.NSData, objc.NSString, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>(
+              objc.newClosureBlock(
+                  _ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_closureCallable,
+                  (ffi.Pointer<ffi.Void> arg0,
+                          ffi.Pointer<objc.ObjCObject> arg1,
+                          ffi.Pointer<objc.ObjCObject> arg2,
+                          ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3) =>
+                      fn(arg0, objc.NSData.castFromPointer(arg1, retain: true, release: true), objc.NSString.castFromPointer(arg2, retain: true, release: true), arg3)?.ref.retainAndAutorelease() ??
+                      ffi.nullptr),
+              retain: false,
+              release: true);
+}
+
+/// Call operator for `objc.ObjCBlock<ffi.Pointer<objc.ObjCObject>? Function(ffi.Pointer<ffi.Void>, objc.NSData, objc.NSString, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>`.
+extension ObjCBlock_instancetype_ffiVoid_NSData_NSString_NSError_CallExtension
+    on objc.ObjCBlock<
+        ffi.Pointer<objc.ObjCObject>? Function(
+            ffi.Pointer<ffi.Void>,
+            objc.NSData,
+            objc.NSString,
+            ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)> {
+  Dartinstancetype? call(ffi.Pointer<ffi.Void> arg0, objc.NSData arg1, objc.NSString arg2, ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3) => ref
+              .pointer.ref.invoke
+              .cast<
+                  ffi.NativeFunction<
+                      instancetype Function(
+                          ffi.Pointer<objc.ObjCBlockImpl> block,
+                          ffi.Pointer<ffi.Void> arg0,
+                          ffi.Pointer<objc.ObjCObject> arg1,
+                          ffi.Pointer<objc.ObjCObject> arg2,
+                          ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3)>>()
+              .asFunction<
+                  instancetype Function(
+                      ffi.Pointer<objc.ObjCBlockImpl>,
+                      ffi.Pointer<ffi.Void>,
+                      ffi.Pointer<objc.ObjCObject>,
+                      ffi.Pointer<objc.ObjCObject>,
+                      ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>()
+              (ref.pointer, arg0, arg1.ref.pointer, arg2.ref.pointer, arg3)
+              .address ==
+          0
+      ? null
+      : objc.ObjCObjectBase(
+          ref.pointer.ref.invoke.cast<ffi.NativeFunction<instancetype Function(ffi.Pointer<objc.ObjCBlockImpl> block, ffi.Pointer<ffi.Void> arg0, ffi.Pointer<objc.ObjCObject> arg1, ffi.Pointer<objc.ObjCObject> arg2, ffi.Pointer<ffi.Pointer<objc.ObjCObject>> arg3)>>().asFunction<instancetype Function(ffi.Pointer<objc.ObjCBlockImpl>, ffi.Pointer<ffi.Void>, ffi.Pointer<objc.ObjCObject>, ffi.Pointer<objc.ObjCObject>, ffi.Pointer<ffi.Pointer<objc.ObjCObject>>)>()(ref.pointer, arg0, arg1.ref.pointer, arg2.ref.pointer, arg3),
+          retain: true,
+          release: true);
+}
+
+/// UIImage
+class UIImage extends objc.NSObject {
+  UIImage._(ffi.Pointer<objc.ObjCObject> pointer,
+      {bool retain = false, bool release = false})
+      : super.castFromPointer(pointer, retain: retain, release: release);
+
+  /// Constructs a [UIImage] that points to the same underlying object as [other].
+  UIImage.castFrom(objc.ObjCObjectBase other)
+      : this._(other.ref.pointer, retain: true, release: true);
+
+  /// Constructs a [UIImage] that wraps the given raw object pointer.
+  UIImage.castFromPointer(ffi.Pointer<objc.ObjCObject> other,
+      {bool retain = false, bool release = false})
+      : this._(other, retain: retain, release: release);
+
+  /// Returns whether [obj] is an instance of [UIImage].
+  static bool isInstance(objc.ObjCObjectBase obj) {
+    return _objc_msgSend_69e0x1(
+        obj.ref.pointer, _sel_isKindOfClass_, _class_UIImage);
+  }
+
+  /// Retrieve a system-provided image with the specified name.
+  /// This will only return system-provided images. If you want a custom
+  /// image as defined in your own catalogs, you should use +imageNamed:.
+  ///
+  /// UIKit applications on macOS may pass NSImageName values (defined in
+  /// <AppKit/NSImage.h>) for the name to access macOS system images.
+  ///
+  /// Returns nil if an image with specified name doesn't exist.
+  static UIImage? systemImageNamed_(objc.NSString name) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_UIImage, _sel_systemImageNamed_, name.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// systemImageNamed:withConfiguration:
+  static UIImage? systemImageNamed_withConfiguration_(
+      objc.NSString name, UIImageConfiguration? configuration) {
+    final _ret = _objc_msgSend_rsfdlh(
+        _class_UIImage,
+        _sel_systemImageNamed_withConfiguration_,
+        name.ref.pointer,
+        configuration?.ref.pointer ?? ffi.nullptr);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// Retrieve a system-provided image with the specified name and variable value (between 0 and 1).
+  ///
+  /// This will only return system-provided images. If you want a custom image as defined in your own catalogs,
+  /// you should use @c +imageNamed:inBundle:variableValue:withConfiguration:.
+  ///
+  /// Returns @c nil if an image with specified name doesn't exist.
+  static UIImage? systemImageNamed_variableValue_withConfiguration_(
+      objc.NSString name, double value, UIImageConfiguration? configuration) {
+    final _ret = _objc_msgSend_45qm9k(
+        _class_UIImage,
+        _sel_systemImageNamed_variableValue_withConfiguration_,
+        name.ref.pointer,
+        value,
+        configuration?.ref.pointer ?? ffi.nullptr);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// load from main bundle
+  static UIImage? imageNamed_(objc.NSString name) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_UIImage, _sel_imageNamed_, name.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageNamed:inBundle:withConfiguration:
+  static UIImage? imageNamed_inBundle_withConfiguration_(objc.NSString name,
+      NSBundle? bundle, UIImageConfiguration? configuration) {
+    final _ret = _objc_msgSend_582s3n(
+        _class_UIImage,
+        _sel_imageNamed_inBundle_withConfiguration_,
+        name.ref.pointer,
+        bundle?.ref.pointer ?? ffi.nullptr,
+        configuration?.ref.pointer ?? ffi.nullptr);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// Retrieve a image with the specified name and variable value (between 0 and 1).
+  ///
+  /// This will only return custom images defined in your own catalogs. If you want a system-provided image,
+  /// you should use @c +systemImageNamed:variableValue:withConfiguration:.
+  ///
+  /// Returns @c nil if an image with specified name doesn't exist.
+  static UIImage? imageNamed_inBundle_variableValue_withConfiguration_(
+      objc.NSString name,
+      NSBundle? bundle,
+      double value,
+      UIImageConfiguration? configuration) {
+    final _ret = _objc_msgSend_1ck51ja(
+        _class_UIImage,
+        _sel_imageNamed_inBundle_variableValue_withConfiguration_,
+        name.ref.pointer,
+        bundle?.ref.pointer ?? ffi.nullptr,
+        value,
+        configuration?.ref.pointer ?? ffi.nullptr);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithContentsOfFile:
+  static UIImage? imageWithContentsOfFile_(objc.NSString path) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_UIImage, _sel_imageWithContentsOfFile_, path.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithData:
+  static UIImage? imageWithData_(objc.NSData data) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_UIImage, _sel_imageWithData_, data.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithData:scale:
+  static UIImage? imageWithData_scale_(objc.NSData data, double scale) {
+    final _ret = _objc_msgSend_1cw9ptg(
+        _class_UIImage, _sel_imageWithData_scale_, data.ref.pointer, scale);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithCGImage:
+  static UIImage imageWithCGImage_(ffi.Pointer<CGImage> cgImage) {
+    final _ret =
+        _objc_msgSend_6cumpt(_class_UIImage, _sel_imageWithCGImage_, cgImage);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithCGImage:scale:orientation:
+  static UIImage imageWithCGImage_scale_orientation_(
+      ffi.Pointer<CGImage> cgImage,
+      double scale,
+      UIImageOrientation orientation) {
+    final _ret = _objc_msgSend_1t901p7(
+        _class_UIImage,
+        _sel_imageWithCGImage_scale_orientation_,
+        cgImage,
+        scale,
+        orientation.value);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithCIImage:
+  static UIImage imageWithCIImage_(CIImage ciImage) {
+    final _ret = _objc_msgSend_62nh5j(
+        _class_UIImage, _sel_imageWithCIImage_, ciImage.ref.pointer);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithCIImage:scale:orientation:
+  static UIImage imageWithCIImage_scale_orientation_(
+      CIImage ciImage, double scale, UIImageOrientation orientation) {
+    final _ret = _objc_msgSend_1e1qck9(
+        _class_UIImage,
+        _sel_imageWithCIImage_scale_orientation_,
+        ciImage.ref.pointer,
+        scale,
+        orientation.value);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// initWithContentsOfFile:
+  UIImage? initWithContentsOfFile_(objc.NSString path) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.retainAndReturnPointer(),
+        _sel_initWithContentsOfFile_, path.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithData:
+  UIImage? initWithData_(objc.NSData data) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.retainAndReturnPointer(),
+        _sel_initWithData_, data.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithData:scale:
+  UIImage? initWithData_scale_(objc.NSData data, double scale) {
+    final _ret = _objc_msgSend_1cw9ptg(this.ref.retainAndReturnPointer(),
+        _sel_initWithData_scale_, data.ref.pointer, scale);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithCGImage:
+  UIImage initWithCGImage_(ffi.Pointer<CGImage> cgImage) {
+    final _ret = _objc_msgSend_6cumpt(
+        this.ref.retainAndReturnPointer(), _sel_initWithCGImage_, cgImage);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithCGImage:scale:orientation:
+  UIImage initWithCGImage_scale_orientation_(ffi.Pointer<CGImage> cgImage,
+      double scale, UIImageOrientation orientation) {
+    final _ret = _objc_msgSend_1t901p7(
+        this.ref.retainAndReturnPointer(),
+        _sel_initWithCGImage_scale_orientation_,
+        cgImage,
+        scale,
+        orientation.value);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithCIImage:
+  UIImage initWithCIImage_(CIImage ciImage) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.retainAndReturnPointer(),
+        _sel_initWithCIImage_, ciImage.ref.pointer);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// initWithCIImage:scale:orientation:
+  UIImage initWithCIImage_scale_orientation_(
+      CIImage ciImage, double scale, UIImageOrientation orientation) {
+    final _ret = _objc_msgSend_1e1qck9(
+        this.ref.retainAndReturnPointer(),
+        _sel_initWithCIImage_scale_orientation_,
+        ciImage.ref.pointer,
+        scale,
+        orientation.value);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// reflects orientation setting. In iOS 4.0 and later, this is measured in points. In 3.x and earlier, measured in pixels
+  CGSize get size {
+    final _ptr = pkg_ffi.calloc<CGSize>();
+    objc.useMsgSendVariants
+        ? _objc_msgSend_1vdfkenStret(_ptr, this.ref.pointer, _sel_size)
+        : _ptr.ref = _objc_msgSend_1vdfken(this.ref.pointer, _sel_size);
+    final _finalizable = _ptr.cast<ffi.Uint8>().asTypedList(
+        ffi.sizeOf<CGSize>(),
+        finalizer: pkg_ffi.calloc.nativeFree);
+    return ffi.Struct.create<CGSize>(_finalizable);
+  }
+
+  /// returns underlying CGImageRef or nil if CIImage based
+  ffi.Pointer<CGImage> get CGImage1 {
+    return _objc_msgSend_y1izi1(this.ref.pointer, _sel_CGImage);
+  }
+
+  /// returns underlying CIImage or nil if CGImageRef based
+  CIImage? get CIImage1 {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_CIImage);
+    return _ret.address == 0
+        ? null
+        : CIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// this will affect how the image is composited
+  UIImageOrientation get imageOrientation {
+    final _ret = _objc_msgSend_fkvhxy(this.ref.pointer, _sel_imageOrientation);
+    return UIImageOrientation.fromValue(_ret);
+  }
+
+  /// scale
+  double get scale {
+    return objc.useMsgSendVariants
+        ? _objc_msgSend_1ukqyt8Fpret(this.ref.pointer, _sel_scale)
+        : _objc_msgSend_1ukqyt8(this.ref.pointer, _sel_scale);
+  }
+
+  /// isSymbolImage
+  bool get symbolImage {
+    return _objc_msgSend_91o635(this.ref.pointer, _sel_isSymbolImage);
+  }
+
+  /// read sequence of files with suffix starting at 0 or 1
+  static UIImage? animatedImageNamed_duration_(
+      objc.NSString name, double duration) {
+    final _ret = _objc_msgSend_1cw9ptg(_class_UIImage,
+        _sel_animatedImageNamed_duration_, name.ref.pointer, duration);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// sequence of files
+  static UIImage? animatedResizableImageNamed_capInsets_duration_(
+      objc.NSString name, objc.ObjCObjectBase capInsets, double duration) {
+    final _ret = _objc_msgSend_1xdeq9e(
+        _class_UIImage,
+        _sel_animatedResizableImageNamed_capInsets_duration_,
+        name.ref.pointer,
+        capInsets.ref.pointer,
+        duration);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// animatedResizableImageNamed:capInsets:resizingMode:duration:
+  static UIImage? animatedResizableImageNamed_capInsets_resizingMode_duration_(
+      objc.NSString name,
+      objc.ObjCObjectBase capInsets,
+      UIImageResizingMode resizingMode,
+      double duration) {
+    final _ret = _objc_msgSend_1fh29a1(
+        _class_UIImage,
+        _sel_animatedResizableImageNamed_capInsets_resizingMode_duration_,
+        name.ref.pointer,
+        capInsets.ref.pointer,
+        resizingMode.value,
+        duration);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// animatedImageWithImages:duration:
+  static UIImage? animatedImageWithImages_duration_(
+      objc.NSArray images, double duration) {
+    final _ret = _objc_msgSend_1cw9ptg(_class_UIImage,
+        _sel_animatedImageWithImages_duration_, images.ref.pointer, duration);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// default is nil for non-animated images
+  objc.NSArray? get images {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_images);
+    return _ret.address == 0
+        ? null
+        : objc.NSArray.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// total duration for all frames. default is 0 for non-animated images
+  double get duration {
+    return objc.useMsgSendVariants
+        ? _objc_msgSend_1ukqyt8Fpret(this.ref.pointer, _sel_duration)
+        : _objc_msgSend_1ukqyt8(this.ref.pointer, _sel_duration);
+  }
+
+  /// mode = kCGBlendModeNormal, alpha = 1.0
+  void drawAtPoint_(CGPoint point) {
+    _objc_msgSend_iy8iz6(this.ref.pointer, _sel_drawAtPoint_, point);
+  }
+
+  /// drawAtPoint:blendMode:alpha:
+  void drawAtPoint_blendMode_alpha_(
+      CGPoint point, CGBlendMode blendMode, double alpha) {
+    _objc_msgSend_yg3i7f(this.ref.pointer, _sel_drawAtPoint_blendMode_alpha_,
+        point, blendMode.value, alpha);
+  }
+
+  /// mode = kCGBlendModeNormal, alpha = 1.0
+  void drawInRect_(CGRect rect) {
+    _objc_msgSend_1okkq16(this.ref.pointer, _sel_drawInRect_, rect);
+  }
+
+  /// drawInRect:blendMode:alpha:
+  void drawInRect_blendMode_alpha_(
+      CGRect rect, CGBlendMode blendMode, double alpha) {
+    _objc_msgSend_1ggt4c3(this.ref.pointer, _sel_drawInRect_blendMode_alpha_,
+        rect, blendMode.value, alpha);
+  }
+
+  /// draws the image as a CGPattern
+  void drawAsPatternInRect_(CGRect rect) {
+    _objc_msgSend_1okkq16(this.ref.pointer, _sel_drawAsPatternInRect_, rect);
+  }
+
+  /// create a resizable version of this image. the interior is tiled when drawn.
+  UIImage resizableImageWithCapInsets_(objc.ObjCObjectBase capInsets) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.pointer,
+        _sel_resizableImageWithCapInsets_, capInsets.ref.pointer);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// the interior is resized according to the resizingMode
+  UIImage resizableImageWithCapInsets_resizingMode_(
+      objc.ObjCObjectBase capInsets, UIImageResizingMode resizingMode) {
+    final _ret = _objc_msgSend_17cdz0o(
+        this.ref.pointer,
+        _sel_resizableImageWithCapInsets_resizingMode_,
+        capInsets.ref.pointer,
+        resizingMode.value);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// default is UIEdgeInsetsZero for non resizable images
+  int get capInsets {
+    return _objc_msgSend_13yqbb6(this.ref.pointer, _sel_capInsets);
+  }
+
+  /// default is UIImageResizingModeTile
+  UIImageResizingMode get resizingMode {
+    final _ret = _objc_msgSend_knxebs(this.ref.pointer, _sel_resizingMode);
+    return UIImageResizingMode.fromValue(_ret);
+  }
+
+  /// Support for constraint-based layout (auto layout)
+  /// The alignmentRectInsets of a UIImage are used by UIImageView and other UIView and UIControl
+  /// subclasses that take custom images to determine the view's alignment rect insets for
+  /// constraint-based layout.
+  /// The default alignmentRectInsets are UIEdgeInsetsZero.
+  UIImage imageWithAlignmentRectInsets_(objc.ObjCObjectBase alignmentInsets) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.pointer,
+        _sel_imageWithAlignmentRectInsets_, alignmentInsets.ref.pointer);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// alignmentRectInsets
+  int get alignmentRectInsets {
+    return _objc_msgSend_13yqbb6(this.ref.pointer, _sel_alignmentRectInsets);
+  }
+
+  /// Create a version of this image with the specified rendering mode. By default, images have a rendering mode of UIImageRenderingModeAutomatic.
+  UIImage imageWithRenderingMode_(UIImageRenderingMode renderingMode) {
+    final _ret = _objc_msgSend_oomw3f(
+        this.ref.pointer, _sel_imageWithRenderingMode_, renderingMode.value);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// renderingMode
+  UIImageRenderingMode get renderingMode {
+    final _ret = _objc_msgSend_s2io2v(this.ref.pointer, _sel_renderingMode);
+    return UIImageRenderingMode.fromValue(_ret);
+  }
+
+  /// Creates a version of this image that, when assigned to a UIImageView’s image property, draws its underlying image contents horizontally mirrored when running under a right-to-left language. Affects the flipsForRightToLeftLayoutDirection property; does not affect the imageOrientation property.
+  /// This method cannot be used to create a left-to-right version of a right-to-left source image, and will be deprecated in a future release. New code should instead use -imageWithHorizontallyFlippedOrientation to construct a UIImageAsset.
+  UIImage imageFlippedForRightToLeftLayoutDirection() {
+    final _ret = _objc_msgSend_1x359cv(
+        this.ref.pointer, _sel_imageFlippedForRightToLeftLayoutDirection);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// flipsForRightToLeftLayoutDirection
+  bool get flipsForRightToLeftLayoutDirection {
+    return _objc_msgSend_91o635(
+        this.ref.pointer, _sel_flipsForRightToLeftLayoutDirection);
+  }
+
+  /// Creates a version of this image with an imageOrientation property that is horizontally mirrored from this image’s. Does not affect the flipsForRightToLeftLayoutDirection property.
+  UIImage imageWithHorizontallyFlippedOrientation() {
+    final _ret = _objc_msgSend_1x359cv(
+        this.ref.pointer, _sel_imageWithHorizontallyFlippedOrientation);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// The baseline offset is expressed in points from the bottom of the image (positive = up, negative = down).
+  /// If the image doesn't have a defined baseline, this value will be 0, but you can
+  /// use -hasBaseline to see if it actually has one defined (because it is perfectly possible to have
+  /// a baseline with the value of 0).
+  double get baselineOffsetFromBottom {
+    return objc.useMsgSendVariants
+        ? _objc_msgSend_1ukqyt8Fpret(
+            this.ref.pointer, _sel_baselineOffsetFromBottom)
+        : _objc_msgSend_1ukqyt8(
+            this.ref.pointer, _sel_baselineOffsetFromBottom);
+  }
+
+  /// hasBaseline
+  bool get hasBaseline {
+    return _objc_msgSend_91o635(this.ref.pointer, _sel_hasBaseline);
+  }
+
+  /// imageWithBaselineOffsetFromBottom:
+  UIImage imageWithBaselineOffsetFromBottom_(double baselineOffset) {
+    final _ret = _objc_msgSend_1x911p2(this.ref.pointer,
+        _sel_imageWithBaselineOffsetFromBottom_, baselineOffset);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithoutBaseline
+  UIImage imageWithoutBaseline() {
+    final _ret =
+        _objc_msgSend_1x359cv(this.ref.pointer, _sel_imageWithoutBaseline);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// Configuration support
+  /// ---------------------
+  /// This describes the configuration of the image.
+  /// Depending on which type of image, the configuration might be different.
+  /// Symbol images will always have a UIImageSymbolConfiguration, even if you give it another
+  /// type of configuration (it will merge the trait info from the other configuration into
+  /// its current configuration).
+  /// Images start off with an unspecified configuration but can be modified by the methods below.
+  /// The preferred ways of adding configurations for displaying images is to specify them on
+  /// the image view, but it is possible to modify images with a more specific configuration.
+  UIImageConfiguration? get configuration {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_configuration);
+    return _ret.address == 0
+        ? null
+        : UIImageConfiguration.castFromPointer(_ret,
+            retain: true, release: true);
+  }
+
+  /// Create a new image by replacing the existing configuration with a new one.
+  /// For symbol images this will always result in an image with a UIImageSymbolConfiguration,
+  /// even if you give it another type of configuration (the trait info from the new configuration
+  /// will be merged into the current symbol configuration resulting in anew symbol configuration).
+  /// For non-symbol images, this will replace the configuration of the image with a new one.
+  ///
+  /// Important note! Given (for example):
+  ///
+  /// image = image(named:"the_image").withRenderingMode(.alwaysTemplate)
+  ///
+  /// the following two statements aren't exactly equivalent:
+  ///
+  /// a = image.imageAsset.withConfiguration(configuration)
+  /// b = image.withConfiguration(configuration)
+  ///
+  /// The first one will resolve the image again from the asset catalog (if it is originating from one),
+  /// resulting in a fresh image without any modifications. In other words, `a` won't have the
+  /// rendering mode change set anymore, and it will be "reverted" to `.automatic`.
+  /// The second one will resolve the image, but apply and changes that were made to the image.
+  /// That means that `b` might be a different image, but it will still have the same rendering mode
+  /// as `image`.
+  UIImage imageWithConfiguration_(UIImageConfiguration configuration) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.pointer,
+        _sel_imageWithConfiguration_, configuration.ref.pointer);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// Symbol configuration support
+  /// ----------------------------
+  /// This describes the symbol configuration of a symbol image.
+  /// Symbol images start off with an unspecified configuration but can be modified by using
+  /// `image.withConfiguration(:)`.
+  ///
+  /// However... the preferred ways of adding configurations for displaying images is to specify
+  /// them on the image view using `preferredSymbolConfiguration`, but it is possible to modify
+  /// images with a more specific configuration. This include image related traits, for example
+  /// you can use this to fix a symbol image to a dynamic type style at a fixed preferred content size
+  /// category.
+  UIImageSymbolConfiguration? get symbolConfiguration {
+    final _ret =
+        _objc_msgSend_1x359cv(this.ref.pointer, _sel_symbolConfiguration);
+    return _ret.address == 0
+        ? null
+        : UIImageSymbolConfiguration.castFromPointer(_ret,
+            retain: true, release: true);
+  }
+
+  /// This is a convenience method to apply another symbol configuration over an existing one.
+  /// If the image doesn't have a symbol configuration, it will just merge the traits of the existing
+  /// with the new one (where the new traits override the old traits).
+  ///
+  /// Create a new image by applying the specified configuration over the existing one.
+  /// This only works if the configuration already has a configuration (i.e. is a symbol image).
+  /// The image will be configured with a combination of both configurations.
+  ///
+  /// If you use this on a symbol image with other layout modifications done (e.g. changed baseline),
+  /// those changes will be lost and overwritten with the new configuration's layout properties.
+  /// This applies to size, contentInsets and baseline.
+  UIImage? imageByApplyingSymbolConfiguration_(
+      UIImageSymbolConfiguration configuration) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.pointer,
+        _sel_imageByApplyingSymbolConfiguration_, configuration.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithTintColor:
+  UIImage imageWithTintColor_(objc.ObjCObjectBase color) {
+    final _ret = _objc_msgSend_62nh5j(
+        this.ref.pointer, _sel_imageWithTintColor_, color.ref.pointer);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// imageWithTintColor:renderingMode:
+  UIImage imageWithTintColor_renderingMode_(
+      objc.ObjCObjectBase color, UIImageRenderingMode renderingMode) {
+    final _ret = _objc_msgSend_noczqd(
+        this.ref.pointer,
+        _sel_imageWithTintColor_renderingMode_,
+        color.ref.pointer,
+        renderingMode.value);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// Indicates that this image is tagged for display of high dynamic range content.
+  bool get isHighDynamicRange {
+    return _objc_msgSend_91o635(this.ref.pointer, _sel_isHighDynamicRange);
+  }
+
+  /// Returns a new image that will render within the standard range.
+  UIImage imageRestrictedToStandardDynamicRange() {
+    final _ret = _objc_msgSend_1x359cv(
+        this.ref.pointer, _sel_imageRestrictedToStandardDynamicRange);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// init
+  UIImage init() {
+    final _ret =
+        _objc_msgSend_1x359cv(this.ref.retainAndReturnPointer(), _sel_init);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// new
+  static UIImage new1() {
+    final _ret = _objc_msgSend_1x359cv(_class_UIImage, _sel_new);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// allocWithZone:
+  static UIImage allocWithZone_(ffi.Pointer<_NSZone> zone) {
+    final _ret =
+        _objc_msgSend_hzlb60(_class_UIImage, _sel_allocWithZone_, zone);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// alloc
+  static UIImage alloc() {
+    final _ret = _objc_msgSend_1x359cv(_class_UIImage, _sel_alloc);
+    return UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// self
+  UIImage self() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_self);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// retain
+  UIImage retain() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_retain);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// autorelease
+  UIImage autorelease() {
+    final _ret = _objc_msgSend_1x359cv(this.ref.pointer, _sel_autorelease);
+    return UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
+
+  /// supportsSecureCoding
+  static bool getSupportsSecureCoding() {
+    return _objc_msgSend_91o635(_class_UIImage, _sel_supportsSecureCoding);
+  }
+
+  /// encodeWithCoder:
+  void encodeWithCoder_(objc.NSCoder coder) {
+    _objc_msgSend_1jdvcbf(
+        this.ref.pointer, _sel_encodeWithCoder_, coder.ref.pointer);
+  }
+
+  /// initWithCoder:
+  UIImage? initWithCoder_(objc.NSCoder coder) {
+    final _ret = _objc_msgSend_62nh5j(this.ref.retainAndReturnPointer(),
+        _sel_initWithCoder_, coder.ref.pointer);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: false, release: true);
+  }
+
+  /// objectWithItemProviderData:typeIdentifier:error:
+  static UIImage? objectWithItemProviderData_typeIdentifier_error_(
+      objc.NSData data,
+      objc.NSString typeIdentifier,
+      ffi.Pointer<ffi.Pointer<objc.ObjCObject>> outError) {
+    final _ret = _objc_msgSend_bo6ep4(
+        _class_UIImage,
+        _sel_objectWithItemProviderData_typeIdentifier_error_,
+        data.ref.pointer,
+        typeIdentifier.ref.pointer,
+        outError);
+    return _ret.address == 0
+        ? null
+        : UIImage.castFromPointer(_ret, retain: true, release: true);
+  }
 }

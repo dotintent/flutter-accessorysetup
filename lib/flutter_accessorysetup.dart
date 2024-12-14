@@ -1,6 +1,8 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
+
 import 'package:objective_c/objective_c.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup/helpers.dart';
@@ -50,6 +52,28 @@ class FlutterAccessorysetupFFI {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
     _session.showPickerForItems_(items.toNSArray());
+    return completer.future;
+  }
+
+  Future<void> showPickerForDevice(String name, String asset, String serviceID) async {
+    final completer = Completer<void>();
+    _showPickerCompleter = completer;
+
+    final image = await nativeUIImageWithDartAsset(asset);
+    if (image == null) {
+      throw FlutterAccessorysetupError(
+        code: 1,
+        description: "Failed to load UIImage for the asset: $asset"
+      );
+    }
+    final descriptor = ASDiscoveryDescriptor.alloc().init();
+    descriptor.bluetoothServiceUUID = CBUUID.UUIDWithString_(serviceID.toNSString());
+    final item = ASPickerDisplayItem.alloc().initWithName_productImage_descriptor_(
+      name.toNSString(),
+      image,
+      descriptor
+    );
+    _session.showPickerForItems_([item].toNSArray());
     return completer.future;
   }
 
@@ -137,7 +161,7 @@ class FlutterAccessorysetupFFI {
 
   // endregion
 
-  // region Logs
+  // region Helpers
 
   /// for debugging the native part of the code
   void printNativeSessionLogs() {
@@ -148,9 +172,24 @@ class FlutterAccessorysetupFFI {
     }
   }
 
+  // Load image from the flutter dart asset
+  static Future<UIImage?> nativeUIImageWithDartAsset(String asset) async {
+    final bytes = await rootBundle.load(asset);
+    return UIImage.imageWithData_(bytes.toNSData());
+  }
+
   // endregion
 }
 
+class FlutterAccessorysetupError extends Error {
+  late final int code;
+  late final String description;
+
+  FlutterAccessorysetupError({required this.code, required this.description});
+
+  @override
+  String toString() => 'FlutterAccessorysetupError(code: $code, description: $description)';
+}
 class NativeCodeError extends Error {
 
   late final String domain;

@@ -80,17 +80,18 @@ class _MyAppState extends State<MyApp> {
   Future<void> connect() async {
     final firstAccessoryId = accessorySetup.accessories.firstOrNull?.dartBluetoothIdentifier;
     if (firstAccessoryId != null) {
+      debugPrint('Got an accessory, will try to connect: $firstAccessoryId');
       await _connectWithoutScanning(firstAccessoryId);
       return;
     }
-
-   
 
     try {
       // to make it work you need to set up info plist keys
       // NSAccessorySetupBluetoothServices -> UUID
       // and NSAccessorySetupKitSupports -> Bluetooth
-      accessorySetup.showPicker();
+      accessorySetup.showPickerForDevice(
+        'My Ble', Assets.images.ble.path, '55AD5FE1-E877-486B-9CD9-A29C8584308D'
+      );
     } catch (e) {
       if (e is NativeCodeError) {
         debugPrint('Got native code error: $e');
@@ -98,21 +99,6 @@ class _MyAppState extends State<MyApp> {
         debugPrint('Got error: $e');
       }
     }
-
-    // TODO: implement ASPickerDisplayItem example
-    // show the picker to select the accessory
-    // final descriptior = ASDiscoveryDescriptor.alloc().init();
-    // descriptior.bluetoothServiceUUID = CBUUID.
-    // final item = ASPickerDisplayItem.alloc().initWithName_productImage_descriptor_(
-
-    // );
-    // item.name = 'My Ble';
-    // try {
-    //   await _flutterAccessorysetupPlugin.showBlePicker(
-    //       'My Ble', Assets.images.ble.path, '55AD5FE1-E877-486B-9CD9-A29C8584308D', null);
-    // } on PlatformException {
-    //   debugPrint('Failed to show the picker');
-    // }
   }
 
   @override
@@ -120,16 +106,16 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Accessory Setup app'),
+          title: const Text('Accessory Setup App'),
         ),
         body: Center(
             child: Column(
           children: [
-            Text('Device status: $_deviceStatus'),
+            Text('Device Status: $_deviceStatus'),
             const SizedBox(
               height: 15,
             ),
-            Text('Setup Session events: \n$_events'),
+            Text('Setup Session Events: \n$_events'),
           ],
         )),
       ),

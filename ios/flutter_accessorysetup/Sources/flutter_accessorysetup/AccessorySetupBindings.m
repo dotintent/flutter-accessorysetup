@@ -2,6 +2,7 @@
 #import <AccessorySetupKit/AccessorySetupKit.h>
 #import "AccessorySetupBindings.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import <UIKit/UIImage.h>
 
 #if !__has_feature(objc_arc)
 #error "This file must be compiled with ARC enabled"
@@ -27,3 +28,11 @@ _ListenerTrampoline1 _FFIAccessorySetupKit_wrapListenerBlock_ao4xm9(_ListenerTra
 }
 
 Protocol* _FFIAccessorySetupKit_FFIAccessorySessionDelegate() { return @protocol(FFIAccessorySessionDelegate); }
+
+typedef void  (^_ListenerTrampoline2)(id arg0, id arg1);
+_ListenerTrampoline2 _FFIAccessorySetupKit_wrapListenerBlock_wjvic9(_ListenerTrampoline2 block) NS_RETURNS_RETAINED {
+  return ^void(id arg0, id arg1) {
+    objc_retainBlock(block);
+    block(objc_retain(arg0), objc_retain(arg1));
+  };
+}

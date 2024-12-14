@@ -1,7 +1,10 @@
 import 'dart:ffi';
+import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
 import 'package:objective_c/objective_c.dart';
+
+import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 
 NSObject? _convertKnownType(Object? o) {
@@ -12,6 +15,9 @@ NSObject? _convertKnownType(Object? o) {
     final Map<Object?, Object?> m => m.toNSDictionary(),
     final int i => NSNumber.alloc().initWithInt_(i),
     final double d => NSNumber.alloc().initWithDouble_(d),
+    final ByteData data => data.toNSData(),
+    final ASMigrationDisplayItem item => item,
+    final ASPickerDisplayItem item => item,
     _ => throw UnimplementedError('No conversion for $o'),
   };
 }
@@ -70,10 +76,16 @@ extension DartStringUUIDExtension on NSUUID {
 
 extension ObjCObjectBaseExtension on ObjCObjectBase {
   dynamic downcast() {
-    if (NSNumber.isInstance(this)) {
-      return NSNumber.castFrom(this);
+    if (ASAccessory.isInstance(this)) {
+      return ASAccessory.castFrom(this);
     } else if (NSString.isInstance(this)) {
       return NSString.castFrom(this);
+    } else if (UIImage.isInstance(this)) {
+      return UIImage.castFrom(this);
+    } else if (NSData.isInstance(this)) {
+      return NSData.castFrom(this);
+    } else if (NSNumber.isInstance(this)) {
+      return NSNumber.castFrom(this);
     } else if (NSArray.isInstance(this)) {
       return NSArray.castFrom(this);
     } else if (NSError.isInstance(this)) {
@@ -106,4 +118,10 @@ extension NSEnumeratorExtension on NSEnumerator {
     }
     return results;
   }
+}
+
+extension ByteDataToNativeExtension on ByteData {
+  NSData toNSData() {
+    return buffer.asInt8List().toNSData();
+  } 
 }
