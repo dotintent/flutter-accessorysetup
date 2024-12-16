@@ -6,8 +6,8 @@
 At this stage the library supports:
 
 - [x] BLE
-- [ ] WiFi (work in progress)
-- [ ] Migration
+- [x] WiFi
+- [x] Migration
 
 ‼️ One important remark: by Apple's design, the library works only with **iOS 18 or above**. ‼️
 
@@ -21,6 +21,7 @@ flutter pub get flutter_accessorysetup
 
 ### ⚙️ Setup
 
+- For the full details refer [apple docs](https://developer.apple.com/documentation/accessorysetupkit/discovering-and-configuring-accessories)
 - You should add the keys to the [Info.plist](./example/ios/Runner/Info.plist) of the iOS app to make it work.
   ⚠️ **If you miss the required key the app will crash when you show the picker.** ⚠️
 
@@ -56,21 +57,29 @@ flutter pub get flutter_accessorysetup
 
   - There is an option with manufacturer ID that is not covered here.
 
-- Use the `FlutterAccessorysetup` class. See the full code example in the [Example app](./example/lib/main.dart)
+- Use the `FlutterAccessorysetupFFI` class. See the full code example in the [Example app](./example/lib/main.dart)
 
 ```dart
-final _flutterAccessorysetupPlugin = FlutterAccessorysetup();
+final _accessorySetup = FlutterAccessorysetupFFI();
 
-_flutterAccessorysetupPlugin.sessionStream.listen((event) => setState(() {
-    // handle session events here
-    // async errors will be delivered as session events too
-}));
+void activate() {
+  _accessorySetup.eventStream.listen((event) {
+        debugPrint('Got event: ${event.eventType}');
+        // handle session events here
+  }));
+  await _accessorySetup.activate();
+  try {
+    accessorySetup.showPickerForDevice(
+      'My Ble', Assets.images.ble.path, '55AD5FE1-E877-486B-9CD9-A29C8584308D'
+    );
+  } on PlatformException {
+    debugPrint('Failed to show the picker');
+  }
+}
 
-try {
-  await _flutterAccessorysetupPlugin.activate();
-  await _flutterAccessorysetupPlugin.showPicker();
-} on PlatformException {
-  debugPrint('Failed to show the picker');
+void deactivate() {
+  accessorySetup.dispose();
+  super.deactivate();
 }
 ```
 
@@ -99,8 +108,3 @@ try {
 
 - <https://developer.apple.com/documentation/accessorysetupkit/discovering-and-configuring-accessories>
 - <https://developer.apple.com/documentation/accessorysetupkit/authorizing-a-bluetooth-accessory-to-share-a-dice-roll>
-
-
-
-I see that block pointer is not working properly in FFI, check how to make them work
-NSArray to list to print logs by using a custom helper
