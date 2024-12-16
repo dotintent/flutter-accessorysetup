@@ -69,7 +69,7 @@ void activate() {
   }));
   await _accessorySetup.activate();
   try {
-    accessorySetup.showPickerForDevice(
+    _accessorySetup.showPickerForDevice(
       'My Ble', Assets.images.ble.path, '55AD5FE1-E877-486B-9CD9-A29C8584308D'
     );
   } on PlatformException {
