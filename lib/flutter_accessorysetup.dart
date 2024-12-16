@@ -7,22 +7,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup/helpers.dart';
 
-
 class FlutterAccessorysetupFFI {
-
   Stream<ASAccessoryEvent> get eventStream => _eventsController.stream;
   List<ASAccessory> get accessories => _session.accessories.toList();
   final _session = FFIAccessorySession.alloc().init();
   final _eventsController = StreamController<ASAccessoryEvent>();
-  
+
   late final _delegate = FFIAccessorySessionDelegate.implementAsListener(
-    handleEvent_: _handleEvent,
-    didShowPickerWithError_: _didShowPicker,
-    didRenameAccessory_withError_: _didRenameAccessory,
-    didRemoveAccessory_withError_: _didRemoveAccessory,
-    didFinishAuthorizationForAccessory_withError_: _didFinishAuthorization,
-    didFailAuthorizationForAccessory_withError_: _didFailAuthorization
-  );
+      handleEvent_: _handleEvent,
+      didShowPickerWithError_: _didShowPicker,
+      didRenameAccessory_withError_: _didRenameAccessory,
+      didRemoveAccessory_withError_: _didRemoveAccessory,
+      didFinishAuthorizationForAccessory_withError_: _didFinishAuthorization,
+      didFailAuthorizationForAccessory_withError_: _didFailAuthorization);
   // TODO: bind completers to accessories to enable multiple calls
   Completer<void>? _showPickerCompleter;
   Completer<void>? _renameAccessoryCompleter;
@@ -55,56 +52,50 @@ class FlutterAccessorysetupFFI {
     return completer.future;
   }
 
-  Future<void> showPickerForDevice(String name, String asset, String serviceID) async {
+  Future<void> showPickerForDevice(
+      String name, String asset, String serviceID) async {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
 
     final image = await nativeUIImageWithDartAsset(asset);
     if (image == null) {
       throw FlutterAccessorysetupError(
-        code: 1,
-        description: "Failed to load UIImage for the asset: $asset"
-      );
+          code: 1, description: "Failed to load UIImage for the asset: $asset");
     }
     final descriptor = ASDiscoveryDescriptor.alloc().init();
-    descriptor.bluetoothServiceUUID = CBUUID.UUIDWithString_(serviceID.toNSString());
-    final item = ASPickerDisplayItem.alloc().initWithName_productImage_descriptor_(
-      name.toNSString(),
-      image,
-      descriptor
-    );
+    descriptor.bluetoothServiceUUID =
+        CBUUID.UUIDWithString_(serviceID.toNSString());
+    final item = ASPickerDisplayItem.alloc()
+        .initWithName_productImage_descriptor_(
+            name.toNSString(), image, descriptor);
     _session.showPickerForItems_([item].toNSArray());
     return completer.future;
   }
 
   Future<void> renameAccessory(
-    ASAccessory accessory,
-    ASAccessoryRenameOptions options
-  ) async {
+      ASAccessory accessory, ASAccessoryRenameOptions options) async {
     final completer = Completer<void>();
     _renameAccessoryCompleter = completer;
     _session.renameAccessory_options_(accessory, options);
     return completer.future;
   }
 
-   Future<void> removeAccessory(ASAccessory accessory) async {
+  Future<void> removeAccessory(ASAccessory accessory) async {
     final completer = Completer<void>();
     _removeAccessoryCompleter = completer;
     _session.removeAccessory_(accessory);
     return completer.future;
   }
 
-   Future<void> finishAuthorizationForAccessory(
-    ASAccessory accessory,
-    ASAccessorySettings settings
-   ) async {
+  Future<void> finishAuthorizationForAccessory(
+      ASAccessory accessory, ASAccessorySettings settings) async {
     final completer = Completer<void>();
     _finishAuthorizationForAccessoryCompleter = completer;
     _session.finishAuthorizationForAccessory_settings_(accessory, settings);
     return completer.future;
   }
 
-   Future<void> failAuthorizationForAccessory(ASAccessory accessory) async {
+  Future<void> failAuthorizationForAccessory(ASAccessory accessory) async {
     final completer = Completer<void>();
     _failAuthorizationForAccessoryCompleter = completer;
     _session.failAuthorizationForAccessory_(accessory);
@@ -145,7 +136,8 @@ class FlutterAccessorysetupFFI {
 
   void _didFinishAuthorization(ASAccessory accessory, NSError? nsError) {
     if (nsError != null) {
-      _finishAuthorizationForAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      _finishAuthorizationForAccessoryCompleter
+          ?.completeError(NativeCodeError(nsError));
       return;
     }
     _finishAuthorizationForAccessoryCompleter?.complete();
@@ -153,7 +145,8 @@ class FlutterAccessorysetupFFI {
 
   void _didFailAuthorization(ASAccessory accessory, NSError? nsError) {
     if (nsError != null) {
-      _failAuthorizationForAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      _failAuthorizationForAccessoryCompleter
+          ?.completeError(NativeCodeError(nsError));
       return;
     }
     _failAuthorizationForAccessoryCompleter?.complete();
@@ -188,10 +181,11 @@ class FlutterAccessorysetupError extends Error {
   FlutterAccessorysetupError({required this.code, required this.description});
 
   @override
-  String toString() => 'FlutterAccessorysetupError(code: $code, description: $description)';
+  String toString() =>
+      'FlutterAccessorysetupError(code: $code, description: $description)';
 }
-class NativeCodeError extends Error {
 
+class NativeCodeError extends Error {
   late final String domain;
   late final int code;
   late final String description;
@@ -203,13 +197,12 @@ class NativeCodeError extends Error {
   }
 
   @override
-  String toString() => 'NativeCodeError(domain: $domain, code: $code, description: $description)';
+  String toString() =>
+      'NativeCodeError(domain: $domain, code: $code, description: $description)';
 }
-
 
 /// Exposing properties as Dart types
 extension ASAccessoryDartExtension on ASAccessory {
-
   String? get dartBluetoothIdentifier {
     return bluetoothIdentifier?.toDartUUIDString();
   }
@@ -217,7 +210,6 @@ extension ASAccessoryDartExtension on ASAccessory {
 
 /// Exposing properties as Dart types
 extension ASAccessoryEventDartExtension on ASAccessoryEvent {
-  
   NativeCodeError? get dartError {
     final nsError = error;
     if (nsError != null) {

@@ -78,7 +78,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> connect() async {
-    final firstAccessoryId = accessorySetup.accessories.firstOrNull?.dartBluetoothIdentifier;
+    final firstAccessoryId =
+        accessorySetup.accessories.firstOrNull?.dartBluetoothIdentifier;
     if (firstAccessoryId != null) {
       debugPrint('Got an accessory, will try to connect: $firstAccessoryId');
       await _connectWithoutScanning(firstAccessoryId);
@@ -89,9 +90,8 @@ class _MyAppState extends State<MyApp> {
       // to make it work you need to set up info plist keys
       // NSAccessorySetupBluetoothServices -> UUID
       // and NSAccessorySetupKitSupports -> Bluetooth
-      accessorySetup.showPickerForDevice(
-        'My Ble', Assets.images.ble.path, '55AD5FE1-E877-486B-9CD9-A29C8584308D'
-      );
+      accessorySetup.showPickerForDevice('My Ble', Assets.images.ble.path,
+          '55AD5FE1-E877-486B-9CD9-A29C8584308D');
     } catch (e) {
       if (e is NativeCodeError) {
         debugPrint('Got native code error: $e');

@@ -38,9 +38,11 @@ extension ListExtension on List {
 
 extension MapExtension on Map {
   NSDictionary toNSDictionary() {
-    final NSMutableDictionary dict = NSMutableDictionary.dictionaryWithCapacity_(length);
+    final NSMutableDictionary dict =
+        NSMutableDictionary.dictionaryWithCapacity_(length);
     for (final MapEntry<Object?, Object?> entry in entries) {
-      dict.setObject_forKey_(_covertKnownTypeWithNSNull(entry.value), _covertKnownTypeWithNSNull(entry.key));
+      dict.setObject_forKey_(_covertKnownTypeWithNSNull(entry.value),
+          _covertKnownTypeWithNSNull(entry.key));
     }
     return dict;
   }
@@ -57,7 +59,9 @@ extension NSArrayExtension on NSArray {
   }
 
   List<String> toDartStringList() {
-    return toList<NSString>().map((nsString) => nsString.toDartString()).toList();
+    return toList<NSString>()
+        .map((nsString) => nsString.toDartString())
+        .toList();
   }
 }
 
@@ -105,8 +109,10 @@ extension ObjCObjectBaseExtension on ObjCObjectBase {
 }
 
 extension NSDictionaryExtension on NSDictionary {
-  Map<Object?, Object?> toMap() =>
-      <Object?, Object?>{for (final ObjCObjectBase key in keyEnumerator().toList()) key: objectForKey_(key)?.downcast()};
+  Map<Object?, Object?> toMap() => <Object?, Object?>{
+        for (final ObjCObjectBase key in keyEnumerator().toList())
+          key: objectForKey_(key)?.downcast()
+      };
 }
 
 extension NSEnumeratorExtension on NSEnumerator {
@@ -123,5 +129,5 @@ extension NSEnumeratorExtension on NSEnumerator {
 extension ByteDataToNativeExtension on ByteData {
   NSData toNSData() {
     return buffer.asInt8List().toNSData();
-  } 
+  }
 }
