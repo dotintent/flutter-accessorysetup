@@ -28,7 +28,7 @@
 	<true/>
 	<key>NSAccessorySetupBluetoothServices</key>
 	<array>
-		<string>FEF3</string>
+		<string>4013ABDE-11C0-49E7-9939-4B4567C26ADA</string>
 	</array>
 	<key>NSAccessorySetupKitSupports</key>
 	<array>

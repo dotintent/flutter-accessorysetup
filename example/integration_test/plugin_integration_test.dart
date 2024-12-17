@@ -15,11 +15,14 @@ import 'package:flutter_accessorysetup/flutter_accessorysetup.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final FlutterAccessorysetup plugin = FlutterAccessorysetup();
-    final String? version = await plugin.getPlatformVersion();
-    // The version string depends on the host platform running the test, so
-    // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+  testWidgets('activate test', (WidgetTester tester) async {
+    final setup = FlutterAccessorySetup();
+    final firstEventFuture = setup.eventStream.first;
+
+    setup.activate();
+    final event = await firstEventFuture.timeout(Duration(seconds: 2));
+
+    expect(event.error, null, reason: 'during activation the error should be null');
+    expect(event.accessory, null, reason: 'during activation the accessory should be null');
   });
 }
