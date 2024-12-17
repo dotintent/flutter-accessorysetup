@@ -1,6 +1,6 @@
 name: flutter_accessorysetup
 description: "A Flutter plugin to use AccessorySetupKit from iOS 18+"
-version: 0.0.2
+version: 1.0.0
 homepage: https://github.com/dotintent/flutter-accessorysetup
 
 environment:
