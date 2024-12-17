@@ -16,7 +16,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('activate test', (WidgetTester tester) async {
-    final setup = FlutterAccessorysetupFFI();
+    final setup = FlutterAccessorySetup();
     final firstEventFuture = setup.eventStream.first;
 
     setup.activate();

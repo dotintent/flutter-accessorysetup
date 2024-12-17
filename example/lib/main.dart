@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   ASAccessory? _pickedAccessory;
   StreamSubscription<BluetoothAdapterState>? _adapterStateSubscription;
   StreamSubscription<ASAccessoryEvent>? _eventsSubscription;
-  final accessorySetup = FlutterAccessorysetupFFI();
+  final _accessorySetup = FlutterAccessorySetup();
 
   @override
   void initState() {
@@ -36,12 +36,12 @@ class _MyAppState extends State<MyApp> {
   void deactivate() {
     _adapterStateSubscription?.cancel();
     _eventsSubscription?.cancel();
-    accessorySetup.dispose();
+    _accessorySetup.dispose();
     super.deactivate();
   }
 
   Future<void> _activateAccessorySession() async {
-    accessorySetup.eventStream.listen((event) {
+    _accessorySetup.eventStream.listen((event) {
       debugPrint('Got event: ${event.eventType}');
       setState(() {
         _events += '\n\r${event.dartDescription};\n\r';
@@ -74,12 +74,12 @@ class _MyAppState extends State<MyApp> {
         }
       }
     });
-    accessorySetup.activate();
+    _accessorySetup.activate();
   }
 
   Future<void> connect() async {
     final firstAccessoryId =
-        accessorySetup.accessories.firstOrNull?.dartBluetoothIdentifier;
+        _accessorySetup.accessories.firstOrNull?.dartBluetoothIdentifier;
     if (firstAccessoryId != null) {
       debugPrint('Got an accessory, will try to connect: $firstAccessoryId');
       await _connectWithoutScanning(firstAccessoryId);
@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
       // to make it work you need to set up info plist keys
       // NSAccessorySetupBluetoothServices -> UUID
       // and NSAccessorySetupKitSupports -> Bluetooth
-      accessorySetup.showPickerForDevice('My Ble', Assets.images.ble.path,
+      _accessorySetup.showPickerForDevice('My Ble', Assets.images.ble.path,
           '4013ABDE-11C0-49E7-9939-4B4567C26ADA');
     } catch (e) {
       if (e is NativeCodeError) {

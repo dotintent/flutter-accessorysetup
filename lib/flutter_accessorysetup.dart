@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup/helpers.dart';
 
-class FlutterAccessorysetupFFI {
+class FlutterAccessorySetup {
   Stream<ASAccessoryEvent> get eventStream => _eventsController.stream;
   List<ASAccessory> get accessories => _session.accessories.toList();
   final _session = FFIAccessorySession.alloc().init();

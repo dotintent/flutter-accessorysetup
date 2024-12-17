@@ -57,10 +57,10 @@ flutter pub get flutter_accessorysetup
 
   - There is an option with manufacturer ID that is not covered here.
 
-- Use the `FlutterAccessorysetupFFI` class. See the full code example in the [Example app](./example/lib/main.dart)
+- Use the `FlutterAccessorySetup` class. See the full code example in the [Example app](./example/lib/main.dart)
 
 ```dart
-final _accessorySetup = FlutterAccessorysetupFFI();
+final _accessorySetup = FlutterAccessorySetup();
 
 void activate() {
   _accessorySetup.eventStream.listen((event) {
