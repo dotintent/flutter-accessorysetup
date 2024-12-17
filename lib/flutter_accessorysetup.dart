@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup/helpers.dart';
 
-
 /// The main class of the library that provides service functionality
 /// Use it to activate the session and find and configure devices
 class FlutterAccessorySetup {
