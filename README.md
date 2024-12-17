@@ -70,7 +70,7 @@ void activate() {
   await _accessorySetup.activate();
   try {
     _accessorySetup.showPickerForDevice(
-      'My Ble', Assets.images.ble.path, '55AD5FE1-E877-486B-9CD9-A29C8584308D'
+      'My Ble', Assets.images.ble.path, '4013ABDE-11C0-49E7-9939-4B4567C26ADA'
     );
   } on PlatformException {
     debugPrint('Failed to show the picker');
