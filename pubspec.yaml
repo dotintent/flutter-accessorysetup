@@ -1,5 +1,7 @@
 name: flutter_accessorysetup
-description: "A Flutter plugin to use AccessorySetupKit from iOS 18+"
+description: >-
+  Use it to discover and configure Bluetooth or Wi-Fi accessories with images and names provided by the app.
+  Works on iOS 18 and above, and uses AccessorySetupKit through FFI.
 version: 1.0.0
 homepage: https://github.com/dotintent/flutter-accessorysetup
 

@@ -7,6 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup/helpers.dart';
 
+
+/// The main class of the library that provides service functionality
+/// Use it to activate the session and find and configure devices
 class FlutterAccessorySetup {
   Stream<ASAccessoryEvent> get eventStream => _eventsController.stream;
   List<ASAccessory> get accessories => _session.accessories.toList();
@@ -33,11 +36,14 @@ class FlutterAccessorySetup {
 
   // region Interface
 
+  /// Activates the session.
+  /// You should activate the session before using it
   void activate() {
     _session.setDelegate_(_delegate);
     _session.activate();
   }
 
+  /// Shows device picker
   Future<void> showPicker() async {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
@@ -45,6 +51,7 @@ class FlutterAccessorySetup {
     return completer.future;
   }
 
+  /// Shows device picker configured with list of `ASPickerDisplayItem`
   Future<void> showPickerForItems(List<ASPickerDisplayItem> items) async {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
@@ -52,6 +59,11 @@ class FlutterAccessorySetup {
     return completer.future;
   }
 
+  /// Shows device picker configured for a single device
+  /// parameters:
+  /// - name: the name of the device to display in picker
+  /// - asset: the asset of the device image to display in picker
+  /// - serviceID: the service UUID advertised by device (to search for a particular device)
   Future<void> showPickerForDevice(
       String name, String asset, String serviceID) async {
     final completer = Completer<void>();
@@ -72,6 +84,7 @@ class FlutterAccessorySetup {
     return completer.future;
   }
 
+  /// Renames provided accessory using the `ASAccessoryRenameOptions`
   Future<void> renameAccessory(
       ASAccessory accessory, ASAccessoryRenameOptions options) async {
     final completer = Completer<void>();
@@ -80,6 +93,7 @@ class FlutterAccessorySetup {
     return completer.future;
   }
 
+  /// Removes provided accessory (disconnects from the app)
   Future<void> removeAccessory(ASAccessory accessory) async {
     final completer = Completer<void>();
     _removeAccessoryCompleter = completer;
@@ -87,6 +101,7 @@ class FlutterAccessorySetup {
     return completer.future;
   }
 
+  /// Finishes the Authorization for accessory using `ASAccessorySettings`
   Future<void> finishAuthorizationForAccessory(
       ASAccessory accessory, ASAccessorySettings settings) async {
     final completer = Completer<void>();
@@ -95,6 +110,7 @@ class FlutterAccessorySetup {
     return completer.future;
   }
 
+  /// Fails the Authorization for the accessory
   Future<void> failAuthorizationForAccessory(ASAccessory accessory) async {
     final completer = Completer<void>();
     _failAuthorizationForAccessoryCompleter = completer;
@@ -156,7 +172,8 @@ class FlutterAccessorySetup {
 
   // region Helpers
 
-  /// for debugging the native part of the code
+  /// Prints logs from the native code
+  /// Use it for debugging the native part of the code
   void printNativeSessionLogs() {
     final logs = _session.logs.toDartStringList();
     print("logs count: ${logs.length}");
@@ -165,7 +182,7 @@ class FlutterAccessorySetup {
     }
   }
 
-  // Load image from the flutter dart asset
+  // Loads an image from the flutter dart asset
   static Future<UIImage?> nativeUIImageWithDartAsset(String asset) async {
     final bytes = await rootBundle.load(asset);
     return UIImage.imageWithData_(bytes.toNSData());
@@ -174,6 +191,7 @@ class FlutterAccessorySetup {
   // endregion
 }
 
+/// The class for errors occurred in the Dart code of the library
 class FlutterAccessorysetupError extends Error {
   late final int code;
   late final String description;
@@ -185,6 +203,7 @@ class FlutterAccessorysetupError extends Error {
       'FlutterAccessorysetupError(code: $code, description: $description)';
 }
 
+/// The class for errors occurred in the Native code of the library
 class NativeCodeError extends Error {
   late final String domain;
   late final int code;
@@ -201,14 +220,14 @@ class NativeCodeError extends Error {
       'NativeCodeError(domain: $domain, code: $code, description: $description)';
 }
 
-/// Exposing properties as Dart types
+/// Exposing native properties as Dart types
 extension ASAccessoryDartExtension on ASAccessory {
   String? get dartBluetoothIdentifier {
     return bluetoothIdentifier?.toDartUUIDString();
   }
 }
 
-/// Exposing properties as Dart types
+/// Exposing native properties as Dart types
 extension ASAccessoryEventDartExtension on ASAccessoryEvent {
   NativeCodeError? get dartError {
     final nsError = error;
