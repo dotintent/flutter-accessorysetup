@@ -87,20 +87,29 @@ void deactivate() {
 
 ## ℹ️ What we know
 
-⚠️ The AccessorySetup does not work on the Simulator. ⚠️
+- You app does not need Bluetooth permissions when you use the picker to work with bluetooth devices.
 
-- When the user closes the Picker by tapping the cross button, the `showPicker` closure emits an error (ASErrorDomain, code 700).
+- It is very easy for user to select the device from a picker.
 
-- ⚠️ **When the person picks a BLE accessory, the picker sends an event of type `ASAccessoryEventType.accessoryChanged`. It might be that the picker sends an event of type `ASAccessoryEventType.accessoryAdded`, but I can't reproduce it at all.** ⚠️
+- ⚠️ If you want to have multiple devices of the same type displayed in the picker, each device should advertise a unique name. The picker will show only one device per unique name. If your device exposes 0x1800 service, the device name in that service should be unique too⚠️
+
+- When the user closes the Picker by tapping the cross button, the `showPicker` closure emits an error (ASErrorDomain, code 700). Be prepared.
+
+- ⚠️ When the person picks a BLE accessory, the picker sends an event of type `ASAccessoryEventType.accessoryChanged`. The picker is supposed to sends an event of type `ASAccessoryEventType.accessoryAdded`, but I can't reproduce it at all.⚠️
 
 - If the device has been connected previously, it will be in the `session.accessories` array right after the session is activated.  
   ⚠️ **This device will not be discoverable by the Setup Picker until the user disconnects it from the settings.** ⚠️
 
+- If the device has been connected by another app already, the picker will show the device as it was decorated by another app -> meaning the image and name will be from that app, not that you provide. To change the decoration the user should add the device to your app.
+
 - When the user selects the device using the picker:
-  - The device will be displayed in the `My Devices` section of the `Settings/Bluetooth` screen.
+  - The device will be displayed in the `Accessories` of the mobile App settings at `Settings/Apps/YourApp`.
+  - The device will be displayed in the `My Devices` section at `Settings/Bluetooth`.
   - The device's info screen will display the image and name you provided to the `ASPickerDisplayItem` during the discovery process (the same that the user saw in the picker).
 
 - When the user deletes the app, the device will be disconnected automatically. It won't be displayed in the `My Devices` section of the `Settings/Bluetooth` screen anymore.
+
+⚠️ The AccessorySetup does not work on the Simulator. ⚠️
 
 ---
 
