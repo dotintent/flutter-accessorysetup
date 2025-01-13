@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:objective_c/objective_c.dart';
 import 'package:flutter/services.dart';
