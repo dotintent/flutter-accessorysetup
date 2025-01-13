@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_accessorysetup/flutter_accessorysetup.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
 import 'package:flutter_accessorysetup_example/gen/assets.gen.dart';
