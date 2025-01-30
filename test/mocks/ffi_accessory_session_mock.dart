@@ -19,7 +19,12 @@ enum SessionMockMethodCall {
 }
 
 class FFIAccessorySessionMock implements FFIAccessorySession {
-  final List<SessionMockMethodCall> calls = [];
+
+  // region Mocking
+
+  List<SessionMockMethodCall> _calls = [];
+  List<SessionMockMethodCall> get calls => _calls;
+  
   objc.NSArray? showPickerForItemsValue;
 
   ASAccessory? renameAccessoryOptionsAccessoryValue;
@@ -31,6 +36,35 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
   ASAccessorySettings? finishAuthorizationForAccessorySettingsSettingsValue;
 
   ASAccessory? failAuthorizationForAccessoryValue;
+
+  // callbacks
+
+  Function? activateCallback;
+  Function? invalidateCallback;
+  Function? showPickerCallback;
+  Function? showPickerForItemsCallback;
+  Function? renameAccessoryOptionsCallback;
+  Function? removeAccessoryCallback;
+  Function? finishAuthorizationForAccessorySettingsCallback;
+  Function? failAuthorizationForAccessoryCallback;
+
+
+  // resetting
+
+  void resetMock() {
+      _calls = [];
+      showPickerForItemsValue = null;
+      renameAccessoryOptionsAccessoryValue = null;
+      renameAccessoryOptionsOptionsValue = null;
+      removeAccessoryValue = null;
+      finishAuthorizationForAccessorySettingsAccessoryValue = null;
+      finishAuthorizationForAccessorySettingsSettingsValue = null;
+      failAuthorizationForAccessoryValue = null;
+  }
+
+  // endregion
+
+  // region Overwrites
 
   @override
   objc.NSArray get logs {
@@ -52,22 +86,26 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
   @override
   void activate() {
     calls.add(SessionMockMethodCall.activate);
+    activateCallback?.call();
   }
 
   @override
   void invalidate() {
     calls.add(SessionMockMethodCall.invalidate);
+    invalidateCallback?.call();
   }
 
   @override
   void showPicker() {
     calls.add(SessionMockMethodCall.showPicker);
+    showPickerCallback?.call();
   }
 
   @override
   void showPickerForItems_(objc.NSArray items) {
     calls.add(SessionMockMethodCall.showPickerForItems);
     showPickerForItemsValue = items;
+    showPickerForItemsCallback?.call();
   }
 
   /// renameAccessory:options:
@@ -77,6 +115,7 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
     calls.add(SessionMockMethodCall.renameAccessoryOptions);
     renameAccessoryOptionsAccessoryValue = accessory;
     renameAccessoryOptionsOptionsValue = options;
+    renameAccessoryOptionsCallback?.call();
   }
 
   /// removeAccessory:
@@ -84,6 +123,7 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
   void removeAccessory_(ASAccessory accessory) {
     calls.add(SessionMockMethodCall.removeAccessory);
     removeAccessoryValue = accessory;
+    removeAccessoryCallback?.call();
   }
 
   /// finishAuthorizationForAccessory:settings:
@@ -93,13 +133,17 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
     calls.add(SessionMockMethodCall.finishAuthorizationForAccessorySettings);
     finishAuthorizationForAccessorySettingsAccessoryValue = accessory;
     finishAuthorizationForAccessorySettingsSettingsValue = settings;
+    finishAuthorizationForAccessorySettingsCallback?.call();
   }
 
   @override
   void failAuthorizationForAccessory_(ASAccessory accessory) {
     calls.add(SessionMockMethodCall.failAuthorizationForAccessory);
     failAuthorizationForAccessoryValue = accessory;
+    failAuthorizationForAccessoryCallback?.call();
   }
+
+  // endregion
 
   // @override
   // FFIAccessorySession autorelease() {

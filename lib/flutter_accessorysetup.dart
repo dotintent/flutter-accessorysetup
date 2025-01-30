@@ -24,10 +24,17 @@ class FlutterAccessorySetup {
   Completer<void>? _finishAuthorizationForAccessoryCompleter;
   Completer<void>? _failAuthorizationForAccessoryCompleter;
 
+  late NSArray Function(List<Object>) _convertToNSArray;
+  late NativeCodeError Function(NSError) _convertToNativeCodeError;
+
   FlutterAccessorySetup({
     FFIAccessorySessionAdapter? sessionAdapter,
     DelegateAdapterFactory delegateAdapterFactory = DelegateAdapter.new,
+    NSArray Function(List<Object>)? listConverter,
+    NativeCodeError Function(NSError)? nsErrorConverter,
   }) {
+    _convertToNSArray = listConverter ?? (list) => list.toNSArray();
+    _convertToNativeCodeError = nsErrorConverter ?? (nsError) => NativeCodeError(nsError);
     _sessionAdapter = sessionAdapter ??
         FFIAccessorySessionAdapter(FFIAccessorySession.alloc().init());
     _delegateAdapter = delegateAdapterFactory(
@@ -66,7 +73,7 @@ class FlutterAccessorySetup {
   Future<void> showPickerForItems(List<ASPickerDisplayItem> items) async {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
-    _sessionAdapter.showPickerForItems_(items.toNSArray());
+    _sessionAdapter.showPickerForItems_(_convertToNSArray(items));
     return completer.future;
   }
 
@@ -91,7 +98,7 @@ class FlutterAccessorySetup {
     final item = ASPickerDisplayItem.alloc()
         .initWithName_productImage_descriptor_(
             name.toNSString(), image, descriptor);
-    _sessionAdapter.showPickerForItems_([item].toNSArray());
+    _sessionAdapter.showPickerForItems_(_convertToNSArray([item]));
     return completer.future;
   }
 
@@ -140,7 +147,7 @@ class FlutterAccessorySetup {
 
   void _didShowPicker(NSError? nsError) {
     if (nsError != null) {
-      _showPickerCompleter?.completeError(NativeCodeError(nsError));
+      _showPickerCompleter?.completeError(_convertToNativeCodeError(nsError));
       return;
     }
     _showPickerCompleter?.complete();
@@ -148,7 +155,7 @@ class FlutterAccessorySetup {
 
   void _didRenameAccessory(ASAccessory accessory, NSError? nsError) {
     if (nsError != null) {
-      _renameAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      _renameAccessoryCompleter?.completeError(_convertToNativeCodeError(nsError));
       return;
     }
     _renameAccessoryCompleter?.complete();
@@ -156,7 +163,7 @@ class FlutterAccessorySetup {
 
   void _didRemoveAccessory(ASAccessory accessory, NSError? nsError) {
     if (nsError != null) {
-      _removeAccessoryCompleter?.completeError(NativeCodeError(nsError));
+      _removeAccessoryCompleter?.completeError(_convertToNativeCodeError(nsError));
       return;
     }
     _removeAccessoryCompleter?.complete();
@@ -165,7 +172,7 @@ class FlutterAccessorySetup {
   void _didFinishAuthorization(ASAccessory accessory, NSError? nsError) {
     if (nsError != null) {
       _finishAuthorizationForAccessoryCompleter
-          ?.completeError(NativeCodeError(nsError));
+          ?.completeError(_convertToNativeCodeError(nsError));
       return;
     }
     _finishAuthorizationForAccessoryCompleter?.complete();
@@ -174,7 +181,7 @@ class FlutterAccessorySetup {
   void _didFailAuthorization(ASAccessory accessory, NSError? nsError) {
     if (nsError != null) {
       _failAuthorizationForAccessoryCompleter
-          ?.completeError(NativeCodeError(nsError));
+          ?.completeError(_convertToNativeCodeError(nsError));
       return;
     }
     _failAuthorizationForAccessoryCompleter?.complete();
