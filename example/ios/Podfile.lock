@@ -1,39 +1,27 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_accessorysetup (0.0.2):
-    - Flutter
   - flutter_blue_plus (0.0.1):
-    - Flutter
-  - integration_test (0.0.1):
     - Flutter
   - objective_c (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_accessorysetup (from `.symlinks/plugins/flutter_accessorysetup/ios`)
   - flutter_blue_plus (from `.symlinks/plugins/flutter_blue_plus/ios`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - objective_c (from `.symlinks/plugins/objective_c/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_accessorysetup:
-    :path: ".symlinks/plugins/flutter_accessorysetup/ios"
   flutter_blue_plus:
     :path: ".symlinks/plugins/flutter_blue_plus/ios"
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
   objective_c:
     :path: ".symlinks/plugins/objective_c/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_accessorysetup: b03e79f7ae06961222749b7a363800ab260a2af8
-  flutter_blue_plus: 4837da7d00cf5d441fdd6635b3a57f936778ea96
-  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  objective_c: 77e887b5ba1827970907e10e832eec1683f3431d
+  flutter_blue_plus: e5808fc4e5ebc58bb911635f8fdaf5e2b4da2754
+  objective_c: 89e720c30d716b036faf9c9684022048eee1eee2
 
 PODFILE CHECKSUM: 88001a6f63fedf7dfbfdf4ee0c335d29da93cbc0
 

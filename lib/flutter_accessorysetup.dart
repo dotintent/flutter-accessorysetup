@@ -4,23 +4,19 @@ import 'package:objective_c/objective_c.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
-import 'package:flutter_accessorysetup/helpers.dart';
+import 'package:flutter_accessorysetup/src/helpers.dart';
+import 'package:flutter_accessorysetup/src/testing.dart';
 
 /// The main class of the library that provides service functionality
 /// Use it to activate the session and find and configure devices
 class FlutterAccessorySetup {
   Stream<ASAccessoryEvent> get eventStream => _eventsController.stream;
-  List<ASAccessory> get accessories => _session.accessories.toList();
-  final _session = FFIAccessorySession.alloc().init();
+  List<ASAccessory> get accessories => _sessionAdapter.accessories.toList();
+  late final FFIAccessorySessionAdapter _sessionAdapter;
   final _eventsController = StreamController<ASAccessoryEvent>();
 
-  late final _delegate = FFIAccessorySessionDelegate.implementAsListener(
-      handleEvent_: _handleEvent,
-      didShowPickerWithError_: _didShowPicker,
-      didRenameAccessory_withError_: _didRenameAccessory,
-      didRemoveAccessory_withError_: _didRemoveAccessory,
-      didFinishAuthorizationForAccessory_withError_: _didFinishAuthorization,
-      didFailAuthorizationForAccessory_withError_: _didFailAuthorization);
+  DelegateAdapter? _delegateAdapter;
+
   // TODO: bind completers to accessories to enable multiple calls
   Completer<void>? _showPickerCompleter;
   Completer<void>? _renameAccessoryCompleter;
@@ -28,8 +24,25 @@ class FlutterAccessorySetup {
   Completer<void>? _finishAuthorizationForAccessoryCompleter;
   Completer<void>? _failAuthorizationForAccessoryCompleter;
 
+  FlutterAccessorySetup({
+    FFIAccessorySessionAdapter? sessionAdapter,
+    DelegateAdapterFactory delegateAdapterFactory = DelegateAdapter.new,
+  }) {
+    _sessionAdapter = sessionAdapter ??
+        FFIAccessorySessionAdapter(FFIAccessorySession.alloc().init());
+    _delegateAdapter = delegateAdapterFactory(
+        handleEvent: _handleEvent,
+        didShowPickerWithError: _didShowPicker,
+        didRenameAccessoryWithError: _didRenameAccessory,
+        didRemoveAccessoryWithError: _didRemoveAccessory,
+        didFinishAuthorizationForAccessoryWithError: _didFinishAuthorization,
+        didFailAuthorizationForAccessoryWithError: _didFailAuthorization);
+  }
+
   void dispose() {
     _eventsController.close();
+    _sessionAdapter.invalidate();
+    _delegateAdapter = null;
   }
 
   // region Interface
@@ -37,15 +50,15 @@ class FlutterAccessorySetup {
   /// Activates the session.
   /// You should activate the session before using it
   void activate() {
-    _session.setDelegate_(_delegate);
-    _session.activate();
+    _sessionAdapter.setDelegateAdapter(_delegateAdapter!);
+    _sessionAdapter.activate();
   }
 
   /// Shows device picker
   Future<void> showPicker() async {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
-    _session.showPicker();
+    _sessionAdapter.showPicker();
     return completer.future;
   }
 
@@ -53,7 +66,7 @@ class FlutterAccessorySetup {
   Future<void> showPickerForItems(List<ASPickerDisplayItem> items) async {
     final completer = Completer<void>();
     _showPickerCompleter = completer;
-    _session.showPickerForItems_(items.toNSArray());
+    _sessionAdapter.showPickerForItems_(items.toNSArray());
     return completer.future;
   }
 
@@ -78,7 +91,7 @@ class FlutterAccessorySetup {
     final item = ASPickerDisplayItem.alloc()
         .initWithName_productImage_descriptor_(
             name.toNSString(), image, descriptor);
-    _session.showPickerForItems_([item].toNSArray());
+    _sessionAdapter.showPickerForItems_([item].toNSArray());
     return completer.future;
   }
 
@@ -87,7 +100,7 @@ class FlutterAccessorySetup {
       ASAccessory accessory, ASAccessoryRenameOptions options) async {
     final completer = Completer<void>();
     _renameAccessoryCompleter = completer;
-    _session.renameAccessory_options_(accessory, options);
+    _sessionAdapter.renameAccessory_options_(accessory, options);
     return completer.future;
   }
 
@@ -95,7 +108,7 @@ class FlutterAccessorySetup {
   Future<void> removeAccessory(ASAccessory accessory) async {
     final completer = Completer<void>();
     _removeAccessoryCompleter = completer;
-    _session.removeAccessory_(accessory);
+    _sessionAdapter.removeAccessory_(accessory);
     return completer.future;
   }
 
@@ -104,7 +117,8 @@ class FlutterAccessorySetup {
       ASAccessory accessory, ASAccessorySettings settings) async {
     final completer = Completer<void>();
     _finishAuthorizationForAccessoryCompleter = completer;
-    _session.finishAuthorizationForAccessory_settings_(accessory, settings);
+    _sessionAdapter.finishAuthorizationForAccessory_settings_(
+        accessory, settings);
     return completer.future;
   }
 
@@ -112,7 +126,7 @@ class FlutterAccessorySetup {
   Future<void> failAuthorizationForAccessory(ASAccessory accessory) async {
     final completer = Completer<void>();
     _failAuthorizationForAccessoryCompleter = completer;
-    _session.failAuthorizationForAccessory_(accessory);
+    _sessionAdapter.failAuthorizationForAccessory_(accessory);
     return completer.future;
   }
 
@@ -173,7 +187,7 @@ class FlutterAccessorySetup {
   /// Prints logs from the native code
   /// Use it for debugging the native part of the code
   void printNativeSessionLogs() {
-    final logs = _session.logs.toDartStringList();
+    final logs = _sessionAdapter.logs.toDartStringList();
     print("logs count: ${logs.length}");
     for (final log in logs) {
       print(log);

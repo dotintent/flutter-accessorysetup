@@ -1,98 +1,48 @@
-import 'package:flutter/src/services/platform_channel.dart';
-import 'package:flutter_accessorysetup/flutter_accessorysetup_event.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'dart:ffi';
+
 import 'package:flutter_accessorysetup/flutter_accessorysetup.dart';
-import 'package:flutter_accessorysetup/flutter_accessorysetup_platform.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-class ShowBlePickerParams {
-  String name;
-  String asset;
-  String? serviceUUID;
-  String? nameSubstring;
+import 'package:flutter_accessorysetup/src/testing.dart';
 
-  ShowBlePickerParams({
-    required this.name,
-    required this.asset,
-    this.serviceUUID,
-    this.nameSubstring,
-  });
-}
-
-class MockFlutterAccessorysetupPlatform
-    with MockPlatformInterfaceMixin
-    implements FlutterAccessorysetupPlatform {
-  List<bool> activeCalls = [];
-  List<ShowBlePickerParams> showBlePickerCalls = [];
-
-  @override
-  Stream<FlutterAccessorysetupSessionEvent> get sessionStream =>
-      const Stream<FlutterAccessorysetupSessionEvent>.empty();
-
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
-
-  @override
-  Future<void> activate() async {
-    activeCalls.add(true);
-  }
-
-  @override
-  Future<void> showBlePicker(
-    String name,
-    String asset,
-    String? serviceUUID,
-    String? nameSubstring,
-  ) async {
-    showBlePickerCalls.add(ShowBlePickerParams(
-      name: name,
-      asset: asset,
-      serviceUUID: serviceUUID,
-      nameSubstring: nameSubstring,
-    ));
-  }
-
-  @override
-  EventChannel get eventChannel => throw UnimplementedError();
-
-  @override
-  MethodChannel get methodChannel => throw UnimplementedError();
-}
+import 'mocks/ffi_accessory_session_mock.dart';
+// import 'mocks/objc_ns_array_mock.dart';
+import 'mocks/delegate_adapter_mock.dart';
 
 void main() {
-  test('$FlutterAccessorysetupPlatform is the default instance', () {
-    expect(FlutterAccessorysetupPlatform.instance, isInstanceOf<FlutterAccessorysetupPlatform>());
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  late FFIAccessorySessionMock sessionMock;
+  late FFIAccessorySessionAdapter sessionAdapter;
+  late FlutterAccessorySetup sut;
+
+  setUp(() {
+    sessionMock = FFIAccessorySessionMock();
+    sessionAdapter = FFIAccessorySessionAdapter(sessionMock);
+    sut = FlutterAccessorySetup(sessionAdapter: sessionAdapter);
   });
 
-  test('getPlatformVersion', () async {
-    final flutterAccessorysetupPlugin = FlutterAccessorysetup();
-    final fakePlatform = MockFlutterAccessorysetupPlatform();
-    FlutterAccessorysetupPlatform.instance = fakePlatform;
-
-    expect(await flutterAccessorysetupPlugin.getPlatformVersion(), '42');
+  tearDown(() {
+    sut.dispose();
   });
 
-   test('activate', () async {
-    final flutterAccessorysetupPlugin = FlutterAccessorysetup();
-    final fakePlatform = MockFlutterAccessorysetupPlatform();
-    FlutterAccessorysetupPlatform.instance = fakePlatform;
+  // Tests
 
-    await flutterAccessorysetupPlugin.activate();
-
-    expect(fakePlatform.activeCalls.length, 1);
-  });
-
-   test('showBlePicker', () async {
-    final flutterAccessorysetupPlugin = FlutterAccessorysetup();
-    final fakePlatform = MockFlutterAccessorysetupPlatform();
-    FlutterAccessorysetupPlatform.instance = fakePlatform;
-
-    await flutterAccessorysetupPlugin.showBlePicker('name', 'asset', 'serviceUUID', 'nameSubstring');
-
-    expect(fakePlatform.showBlePickerCalls.length, 1);
-    expect(fakePlatform.showBlePickerCalls.firstOrNull?.name, 'name');
-    expect(fakePlatform.showBlePickerCalls.firstOrNull?.asset, 'asset');
-    expect(fakePlatform.showBlePickerCalls.firstOrNull?.serviceUUID, 'serviceUUID');
-    expect(fakePlatform.showBlePickerCalls.firstOrNull?.nameSubstring, 'nameSubstring');
+  test('sut calls activate and sets up delegate adapter when the `activate` method called',
+      () async {
+    // Given
+    sut = FlutterAccessorySetup(
+        sessionAdapter: sessionAdapter,
+        delegateAdapterFactory: DelegateAdapterMock.new);
+    // When
+    sut.activate();
+    // Then
+    expect(sessionAdapter.delegateAdapter, isNotNull);
+    expect(
+        sessionMock.calls,
+        equals([
+          SessionMockMethodCall.setDelegate,
+          SessionMockMethodCall.activate
+        ]));
   });
 }
