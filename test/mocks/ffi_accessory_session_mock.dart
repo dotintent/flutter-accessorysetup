@@ -19,12 +19,11 @@ enum SessionMockMethodCall {
 }
 
 class FFIAccessorySessionMock implements FFIAccessorySession {
-
   // region Mocking
 
   List<SessionMockMethodCall> _calls = [];
   List<SessionMockMethodCall> get calls => _calls;
-  
+
   objc.NSArray? showPickerForItemsValue;
 
   ASAccessory? renameAccessoryOptionsAccessoryValue;
@@ -48,18 +47,17 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
   Function? finishAuthorizationForAccessorySettingsCallback;
   Function? failAuthorizationForAccessoryCallback;
 
-
   // resetting
 
   void resetMock() {
-      _calls = [];
-      showPickerForItemsValue = null;
-      renameAccessoryOptionsAccessoryValue = null;
-      renameAccessoryOptionsOptionsValue = null;
-      removeAccessoryValue = null;
-      finishAuthorizationForAccessorySettingsAccessoryValue = null;
-      finishAuthorizationForAccessorySettingsSettingsValue = null;
-      failAuthorizationForAccessoryValue = null;
+    _calls = [];
+    showPickerForItemsValue = null;
+    renameAccessoryOptionsAccessoryValue = null;
+    renameAccessoryOptionsOptionsValue = null;
+    removeAccessoryValue = null;
+    finishAuthorizationForAccessorySettingsAccessoryValue = null;
+    finishAuthorizationForAccessorySettingsSettingsValue = null;
+    failAuthorizationForAccessoryValue = null;
   }
 
   // endregion
@@ -110,8 +108,8 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
 
   /// renameAccessory:options:
   @override
-  void renameAccessory_options_(
-      ASAccessory accessory, ASAccessoryRenameOptions options) {
+  // ignore: non_constant_identifier_names
+  void renameAccessory_options_(ASAccessory accessory, ASAccessoryRenameOptions options) {
     calls.add(SessionMockMethodCall.renameAccessoryOptions);
     renameAccessoryOptionsAccessoryValue = accessory;
     renameAccessoryOptionsOptionsValue = options;
@@ -128,8 +126,8 @@ class FFIAccessorySessionMock implements FFIAccessorySession {
 
   /// finishAuthorizationForAccessory:settings:
   @override
-  void finishAuthorizationForAccessory_settings_(
-      ASAccessory accessory, ASAccessorySettings settings) {
+  // ignore: non_constant_identifier_names
+  void finishAuthorizationForAccessory_settings_(ASAccessory accessory, ASAccessorySettings settings) {
     calls.add(SessionMockMethodCall.finishAuthorizationForAccessorySettings);
     finishAuthorizationForAccessorySettingsAccessoryValue = accessory;
     finishAuthorizationForAccessorySettingsSettingsValue = settings;
