@@ -1,11 +1,7 @@
-import 'dart:ffi';
-
-import 'package:flutter_accessorysetup/flutter_accessorysetup.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_accessorysetup/src/testing.dart';
 import 'package:flutter_accessorysetup/gen/ios/accessory_setup_bindings.dart';
-import 'package:objective_c/objective_c.dart';
 
 import 'mocks/ffi_accessory_mock.dart';
 import 'mocks/ffi_accessory_settings_mock.dart';
@@ -24,11 +20,9 @@ void main() {
     sut = FFIAccessorySessionAdapter(sessionMock);
   });
 
-  tearDown(() {
-  });
+  tearDown(() {});
 
-  test('session adapter sets up delegate when the `setDelegateAdapter` method called',
-      () async {
+  test('session adapter sets up delegate when the `setDelegateAdapter` method called', () async {
     // Given
     final delegateAdapter = mockDelegateAdapter();
     // When
@@ -39,8 +33,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.setDelegate));
   });
 
-  test('session adapter gets accessories when the ` get accessories` method called',
-      () async {
+  test('session adapter gets accessories when the ` get accessories` method called', () async {
     // Given
     // When
     sut.accessories;
@@ -48,8 +41,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.getAccessories));
   });
 
-  test('session adapter gets accessories from the session when the `get accessories` method called',
-      () async {
+  test('session adapter gets accessories from the session when the `get accessories` method called', () async {
     // Given
     // When
     sut.accessories;
@@ -57,8 +49,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.getAccessories));
   });
 
-  test('session adapter activates the session when the `activate` method called',
-      () async {
+  test('session adapter activates the session when the `activate` method called', () async {
     // Given
     // When
     sut.activate();
@@ -66,8 +57,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.activate));
   });
 
-  test('session adapter invalidates the session  when the `invalidate` method called',
-      () async {
+  test('session adapter invalidates the session  when the `invalidate` method called', () async {
     // Given
     // When
     sut.invalidate();
@@ -75,8 +65,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.invalidate));
   });
 
-  test('session adapter nullifies the DelegateAdapter when the `invalidate` method called',
-      () async {
+  test('session adapter nullifies the DelegateAdapter when the `invalidate` method called', () async {
     // Given
     sut.setDelegateAdapter(mockDelegateAdapter());
     // When
@@ -85,8 +74,7 @@ void main() {
     expect(sut.delegateAdapter, isNull);
   });
 
-  test('session adapter gets accessories the session when the ` get accessories` method called',
-      () async {
+  test('session adapter gets accessories the session when the ` get accessories` method called', () async {
     // Given
     // When
     sut.accessories;
@@ -94,8 +82,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.getAccessories));
   });
 
-  test('session adapter shows picker using the session when the `showPicker` method called',
-      () async {
+  test('session adapter shows picker using the session when the `showPicker` method called', () async {
     // Given
     // When
     sut.showPicker();
@@ -103,8 +90,7 @@ void main() {
     expect(sessionMock.calls.firstOrNull, equals(SessionMockMethodCall.showPicker));
   });
 
-  test('session adapter shows picker with items using the session when the `showPickerForItems_` method called',
-      () async {
+  test('session adapter shows picker with items using the session when the `showPickerForItems_` method called', () async {
     // Given
     final items = NSArrayMock();
     // When
@@ -114,8 +100,7 @@ void main() {
     expect(sessionMock.showPickerForItemsValue, equals(items));
   });
 
-  test('session adapter renames accessories using session when the `renameAccessory_options_` method called',
-      () async {
+  test('session adapter renames accessories using session when the `renameAccessory_options_` method called', () async {
     // Given
     final accessory = FFIASAccessoryMock();
     final options = ASAccessoryRenameOptions.ASAccessoryRenameSSID;
@@ -127,8 +112,7 @@ void main() {
     expect(sessionMock.renameAccessoryOptionsOptionsValue, equals(options));
   });
 
-  test('session adapter renames accessories using session when the `renameAccessory_options_` method called',
-      () async {
+  test('session adapter renames accessories using session when the `renameAccessory_options_` method called', () async {
     // Given
     final accessory = FFIASAccessoryMock();
     final options = ASAccessoryRenameOptions.ASAccessoryRenameSSID;
@@ -140,8 +124,7 @@ void main() {
     expect(sessionMock.renameAccessoryOptionsOptionsValue, equals(options));
   });
 
-   test('session adapter removes the accessory using session when the `removeAccessory_` method called',
-      () async {
+  test('session adapter removes the accessory using session when the `removeAccessory_` method called', () async {
     // Given
     final accessory = FFIASAccessoryMock();
     // When
@@ -151,7 +134,8 @@ void main() {
     expect(sessionMock.removeAccessoryValue, equals(accessory));
   });
 
-  test('session adapter finishes authorization of the accessory using session when the `finishAuthorizationForAccessory_settings_` method called',
+  test(
+      'session adapter finishes authorization of the accessory using session when the `finishAuthorizationForAccessory_settings_` method called',
       () async {
     // Given
     final accessory = FFIASAccessoryMock();
